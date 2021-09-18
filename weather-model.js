@@ -13,7 +13,7 @@ const weatherModel = {
     },
     weather: {
         temp: { // Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
-            main: undefined, // Temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit. (The same as day if daily forecast is called)
+            main: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
             morn: undefined, // Morning temperature.
             day: undefined, // Day temperature.
             eve: undefined, // Evening temperature.
@@ -22,7 +22,7 @@ const weatherModel = {
             max: undefined // Highest daily temperature.
         },
         feels_like: { // This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
-            main: undefined, // Temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit. (The same as day if daily forecast is called)
+            main: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
             morn: undefined, // Morning temperature.
             day: undefined, // Day temperature.
             eve: undefined, // Evening temperature.
@@ -43,7 +43,7 @@ const weatherModel = {
         rain: undefined, // Precipitation volume, mm
         snow: undefined, // Snow volume, mm
         condition_id: undefined, // Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
-        weather_main: undefined, // Group of weather parameters (Rain, Snow, Extreme etc.)
+        main: undefined, // Group of weather parameters (Rain, Snow, Extreme etc.)
         description: undefined, // Description of the weather
         icon: {
             url: undefined, // Weather icon url.

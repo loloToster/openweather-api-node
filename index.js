@@ -53,12 +53,17 @@ const supLang = [
 
 const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
-    DATA_PATH = "data/2.5/"
+    DATA_PATH = "data/2.5/onecall"
 
 const weatherModel = require("./weather-model")
 
 const fetch = require("node-fetch"),
     syncFetch = require("sync-fetch")
+
+const currentFormatter = require("./formaters/current-formatter"),
+    minutelyFormatter = require("./formaters/minutely-formatter"),
+    hourlyFormatter = require("./formaters/hourly-formatter"),
+    dailyFormatter = require("./formaters/daily-formatter")
 
 class OpenWeatherAPI {
     #globalOptions = {
@@ -72,7 +77,7 @@ class OpenWeatherAPI {
     }
 
     constructor(options) {
-        this.#globalOptions = this.formatOptions(options)
+        this.#globalOptions = this.#formatOptions(options)
     }
 
     getGlobalOptions() {
@@ -149,44 +154,69 @@ class OpenWeatherAPI {
     }
 
     async getLocation(options) {
-        options = this.formatOptions(options)
+        options = this.#formatOptions(options)
         let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.location.lat}&lon=${options.location.lon}&limit=1&appid=${options.key}`)
         console.log(response)
         let data = await response.json()
         return data.length ? data[0] : null
     }
 
-    async getCurrentWeather(options) {
-        options = this.formatOptions(options)
-
+    async getCurrent(options) {
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
+        let data = await response.json()
+        return currentFormatter(data)
     }
 
     async getMinutelyForecast(limit = 60, options) {
-        options = this.formatOptions(options)
-
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options))
+        let data = await response.json()
+        return currentFormatter(data)
     }
 
     async getHourlyForecast(limit = 48, options) {
-        options = this.formatOptions(options)
-
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options))
+        let data = await response.json()
+        return currentFormatter(data)
     }
 
     async getDailyForecast(limit = 7, options) {
-        options = this.formatOptions(options)
-
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options))
+        let data = await response.json()
+        return currentFormatter(data)
     }
 
     async getAlerts(options) {
-        options = this.formatOptions(options)
-
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options))
+        let data = await response.json()
+        return data.alerts
     }
 
     async getEverything(options) {
-        options = this.formatOptions(options)
+        options = this.#formatOptions(options)
+        let response = await fetch(this.#createURL(options))
 
     }
 
-    formatOptions(options) {
+    #createURL(options, exclude) {
+        let url = new URL(DATA_PATH, API_ENDPOINT)
+        url.searchParams.append("appid", options.key)
+        url.searchParams.append("lat", options.location.lat)
+        url.searchParams.append("lon", options.location.lon)
+        if (options.lang)
+            url.searchParams.append("lang", options.lang)
+        if (options.units)
+            url.searchParams.append("units", options.units)
+        if (exclude)
+            url.searchParams.append("exclude", exclude)
+        return url.href
+    }
+
+    #formatOptions(options) {
         let newOptions = this.#globalOptions
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
@@ -208,12 +238,12 @@ class OpenWeatherAPI {
                         newOptions.location = this.evaluateLocationByCityName(value)
                         break
 
-                    case "coordinates":
-                        newOptions.location = { lat: value.lat, lon: value.lon }
-                        break
-
                     case "zipCode":
                         newOptions.location = this.evaluateLocationByZipCode(value)
+                        break
+
+                    case "coordinates":
+                        newOptions.location = { lat: value.lat, lon: value.lon }
                         break
 
                     default:
