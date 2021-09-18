@@ -58,36 +58,141 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     DATA_PATH = "data/2.5/"
 
 class OpenWeatherAPI {
-    #key
-    #lang
-    #location = {
-        lat: null,
-        lon: null
+    #globalOptions = {
+        key: undefined,
+        lang: undefined,
+        location: {
+            lat: undefined,
+            lon: undefined
+        }
     }
 
     constructor(options) {
+        this.#globalOptions = this.formatOptions(options)
+    }
+
+    getGlobalOptions() {
+        return this.#globalOptions
+    }
+
+    setKey(key) {
+        this.#globalOptions.key = key
+    }
+
+    getKey() {
+        return this.#globalOptions.key
+    }
+
+    setLanguage(lang) {
+        this.#globalOptions.lang = this.evaluateLanguage(lang)
+    }
+
+    evaluateLanguage(lang) {
+        lang = lang.toLowerCase()
+        if (supLang.includes(lang))
+            return lang
+        else
+            throw Error("Unsupported language: " + lang)
+    }
+
+    getLanguage() {
+        return this.#globalOptions.lang
+    }
+
+    setLocationByCityName(name) {
+        this.#globalOptions.location = this.evaluateLocationByCityName(name)
+    }
+
+    evaluateLocationByCityName(name) {
+        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
+        let data = response.json()[0]
+        return {
+            lat: data.lat,
+            lon: data.lon
+        }
+    }
+
+    setLocationByCoordinates(location) {
+        this.#globalOptions.location = {
+            lat: location.lat,
+            lon: location.lon
+        }
+    }
+
+    setLocationByZipCode(code) {
+        this.#globalOptions.location = this.evaluateLocationByZipCode(code)
+    }
+
+    evaluateLocationByZipCode(code) {
+        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${code}&appid=${this.#globalOptions.key}`)
+        let data = response.json()
+        return {
+            lat: data.lat,
+            lon: data.lon
+        }
+    }
+
+    async getLocation() {
+        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${this.#globalOptions.location.lat}&lon=${this.#globalOptions.location.lon}&limit=1&appid=${this.#globalOptions.key}`)
+        console.log(response)
+        let data = await response.json()
+        return data[0]
+    }
+
+    async getCurrentWeather(options) {
+        options = this.formatOptions(options)
+
+    }
+
+    async getMinutelyForecast(limit = 60, options) {
+        options = this.formatOptions(options)
+
+    }
+
+    async getHourlyForecast(limit = 48, options) {
+        options = this.formatOptions(options)
+
+    }
+
+    async getDailyForecast(limit = 7, options) {
+        options = this.formatOptions(options)
+
+    }
+
+    async getAlerts(options) {
+        options = this.formatOptions(options)
+
+    }
+
+    async getEverything(options) {
+        options = this.formatOptions(options)
+
+    }
+
+    formatOptions(options) {
+        let newOptions = this.#globalOptions
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
                 const value = options[key]
                 switch (key) {
                     case "key":
-                        this.setKey(value)
+                        newOptions.key = value
                         break
 
                     case "language":
-                        this.setLanguage(value)
+                        newOptions.lang = this.evaluateLanguage(value)
                         break
 
                     case "cityName":
-                        this.setLocationByCityName(value)
+                        newOptions.location = this.evaluateLocationByCityName(value)
                         break
 
                     case "coordinates":
-                        this.setLocationByCoordinates(value)
+                        newOptions.location = { lat: value.lat, lon: value.lon }
                         break
 
                     case "zipCode":
-                        this.setLocationByZipCode(value)
+                        newOptions.location = this.evaluateLocationByZipCode(value)
                         break
 
                     default:
@@ -95,80 +200,7 @@ class OpenWeatherAPI {
                 }
             }
         }
-    }
-
-    setKey(key) {
-        this.#key = key
-    }
-
-    getKey() {
-        return this.#key
-    }
-
-    setLanguage(lang) {
-        lang = lang.toLowerCase()
-        if (supLang.includes(lang))
-            this.#lang = lang
-        else
-            throw Error("Unsupported language: " + lang)
-    }
-
-    getLanguage() {
-        return this.#lang
-    }
-
-    setLocationByCityName(name) {
-        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#key}`)
-        let data = response.json()[0]
-        this.#location.lat = data.lat
-        this.#location.lon = data.lon
-    }
-
-    setLocationByCoordinates(lat, lon) {
-        this.#location.lat = lat
-        this.#location.lon = lon
-    }
-
-    setLocationByZipCode(code) {
-        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${code}&appid=${this.#key}`)
-        let data = response.json()
-        this.#location.lat = data.lat
-        this.#location.lon = data.lon
-    }
-
-    async getLocation() {
-        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${this.#location.lat}&lon=${this.#location.lon}&limit=1&appid=${this.#key}`)
-        console.log(response)
-        let data = await response.json()
-        return data[0]
-    }
-
-    async getCurrentWeather(options) {
-
-    }
-
-    async getMinutelyForecast(limit = 60, options) {
-
-    }
-
-    async getHourlyForecast(limit = 48, options) {
-
-    }
-
-    async getDailyForecast(limit = 7, options) {
-
-    }
-
-    async getAlerts(options) {
-
-    }
-
-    async getEverything(options) {
-
-    }
-
-    formatOptions(options) {
-        return options
+        return newOptions
     }
 }
 
