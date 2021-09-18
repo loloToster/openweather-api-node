@@ -9,7 +9,6 @@
   "author": "loloToster",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4",
     "sync-fetch": "^0.3.0"
   }
 }
