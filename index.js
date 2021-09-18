@@ -48,19 +48,23 @@ const supLang = [
     "zh_cn",
     "zh_tw",
     "zu"
-]
-
-const fetch = require("node-fetch"),
-    syncFetch = require("sync-fetch")
+],
+    supUnits = ["standard", "metric", "imperial"]
 
 const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
     DATA_PATH = "data/2.5/"
 
+const weatherModel = require("./weather-model")
+
+const fetch = require("node-fetch"),
+    syncFetch = require("sync-fetch")
+
 class OpenWeatherAPI {
     #globalOptions = {
         key: undefined,
         lang: undefined,
+        units: undefined,
         location: {
             lat: undefined,
             lon: undefined
@@ -93,6 +97,18 @@ class OpenWeatherAPI {
             return lang
         else
             throw Error("Unsupported language: " + lang)
+    }
+
+    setUnits(unit) {
+        this.#globalOptions.units = this.evaluateUnits(unit)
+    }
+
+    evaluateUnits(unit) {
+        unit = unit.toLowerCase()
+        if (supUnits.includes(unit))
+            return unit
+        else
+            throw Error("Unsupported unit: " + unit)
     }
 
     getLanguage() {
@@ -132,11 +148,12 @@ class OpenWeatherAPI {
         }
     }
 
-    async getLocation() {
-        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${this.#globalOptions.location.lat}&lon=${this.#globalOptions.location.lon}&limit=1&appid=${this.#globalOptions.key}`)
+    async getLocation(options) {
+        options = this.formatOptions(options)
+        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.location.lat}&lon=${options.location.lon}&limit=1&appid=${options.key}`)
         console.log(response)
         let data = await response.json()
-        return data[0]
+        return data.length ? data[0] : null
     }
 
     async getCurrentWeather(options) {
@@ -181,6 +198,10 @@ class OpenWeatherAPI {
 
                     case "language":
                         newOptions.lang = this.evaluateLanguage(value)
+                        break
+
+                    case "units":
+                        newOptions.units = this.evaluateUnits(value)
                         break
 
                     case "cityName":
