@@ -1,6 +1,4 @@
-# Weather Model
-```js
-{
+const weatherModel = {
     lat: undefined, // Geographical coordinates of the location (latitude)
     lon: undefined, // Geographical coordinates of the location (longitude)
     dt: undefined,  // Timezone name for the requested location
@@ -53,4 +51,5 @@
         }
     }
 }
-```
+
+module.exports = weatherModel
