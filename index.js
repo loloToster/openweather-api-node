@@ -156,7 +156,6 @@ class OpenWeatherAPI {
     async getLocation(options) {
         options = this.#formatOptions(options)
         let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.location.lat}&lon=${options.location.lon}&limit=1&appid=${options.key}`)
-        console.log(response)
         let data = await response.json()
         return data.length ? data[0] : null
     }
@@ -168,37 +167,46 @@ class OpenWeatherAPI {
         return currentFormatter(data)
     }
 
-    async getMinutelyForecast(limit = 60, options) {
+    async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options) {
         options = this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
+        let response = await fetch(this.#createURL(options, "alerts,current,hourly,daily"))
         let data = await response.json()
-        return currentFormatter(data)
+        return minutelyFormatter(data, limit)
     }
 
-    async getHourlyForecast(limit = 48, options) {
+    async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options) {
         options = this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
+        let response = await fetch(this.#createURL(options, "alerts,current,minutely,daily"))
         let data = await response.json()
-        return currentFormatter(data)
+        return hourlyFormatter(data, limit)
     }
 
-    async getDailyForecast(limit = 7, options) {
+    async getToday(options) {
+        return await this.getDailyForecast(1, true, options)
+    }
+
+    async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options) {
         options = this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
+        let response = await fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
         let data = await response.json()
-        return currentFormatter(data)
+        if (!includeToday)
+            data.daily.shift()
+        return dailyFormatter(data, limit)
     }
 
     async getAlerts(options) {
         options = this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
+        let response = await fetch(this.#createURL(options, "current,minutely,hourly,daily"))
         let data = await response.json()
         return data.alerts
     }
 
     async getEverything(options) {
         options = this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
+
+    }
+
+    mergeWeathers(weathers) {
 
     }
 

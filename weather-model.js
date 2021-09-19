@@ -52,4 +52,8 @@ const weatherModel = {
     }
 }
 
-module.exports = weatherModel
+function getWeatherModel() {
+    return JSON.parse(JSON.stringify(weatherModel))
+}
+
+module.exports = getWeatherModel
