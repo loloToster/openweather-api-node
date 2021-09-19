@@ -7,7 +7,7 @@ function minutelyFormater(data, limit) {
         let newElement = getWeatherModel()
         newElement.lat = data.lat
         newElement.lon = data.lon
-        newElement.dt = element.dt
+        newElement.dt = new Date(element.dt * 1000)
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
         newElement.rain = element.precipitation
