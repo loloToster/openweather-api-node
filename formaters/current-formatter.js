@@ -1,19 +1,9 @@
 // TODO: add icon url
-const weatherModel = require("../weather-model")
+const getWeatherModel = require("../weather-model")
 const ICON_URL = ""
 
-//https://stackoverflow.com/questions/25421233/javascript-removing-undefined-fields-from-an-object
-function removeEmpty(obj) {
-    let newObj = {}
-    Object.keys(obj).forEach((key) => {
-        if (obj[key] === Object(obj[key])) newObj[key] = removeEmpty(obj[key])
-        else if (obj[key] !== undefined) newObj[key] = obj[key]
-    })
-    return newObj
-}
-
 function formater(data) {
-    let current = weatherModel
+    let current = getWeatherModel()
     current.lat = data.lat
     current.lon = data.lon
     current.dt = data.current.dt
@@ -40,7 +30,7 @@ function formater(data) {
     current.weather.description = data.current.weather.description
     current.weather.icon.url = ICON_URL + data.current.weather.icon
     current.weather.icon.raw = data.current.weather.icon
-    return removeEmpty(current)
+    return current
 }
 
 module.exports = formater
