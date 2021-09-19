@@ -6,11 +6,11 @@ function formater(data) {
     let current = getWeatherModel()
     current.lat = data.lat
     current.lon = data.lon
-    current.dt = data.current.dt
+    current.dt = new Date(data.current.dt * 1000)
     current.timezone = data.timezone
     current.timezone_offset = data.timezone_offset
-    current.astronomical.sunrise = data.current.sunrise
-    current.astronomical.sunset = data.current.sunset
+    current.astronomical.sunrise = new Date(data.current.sunrise * 1000)
+    current.astronomical.sunset = new Date(data.current.sunset * 1000)
     current.weather.temp.main = data.current.temp
     current.weather.feels_like.main = data.current.feels_like
     current.weather.pressure = data.current.pressure

@@ -55,8 +55,6 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
     DATA_PATH = "data/2.5/onecall"
 
-const weatherModel = require("./weather-model")
-
 const fetch = require("node-fetch"),
     syncFetch = require("sync-fetch")
 
@@ -120,11 +118,11 @@ class OpenWeatherAPI {
         return this.#globalOptions.lang
     }
 
-    setLocationByCityName(name) {
-        this.#globalOptions.location = this.evaluateLocationByCityName(name)
+    setLocationByName(name) {
+        this.#globalOptions.location = this.evaluateLocationByName(name)
     }
 
-    evaluateLocationByCityName(name) {
+    evaluateLocationByName(name) {
         let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
         let data = response.json()[0]
         return {
@@ -182,7 +180,7 @@ class OpenWeatherAPI {
     }
 
     async getToday(options) {
-        return await this.getDailyForecast(1, true, options)
+        return (await this.getDailyForecast(1, true, options))[0]
     }
 
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options) {
@@ -203,7 +201,19 @@ class OpenWeatherAPI {
 
     async getEverything(options) {
         options = this.#formatOptions(options)
-
+        let response = await fetch(this.#createURL(options))
+        let data = await response.json()
+        return {
+            lat: data.lat,
+            lon: data.lon,
+            timezone: data.timezone,
+            timezone_offset: data.timezone_offset,
+            current: currentFormatter(data),
+            minutely: minutelyFormatter(data, Number.POSITIVE_INFINITY),
+            hourly: hourlyFormatter(data, Number.POSITIVE_INFINITY),
+            daily: dailyFormatter(data, Number.POSITIVE_INFINITY),
+            alerts: data.alerts
+        }
     }
 
     mergeWeathers(weathers) {
@@ -242,8 +252,8 @@ class OpenWeatherAPI {
                         newOptions.units = this.evaluateUnits(value)
                         break
 
-                    case "cityName":
-                        newOptions.location = this.evaluateLocationByCityName(value)
+                    case "locationName":
+                        newOptions.location = this.evaluateLocationByName(value)
                         break
 
                     case "zipCode":

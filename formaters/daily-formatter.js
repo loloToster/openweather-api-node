@@ -8,13 +8,13 @@ function dailyFormater(data, limit) {
         let newElement = getWeatherModel()
         newElement.lat = data.lat
         newElement.lon = data.lon
-        newElement.dt = element.dt
+        newElement.dt = new Date(element.dt * 1000)
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
-        newElement.astronomical.sunrise = element.sunrise
-        newElement.astronomical.sunset = element.sunset
-        newElement.astronomical.moonrise = element.moonrise
-        newElement.astronomical.moonset = element.moonset
+        newElement.astronomical.sunrise = new Date(element.sunrise * 1000)
+        newElement.astronomical.sunset = new Date(element.sunset * 1000)
+        newElement.astronomical.moonrise = new Date(element.moonrise * 1000)
+        newElement.astronomical.moonset = new Date(element.moonset * 1000)
         newElement.astronomical.moon_phase = element.moon_phase
         newElement.weather.temp.morn = element.temp.morn
         newElement.weather.temp.day = element.temp.day
@@ -31,7 +31,6 @@ function dailyFormater(data, limit) {
         newElement.weather.dew_point = element.dew_point
         newElement.weather.clouds = element.clouds
         newElement.weather.uvi = element.uvi
-        newElement.weather.visibility = element.visibility
         newElement.weather.wind.speed = element.wind_speed
         newElement.weather.wind.gust = element.wind_gust
         newElement.weather.wind.deg = element.wind_deg
