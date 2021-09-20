@@ -1,4 +1,27 @@
-# Options
+# openweathermap-api ☁️
+
+Desc
+
+## Example:
+```js
+let weather = new OpenWeatherAPI({
+    key: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    locationName: "New York",
+    units: "imperial"
+})
+
+// prints current temperature in New York
+weather.getCurrent().then(data => {
+    console.log(data.weather.temp.main)
+})
+```
+
+## Docs:
+* [Weather Model](#weather-model)
+* [Options](#options)
+* [Methods](#methods)
+
+## Options
 ```js
 {
     key: "API key" - String,
@@ -13,7 +36,7 @@
 }
 ```
 
-# Weather Model
+## Weather Model
 ```js
 {
     lat: "Geographical coordinates of the location (latitude) " - Number, 
@@ -70,7 +93,28 @@
 }
 ```
 
-# Methods: 
+## Methods: 
+
+### OpenWeatherAPI:
+* [getGlobalOptions](#getglobaloptions)
+* [setKey](#setkeykey)
+* [getKey](#getkey)
+* [setLanguage](#setlanguagelang)
+* [getLanguage](#getlanguage)
+* [setUnits](#setunitsunits)
+* [getUnits](#getunits)
+* [setLocationByName](#async-setlocationbynamename)
+* [setLocationByCoordinates](#setlocationbycoordinateslat-lon)
+* [setLocationByZipCode](async-#setlocationbyzipcodecode)
+* [getLocation](#async-getlocation)
+* [getCurrent](#)
+* [getMinutelyForecast](#)
+* [getHourlyForecast](#)
+* [getToday](#)
+* [getDailyForecast](#)
+* [getAlerts](#)
+* [getEverything](#)
+* [mergeWeathers](#)
 
 ## method(args)
 ---
@@ -89,3 +133,179 @@ What does it return
 ```js
 let example = await weather.method(arg)
 ```
+*See also:*
+
+## getGlobalOptions()
+---
+**Description:**
+
+Getter for set global options
+
+**Returns:**
+
+Global options - `Object`
+
+**Example:**
+```js
+let options = weather.getGlobalOptions()
+```
+*See also:* [options](#options)
+
+## setKey(key)
+---
+**Description:**
+
+Sets the API key
+
+**Params:**
+* **key** - API key - `String`
+
+**Example:**
+```js
+weather.setKey("XXXXXXXXX")
+```
+*See also:* [getKey()](#getkey)
+
+## getKey()
+---
+**Description:**
+
+Getter for set API key
+
+**Returns:**
+
+Set API key  - `String`
+
+**Example:**
+```js
+let key = weather.getKey()
+```
+*See also:* [setKey()](#setkeykey)
+
+## setLanguage(lang)
+---
+**Description:**
+
+Sets the language. Language must be listed [here](https://openweathermap.org/current#multi).
+
+**Params:**
+* **lang** - language - `String`
+
+**Example:**
+```js
+weather.setLanguage("en")
+```
+*See also:* [getLanguage()](#getlanguage)
+
+## getLanguage()
+---
+**Description:**
+
+Getter for set language
+
+**Returns:**
+
+Set language - `String`
+
+**Example:**
+```js
+let lang = weather.getLanguage()
+```
+*See also:* [setKey()](#setkeykey)
+
+## setUnits(units)
+---
+**Description:**
+
+Sets the units. Must be one of these:
+* standard
+* metric
+* imperial
+
+**Params:**
+* **units** - units - `String`
+
+**Example:**
+```js
+weather.setUnits("metric")
+```
+*See also:* [getUnits()](#getunits)
+
+## getUnits()
+---
+**Description:**
+
+Getter for set units
+
+**Returns:**
+
+Set units - `String`
+
+**Example:**
+```js
+let units = weather.getUnits()
+```
+*See also:* [setUnits()](#setunitsunits)
+
+## `async` setLocationByName(name)
+---
+**Description:**
+
+Sets location by name using OpenWeather Geocoding API
+
+**Params:**
+* **name** - name of the location
+
+**Example:**
+```js
+await weather.setLocationByName("London")
+```
+*See also:* [getLocation()](#async-getlocation)
+
+## setLocationByCoordinates(lat, lon)
+---
+**Description:**
+
+Sets location by coordinates
+
+**Params:**
+* **lat** - latitude of the location
+* **lon** - longitude of the location
+
+**Example:**
+```js
+weather.setLocationByCoordinates(40.73, -73.93)
+```
+*See also:* [getLocation()](#async-getlocation)
+
+## `async` setLocationByZipCode(code)
+---
+**Description:**
+
+Sets location by zip code using OpenWeather Geocoding API
+
+**Params:**
+* **code** - zip code of the location
+
+**Example:**
+```js
+await weather.setLocationByZipCode(93740)
+```
+*See also:* [getLocation()](#async-getlocation)
+
+## `async` getLocation()
+---
+**Description:**
+
+Getter for set location
+
+**Returns:**
+
+Set location
+
+**Example:**
+```js
+let location = await weather.getLocation()
+```
+*See also:* [setLocationByName()](#async-setlocationbynamename), 
+[setLocationByCoordinates()](#setlocationbycoordinateslat-lon), [setLocationByZipCode()](#async-setlocationbyzipcodecode)
