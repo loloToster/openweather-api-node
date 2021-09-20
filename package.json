@@ -9,6 +9,7 @@
   "author": "loloToster",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.21",
     "sync-fetch": "^0.3.0"
   }
 }

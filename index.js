@@ -58,6 +58,8 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
 const fetch = require("node-fetch"),
     syncFetch = require("sync-fetch")
 
+const _ = require("lodash")
+
 const currentFormatter = require("./formaters/current-formatter"),
     minutelyFormatter = require("./formaters/minutely-formatter"),
     hourlyFormatter = require("./formaters/hourly-formatter"),
@@ -75,7 +77,51 @@ class OpenWeatherAPI {
     }
 
     constructor(options) {
-        this.#globalOptions = this.#formatOptions(options)
+        for (const key in options) {
+            if (Object.hasOwnProperty.call(options, key)) {
+                const value = options[key]
+                switch (key) {
+                    case "key":
+                        this.#globalOptions.key = value
+                        break
+
+                    case "language":
+                        this.#globalOptions.lang = this.#evaluateLanguage(value)
+                        break
+
+                    case "units":
+                        this.#globalOptions.units = this.#evaluateUnits(value)
+                        break
+
+                    case "locationName": {
+                        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${value}&limit=1&appid=${this.#globalOptions.key}`)
+                        let data = response.json()[0]
+                        this.#globalOptions.location = {
+                            lat: data.lat,
+                            lon: data.lon
+                        }
+                        break
+                    }
+
+                    case "zipCode": {
+                        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${code}&appid=${this.#globalOptions.key}`)
+                        let data = response.json()
+                        this.#globalOptions.location = {
+                            lat: data.lat,
+                            lon: data.lon
+                        }
+                        break
+                    }
+
+                    case "coordinates":
+                        this.#globalOptions.location = { lat: value.lat, lon: value.lon }
+                        break
+
+                    default:
+                        throw Error("Unknown parameter: " + key)
+                }
+            }
+        }
     }
 
     getGlobalOptions() {
@@ -91,10 +137,14 @@ class OpenWeatherAPI {
     }
 
     setLanguage(lang) {
-        this.#globalOptions.lang = this.evaluateLanguage(lang)
+        this.#globalOptions.lang = this.#evaluateLanguage(lang)
     }
 
-    evaluateLanguage(lang) {
+    getLanguage() {
+        return this.#globalOptions.lang
+    }
+
+    #evaluateLanguage(lang) {
         lang = lang.toLowerCase()
         if (supLang.includes(lang))
             return lang
@@ -103,10 +153,14 @@ class OpenWeatherAPI {
     }
 
     setUnits(unit) {
-        this.#globalOptions.units = this.evaluateUnits(unit)
+        this.#globalOptions.units = this.#evaluateUnits(unit)
     }
 
-    evaluateUnits(unit) {
+    getUnits() {
+        return this.#globalOptions.units
+    }
+
+    #evaluateUnits(unit) {
         unit = unit.toLowerCase()
         if (supUnits.includes(unit))
             return unit
@@ -114,37 +168,33 @@ class OpenWeatherAPI {
             throw Error("Unsupported unit: " + unit)
     }
 
-    getLanguage() {
-        return this.#globalOptions.lang
+    async setLocationByName(name) {
+        this.#globalOptions.location = await this.#evaluateLocationByName(name)
     }
 
-    setLocationByName(name) {
-        this.#globalOptions.location = this.evaluateLocationByName(name)
-    }
-
-    evaluateLocationByName(name) {
-        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
-        let data = response.json()[0]
+    async #evaluateLocationByName(name) {
+        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
+        let data = (await response.json())[0]
         return {
             lat: data.lat,
             lon: data.lon
         }
     }
 
-    setLocationByCoordinates(location) {
+    setLocationByCoordinates(lat, lon) {
         this.#globalOptions.location = {
-            lat: location.lat,
-            lon: location.lon
+            lat: lat,
+            lon: lon
         }
     }
 
-    setLocationByZipCode(code) {
-        this.#globalOptions.location = this.evaluateLocationByZipCode(code)
+    async setLocationByZipCode(code) {
+        this.#globalOptions.location = await this.#evaluateLocationByZipCode(code)
     }
 
-    evaluateLocationByZipCode(code) {
-        let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${code}&appid=${this.#globalOptions.key}`)
-        let data = response.json()
+    async #evaluateLocationByZipCode(code) { // ! not working good 
+        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${code}&appid=${this.#globalOptions.key}`)
+        let data = await response.json()
         return {
             lat: data.lat,
             lon: data.lon
@@ -152,28 +202,28 @@ class OpenWeatherAPI {
     }
 
     async getLocation(options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.location.lat}&lon=${options.location.lon}&limit=1&appid=${options.key}`)
         let data = await response.json()
         return data.length ? data[0] : null
     }
 
     async getCurrent(options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
         let data = await response.json()
         return currentFormatter(data)
     }
 
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options, "alerts,current,hourly,daily"))
         let data = await response.json()
         return minutelyFormatter(data, limit)
     }
 
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options, "alerts,current,minutely,daily"))
         let data = await response.json()
         return hourlyFormatter(data, limit)
@@ -184,7 +234,7 @@ class OpenWeatherAPI {
     }
 
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
         let data = await response.json()
         if (!includeToday)
@@ -193,14 +243,14 @@ class OpenWeatherAPI {
     }
 
     async getAlerts(options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options, "current,minutely,hourly,daily"))
         let data = await response.json()
         return data.alerts
     }
 
     async getEverything(options) {
-        options = this.#formatOptions(options)
+        options = await this.#formatOptions(options)
         let response = await fetch(this.#createURL(options))
         let data = await response.json()
         return {
@@ -217,7 +267,8 @@ class OpenWeatherAPI {
     }
 
     mergeWeathers(weathers) {
-
+        weathers.reverse()
+        return _.merge(...weathers)
     }
 
     #createURL(options, exclude) {
@@ -234,7 +285,7 @@ class OpenWeatherAPI {
         return url.href
     }
 
-    #formatOptions(options) {
+    async #formatOptions(options) {
         let newOptions = this.#globalOptions
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
@@ -245,19 +296,19 @@ class OpenWeatherAPI {
                         break
 
                     case "language":
-                        newOptions.lang = this.evaluateLanguage(value)
+                        newOptions.lang = this.#evaluateLanguage(value)
                         break
 
                     case "units":
-                        newOptions.units = this.evaluateUnits(value)
+                        newOptions.units = this.#evaluateUnits(value)
                         break
 
                     case "locationName":
-                        newOptions.location = this.evaluateLocationByName(value)
+                        newOptions.location = await this.#evaluateLocationByName(value)
                         break
 
                     case "zipCode":
-                        newOptions.location = this.evaluateLocationByZipCode(value)
+                        newOptions.location = await this.#evaluateLocationByZipCode(value)
                         break
 
                     case "coordinates":
