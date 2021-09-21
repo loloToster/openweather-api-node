@@ -55,8 +55,7 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
     DATA_PATH = "data/2.5/onecall"
 
-const fetch = require("node-fetch"),
-    syncFetch = require("sync-fetch")
+const axios = require("axios").default
 
 const _ = require("lodash")
 
@@ -96,12 +95,6 @@ class OpenWeatherAPI {
 
                     case "locationName":
                         this.setLocationByName(value)
-                        /* let response = syncFetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${value}&limit=1&appid=${this.#globalOptions.key}`)
-                        let data = response.json()[0]
-                        this.#globalOptions.location = {
-                            lat: data.lat,
-                            lon: data.lon
-                        } */
                         break
 
                     case "coordinates":
@@ -115,6 +108,7 @@ class OpenWeatherAPI {
         }
     }
 
+    // setters and getters
     getGlobalOptions() {
         return this.#globalOptions
     }
@@ -166,8 +160,8 @@ class OpenWeatherAPI {
     }
 
     async #evaluateLocationByName(name) {
-        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
-        let data = (await response.json())[0]
+        let response = await axios.get(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
+        let data = response.data[0]
         return {
             lat: data.lat,
             lon: data.lon
@@ -183,8 +177,8 @@ class OpenWeatherAPI {
     async getLocation(options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
-        let data = await response.json()
+        let response = await axios.get(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
+        let data = response.data
         return data.length ? data[0] : null
     }
 
@@ -192,24 +186,24 @@ class OpenWeatherAPI {
     async getCurrent(options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options, "alerts,minutely,hourly,daily"))
+        let data = response.data
         return currentFormatter(data)
     }
 
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options, "alerts,current,hourly,daily"))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options, "alerts,current,hourly,daily"))
+        let data = response.data
         return minutelyFormatter(data, limit)
     }
 
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options, "alerts,current,minutely,daily"))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options, "alerts,current,minutely,daily"))
+        let data = response.data
         return hourlyFormatter(data, limit)
     }
 
@@ -221,8 +215,8 @@ class OpenWeatherAPI {
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options, "alerts,current,minutely,hourly"))
+        let data = response.data
         if (!includeToday)
             data.daily.shift()
         return dailyFormatter(data, limit)
@@ -231,16 +225,16 @@ class OpenWeatherAPI {
     async getAlerts(options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options, "current,minutely,hourly,daily"))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options, "current,minutely,hourly,daily"))
+        let data = response.data
         return data.alerts
     }
 
     async getEverything(options) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await fetch(this.#createURL(options))
-        let data = await response.json()
+        let response = await axios.get(this.#createURL(options))
+        let data = response.data
         return {
             lat: data.lat,
             lon: data.lon,
@@ -254,12 +248,13 @@ class OpenWeatherAPI {
         }
     }
 
-    // Weather Methods
+    // Uncategorized Methods
     mergeWeathers(weathers) {
         weathers.reverse()
         return _.merge(...weathers)
     }
 
+    // helpers
     async #uncacheLocation() {
         if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return
         if (this.#globalOptions.locationName) {
