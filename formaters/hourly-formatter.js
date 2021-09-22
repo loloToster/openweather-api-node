@@ -9,6 +9,7 @@ function hourlyFormater(data, limit) {
         newElement.lat = data.lat
         newElement.lon = data.lon
         newElement.dt = new Date(element.dt * 1000)
+        newElement.dt_raw = element.dt
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
         newElement.weather.temp.main = element.temp

@@ -9,12 +9,17 @@ function dailyFormater(data, limit) {
         newElement.lat = data.lat
         newElement.lon = data.lon
         newElement.dt = new Date(element.dt * 1000)
+        newElement.dt_raw = element.dt
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
         newElement.astronomical.sunrise = new Date(element.sunrise * 1000)
+        newElement.astronomical.sunrise_raw = element.sunrise
         newElement.astronomical.sunset = new Date(element.sunset * 1000)
+        newElement.astronomical.sunset_raw = element.sunset
         newElement.astronomical.moonrise = new Date(element.moonrise * 1000)
+        newElement.astronomical.moonrise_raw = element.moonrise
         newElement.astronomical.moonset = new Date(element.moonset * 1000)
+        newElement.astronomical.moonset_raw = element.moonset
         newElement.astronomical.moon_phase = element.moon_phase
         newElement.weather.temp.morn = element.temp.morn
         newElement.weather.temp.day = element.temp.day

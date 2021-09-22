@@ -2,13 +2,18 @@ const weatherModel = {
     lat: undefined, // Geographical coordinates of the location (latitude)
     lon: undefined, // Geographical coordinates of the location (longitude)
     dt: undefined,  // Timezone name for the requested location
+    dt_raw: undefined,
     timezone: undefined, // Shift in seconds from UTC
     timezone_offset: undefined, // Shift in seconds from UTC
     astronomical: {
         sunrise: undefined, // Sunrise time, Unix, UTC
+        sunrise_raw: undefined,
         sunset: undefined, // Sunset time, Unix, UTC
+        sunset_raw: undefined,
         moonrise: undefined, // The time of when the moon rises for this day, Unix, UTC
+        moonrise_raw: undefined,
         moonset: undefined, // The time of when the moon sets for this day, Unix, UTC
+        moonset_raw: undefined,
         moon_phase: undefined // Moon phase. 0 and 1 are 'new moon', 0.25 is 'first quarter moon', 0.5 is 'full moon' and 0.75 is 'last quarter moon'. The periods in between are called 'waxing crescent', 'waxing gibous', 'waning gibous', and 'waning crescent', respectively.
     },
     weather: {

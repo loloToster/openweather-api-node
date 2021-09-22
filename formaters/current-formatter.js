@@ -7,10 +7,13 @@ function formater(data) {
     current.lat = data.lat
     current.lon = data.lon
     current.dt = new Date(data.current.dt * 1000)
+    current.dt_raw = data.current.dt
     current.timezone = data.timezone
     current.timezone_offset = data.timezone_offset
     current.astronomical.sunrise = new Date(data.current.sunrise * 1000)
+    current.astronomical.sunrise_raw = data.current.sunrise
     current.astronomical.sunset = new Date(data.current.sunset * 1000)
+    current.astronomical.sunset_raw = data.current.sunset
     current.weather.temp.main = data.current.temp
     current.weather.feels_like.main = data.current.feels_like
     current.weather.pressure = data.current.pressure
