@@ -160,8 +160,10 @@ class OpenWeatherAPI {
     }
 
     async #evaluateLocationByName(name) {
-        let response = await axios.get(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
-        let data = response.data[0]
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
+        let data = response.data
+        if (data.length == 0) throw Error("Unknown location name")
+        data = response.data[0]
         return {
             lat: data.lat,
             lon: data.lon
@@ -169,9 +171,18 @@ class OpenWeatherAPI {
     }
 
     setLocationByCoordinates(lat, lon) { // - location setter
-        this.#globalOptions.coordinates.lat = lat
-        this.#globalOptions.coordinates.lon = lon
+        let location = this.#evaluateLocationByCoordinates(lat, lon)
+        this.#globalOptions.coordinates.lat = location.lat
+        this.#globalOptions.coordinates.lon = location.lon
         this.#globalOptions.locationName = undefined
+    }
+
+    #evaluateLocationByCoordinates(lat, lon) {
+        if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
+            return { lat: lat, lon: lon }
+        } else {
+            throw Error("Wrong coordinates")
+        }
     }
 
     async getLocation(options) {
@@ -276,6 +287,21 @@ class OpenWeatherAPI {
         return url.href
     }
 
+    async #fetch(url) {
+        let response
+        try {
+            response = await axios.get(url)
+        } catch (error) {
+            response = error.response
+        }
+        let data = response.data
+        if (data.cod) {
+            throw Error(JSON.stringify(data))
+        } else {
+            return data
+        }
+    }
+
     async #formatOptions(options) {
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
@@ -298,7 +324,7 @@ class OpenWeatherAPI {
                         break
 
                     case "coordinates":
-                        options.coordinates = { lat: value.lat, lon: value.lon }
+                        options.coordinates = this.#evaluateLocationByCoordinates(value.lat, value.lon)
                         break
 
                     default:
