@@ -298,7 +298,7 @@ class OpenWeatherAPI {
         if (data.cod) {
             throw Error(JSON.stringify(data))
         } else {
-            return data
+            return response
         }
     }
 
