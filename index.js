@@ -1,4 +1,4 @@
-const supLang = [
+const SUP_LANGS = [
     "af",
     "al",
     "ar",
@@ -49,7 +49,7 @@ const supLang = [
     "zh_tw",
     "zu"
 ],
-    supUnits = ["standard", "metric", "imperial"]
+    SUP_UNITS = ["standard", "metric", "imperial"]
 
 const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
@@ -76,7 +76,12 @@ class OpenWeatherAPI {
         locationName: undefined
     }
 
-    constructor(options) {
+    constructor(options = {}) {
+        if (
+            !(typeof options === "object") ||
+            Array.isArray(options) ||
+            options === null
+        ) throw new Error("Provide {} object as options")
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
                 const value = options[key]
@@ -102,7 +107,7 @@ class OpenWeatherAPI {
                         break
 
                     default:
-                        throw Error("Unknown parameter: " + key)
+                        throw new Error("Unknown parameter: " + key)
                 }
             }
         }
@@ -131,26 +136,26 @@ class OpenWeatherAPI {
 
     #evaluateLanguage(lang) {
         lang = lang.toLowerCase()
-        if (supLang.includes(lang))
+        if (SUP_LANGS.includes(lang))
             return lang
         else
-            throw Error("Unsupported language: " + lang)
+            throw new Error("Unsupported language: " + lang)
     }
 
-    setUnits(unit) {
-        this.#globalOptions.units = this.#evaluateUnits(unit)
+    setUnits(units) {
+        this.#globalOptions.units = this.#evaluateUnits(units)
     }
 
     getUnits() {
         return this.#globalOptions.units
     }
 
-    #evaluateUnits(unit) {
-        unit = unit.toLowerCase()
-        if (supUnits.includes(unit))
-            return unit
+    #evaluateUnits(units) {
+        units = units.toLowerCase()
+        if (SUP_UNITS.includes(units))
+            return units
         else
-            throw Error("Unsupported unit: " + unit)
+            throw new Error("Unsupported units: " + units)
     }
 
     setLocationByName(name) { // - location setter
@@ -162,7 +167,7 @@ class OpenWeatherAPI {
     async #evaluateLocationByName(name) {
         let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
         let data = response.data
-        if (data.length == 0) throw Error("Unknown location name")
+        if (data.length == 0) throw new Error("Unknown location name: " + name)
         data = response.data[0]
         return {
             lat: data.lat,
@@ -178,73 +183,73 @@ class OpenWeatherAPI {
     }
 
     #evaluateLocationByCoordinates(lat, lon) {
-        if (-90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
+        if (typeof lat === "number" && typeof lon === "number" && -90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
             return { lat: lat, lon: lon }
         } else {
-            throw Error("Wrong coordinates")
+            throw new Error("Wrong coordinates")
         }
     }
 
-    async getLocation(options) {
+    async getLocation(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
         let data = response.data
         return data.length ? data[0] : null
     }
 
     // Weather getters
-    async getCurrent(options) {
+    async getCurrent(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options, "alerts,minutely,hourly,daily"))
+        let response = await this.#fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
         let data = response.data
         return currentFormatter(data)
     }
 
-    async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options) {
+    async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options, "alerts,current,hourly,daily"))
+        let response = await this.#fetch(this.#createURL(options, "alerts,current,hourly,daily"))
         let data = response.data
         return minutelyFormatter(data, limit)
     }
 
-    async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options) {
+    async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options, "alerts,current,minutely,daily"))
+        let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,daily"))
         let data = response.data
         return hourlyFormatter(data, limit)
     }
 
-    async getToday(options) {
+    async getToday(options = {}) {
         await this.#uncacheLocation()
         return (await this.getDailyForecast(1, true, options))[0]
     }
 
-    async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options) {
+    async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options, "alerts,current,minutely,hourly"))
+        let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
         let data = response.data
         if (!includeToday)
             data.daily.shift()
         return dailyFormatter(data, limit)
     }
 
-    async getAlerts(options) {
+    async getAlerts(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options, "current,minutely,hourly,daily"))
+        let response = await this.#fetch(this.#createURL(options, "current,minutely,hourly,daily"))
         let data = response.data
         return data.alerts
     }
 
-    async getEverything(options) {
+    async getEverything(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
-        let response = await axios.get(this.#createURL(options))
+        let response = await this.#fetch(this.#createURL(options))
         let data = response.data
         return {
             lat: data.lat,
@@ -262,7 +267,7 @@ class OpenWeatherAPI {
     // Uncategorized Methods
     mergeWeathers(weathers) {
         weathers.reverse()
-        return _.merge(...weathers)
+        return _.merge({}, ...weathers)
     }
 
     // helpers
@@ -288,6 +293,7 @@ class OpenWeatherAPI {
     }
 
     async #fetch(url) {
+        //console.log("fetching:", url) // ! delete this
         let response
         try {
             response = await axios.get(url)
@@ -296,13 +302,18 @@ class OpenWeatherAPI {
         }
         let data = response.data
         if (data.cod) {
-            throw Error(JSON.stringify(data))
+            throw new Error(JSON.stringify(data))
         } else {
             return response
         }
     }
 
     async #formatOptions(options) {
+        if (
+            !(typeof options === "object") ||
+            Array.isArray(options) ||
+            options === null
+        ) throw new Error("Provide {} object as options")
         for (const key in options) {
             if (Object.hasOwnProperty.call(options, key)) {
                 const value = options[key]
@@ -328,11 +339,11 @@ class OpenWeatherAPI {
                         break
 
                     default:
-                        throw Error("Unknown parameter: " + key)
+                        throw new Error("Unknown parameter: " + key)
                 }
             }
         }
-        return _.merge(this.#globalOptions, options)
+        return _.merge({}, this.#globalOptions, options)
     }
 }
 

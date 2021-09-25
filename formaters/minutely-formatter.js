@@ -1,6 +1,7 @@
 const getWeatherModel = require("../weather-model")
 
 function minutelyFormater(data, limit) {
+    if (!data.minutely) return []
     let newMinutely = []
     for (let i = 0; i < limit && i < data.minutely.length; i++) {
         let element = data.minutely[i]
@@ -11,7 +12,7 @@ function minutelyFormater(data, limit) {
         newElement.dt_raw = element.dt
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
-        newElement.rain = element.precipitation
+        newElement.weather.rain = element.precipitation
         newMinutely.push(newElement)
     }
     return newMinutely

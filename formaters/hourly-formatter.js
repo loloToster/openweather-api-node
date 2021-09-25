@@ -2,6 +2,7 @@ const getWeatherModel = require("../weather-model")
 const ICON_URL = ""
 
 function hourlyFormater(data, limit) {
+    if (!data.hourly) return []
     let newHourly = []
     for (let i = 0; i < limit && i < data.hourly.length; i++) {
         let element = data.hourly[i]

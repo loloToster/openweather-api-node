@@ -4,7 +4,7 @@
   "description": "Simple Node.js package that makes it easy to work with OpenWeather API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "loloToster",
   "license": "ISC",
