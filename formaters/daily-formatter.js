@@ -2,6 +2,7 @@ const getWeatherModel = require("../weather-model")
 const ICON_URL = ""
 
 function dailyFormater(data, limit) {
+    if (!data.daily) return []
     let newDaily = []
     for (let i = 0; i < limit && i < data.daily.length; i++) {
         let element = data.daily[i]
