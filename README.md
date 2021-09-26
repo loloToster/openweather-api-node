@@ -1,6 +1,6 @@
 # todo:
 * handle empty arguments `""`
-* include info about empty minutely
+* include info about empty arrays in weather getters
 
 # openweathermap-api ☁️
 Despription
