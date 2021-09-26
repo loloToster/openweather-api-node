@@ -6,6 +6,11 @@
   "scripts": {
     "test": "mocha"
   },
+  "keywords": [
+    "weather",
+    "openweather",
+    "openweathermap"
+  ],
   "author": "loloToster",
   "license": "ISC",
   "dependencies": {

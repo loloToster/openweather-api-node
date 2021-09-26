@@ -119,6 +119,7 @@ class OpenWeatherAPI {
     }
 
     setKey(key) {
+        if (!key) throw new Error("Empty value cannot be a key: " + key)
         this.#globalOptions.key = key
     }
 
@@ -159,6 +160,7 @@ class OpenWeatherAPI {
     }
 
     setLocationByName(name) { // - location setter
+        if (!name) throw new Error("Empty value cannot be a location name: " + name)
         this.#globalOptions.coordinates.lat = undefined
         this.#globalOptions.coordinates.lon = undefined
         this.#globalOptions.locationName = name
@@ -223,11 +225,6 @@ class OpenWeatherAPI {
         return hourlyFormatter(data, limit)
     }
 
-    async getToday(options = {}) {
-        await this.#uncacheLocation()
-        return (await this.getDailyForecast(1, true, options))[0]
-    }
-
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -236,6 +233,10 @@ class OpenWeatherAPI {
         if (!includeToday)
             data.daily.shift()
         return dailyFormatter(data, limit)
+    }
+
+    async getToday(options = {}) {
+        return (await this.getDailyForecast(1, true, options))[0]
     }
 
     async getAlerts(options = {}) {
