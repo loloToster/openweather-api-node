@@ -30,7 +30,7 @@ function hourlyFormater(data, limit) {
         element.weather = element.weather[0]
         newElement.weather.condition_id = element.weather.id
         newElement.weather.description = element.weather.description
-        newElement.weather.icon.url = ICON_URL + element.weather.icon
+        newElement.weather.icon.url = `http://openweathermap.org/img/wn/${element.weather.icon}@2x.png`
         newElement.weather.icon.raw = element.weather.icon
         newHourly.push(newElement)
     }

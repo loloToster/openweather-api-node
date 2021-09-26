@@ -31,7 +31,7 @@ function formater(data) {
     current.weather.condition_id = data.current.weather.id
     current.weather.main = data.current.weather.main
     current.weather.description = data.current.weather.description
-    current.weather.icon.url = ICON_URL + data.current.weather.icon
+    current.weather.icon.url = `http://openweathermap.org/img/wn/${data.current.weather.icon}@2x.png`
     current.weather.icon.raw = data.current.weather.icon
     return current
 }

@@ -25,7 +25,7 @@ describe("Error tests:", function () {
         try {
             weather.setLocationByCoordinates("-200", 78)
         } catch (err) {
-            assert(err.message.toLowerCase().includes("coordinates"))
+            assert(err.message.toLowerCase().includes("wrong coordinates"))
         }
     })
 
@@ -33,7 +33,7 @@ describe("Error tests:", function () {
         try {
             await weather.getCurrent({ locationName: "ptero" })
         } catch (err) {
-            assert(err.message.toLowerCase().includes("ptero") || true)
+            assert(err.message.toLowerCase().includes("ptero"))
         }
     })
 
@@ -65,8 +65,40 @@ describe("Error tests:", function () {
         try {
             await weather.getCurrent("ptero")
         } catch (err) {
-            assert(err.message.toLowerCase().includes("provide"))
+            assert(err.message.toLowerCase().includes("provide {}"))
         }
+    })
+
+    it("handles empty location name", async () => {
+        let testValues = ["", 0, null, undefined, false, NaN]
+        testValues.forEach(element => {
+            try {
+                weather.setLocationByName(element)
+                assert(false)
+            } catch (err) {
+                if (err.message.toLowerCase().includes("empty"))
+                    return
+                else
+                    assert(false)
+            }
+        })
+        assert(true)
+    })
+
+    it("handles empty key", async () => {
+        let testValues = ["", 0, null, undefined, false, NaN]
+        testValues.forEach(element => {
+            try {
+                weather.setKey(element)
+                assert(false)
+            } catch (err) {
+                if (err.message.toLowerCase().includes("empty"))
+                    return
+                else
+                    assert(false)
+            }
+        })
+        assert(true)
     })
 
 })
