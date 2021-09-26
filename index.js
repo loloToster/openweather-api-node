@@ -267,6 +267,7 @@ class OpenWeatherAPI {
 
     // Uncategorized Methods
     mergeWeathers(weathers) {
+        if (!Array.isArray(weathers)) throw new Error("Provide list of weather objects")
         weathers.reverse()
         return _.merge({}, ...weathers)
     }

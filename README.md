@@ -1,9 +1,11 @@
-# todo:
-* include info about empty arrays in weather getters
-* add icon url
-
 # openweathermap-api ☁️
-Despription
+Description
+
+## Table of contents
+
+* Methods
+* Unique features of this package
+
 # Methods:
 
 <!--
@@ -217,7 +219,7 @@ Getter for [minutely]() weather
 
 **Returns:**
 
-Array of [Weather objects](), one for every next minute (Empty if API returned no info about this type) - `Array`
+Array of [Weather objects](), one for every next minute (Empty if API returned no info about minutely weather) - `Array`
 
 **Example:**
 ```js
@@ -240,7 +242,7 @@ Getter for [hourly]() weather
 
 **Returns:**
 
-Array of [Weather objects](), one for every next hour (Empty if API returned no info about this type) - `Array`
+Array of [Weather objects](), one for every next hour (Empty if API returned no info about hourly weather) - `Array`
 
 **Example:**
 ```js
@@ -259,12 +261,12 @@ Getter for [daily]() weather
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
-* **includeToday** - boolean indicating whether to include today in returned array (defaults to false)
+* **includeToday** - boolean indicating whether to include today's weather in returned array (defaults to false)
 * **options** - options used only for this call (defaults to empty object)
 
 **Returns:**
 
-Array of [Weather objects](), one for every next day (Empty if API returned no info about this type) - `Array`
+Array of [Weather objects](), one for every next day (Empty if API returned no info about daily weather) - `Array`
 
 **Example:**
 ```js
@@ -280,8 +282,9 @@ daily = await weather.getDailyForecast(3)
 **Description:**
 
 Getter for today's weather. Equivalent to:
-> let today = (await weather.getDailyForecast(1, true, options))[0]
-
+```js
+let today = (await weather.getDailyForecast(1, true, options))[0]
+```
 **Not** the same as current weather. [`getCurrent()`]() returns *current* weather and this method returns summary of the *whole* present day.
 
 **Arguments:**
@@ -301,3 +304,88 @@ daily = await weather.getDailyForecast({coordinates:{
 }})
 ```
 *See also:* [options]()
+
+## `async` getAlerts(options = {})
+
+**Description:**
+
+Getter for [alerts]()
+
+**Arguments:**
+* **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+Alerts (`undefined` if API returned no info about alerts) - `Object`
+
+**Example:**
+```js
+let alerts = await weather.getAlerts()
+```
+*See also:* [options]()
+
+## `async` getEverything(options = {})
+
+**Description:**
+
+Getter for every type of weather call and alerts
+
+**Arguments:**
+* **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+Object that looks like this:
+```
+{
+    lat: latitude of the location,
+    lon: longitude of the location,
+    timezone: timezone of the location,
+    timezone_offset: timezone offset of the location,
+    current: current weather object,
+    minutely: array of minutely weather objects,
+    hourly: array of hourly weather objects,
+    daily: array of daily weather objects,
+    alerts: alerts
+}
+```
+
+**Example:**
+```js
+let everything = await weather.getEverything()
+let current = everything.current
+let minutely = everything.minutely
+// and so on...
+```
+*See also:* [options]()
+
+## mergeWeathers(weathers)
+
+**Description:**
+
+Merges [weather objects](). Useful if for example you want to get minutely [weather object]() but with more data than only rain volume, in this case you can merge minutely [weather object]() with current [weather object]() and get full [weather object]() with data in nth minutes.
+
+**Arguments:**
+* **weathers** - Array of weather objects that you want to merge
+
+**Returns:**
+
+Merged object of weather provided in weathers arg - `Object`
+
+**Example:**
+```js
+let current = await weather.getCurrent()
+let minutely = await weather.getMinutelyForecast()
+let full = await weather.mergeWeathers([minutely[20], current])
+```
+*See also:*
+
+# Unique features of this package
+
+## Options
+
+desc
+
+## Weather Object
+
+desc
