@@ -14,8 +14,8 @@ function formater(data) {
     current.astronomical.sunrise_raw = data.current.sunrise
     current.astronomical.sunset = new Date(data.current.sunset * 1000)
     current.astronomical.sunset_raw = data.current.sunset
-    current.weather.temp.main = data.current.temp
-    current.weather.feels_like.main = data.current.feels_like
+    current.weather.temp.cur = data.current.temp
+    current.weather.feels_like.cur = data.current.feels_like
     current.weather.pressure = data.current.pressure
     current.weather.humidity = data.current.humidity
     current.weather.dew_point = data.current.dew_point

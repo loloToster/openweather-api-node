@@ -13,8 +13,8 @@ function hourlyFormater(data, limit) {
         newElement.dt_raw = element.dt
         newElement.timezone = data.timezone
         newElement.timezone_offset = data.timezone_offset
-        newElement.weather.temp.main = element.temp
-        newElement.weather.feels_like.main = element.temp
+        newElement.weather.temp.cur = element.temp
+        newElement.weather.feels_like.cur = element.temp
         newElement.weather.pressure = element.pressure
         newElement.weather.humidity = element.humidity
         newElement.weather.dew_point = element.dew_point

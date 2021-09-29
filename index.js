@@ -76,15 +76,15 @@ class OpenWeatherAPI {
         locationName: undefined
     }
 
-    constructor(options = {}) {
+    constructor(globalOptions = {}) {
         if (
-            !(typeof options === "object") ||
-            Array.isArray(options) ||
-            options === null
+            !(typeof globalOptions === "object") ||
+            Array.isArray(globalOptions) ||
+            globalOptions === null
         ) throw new Error("Provide {} object as options")
-        for (const key in options) {
-            if (Object.hasOwnProperty.call(options, key)) {
-                const value = options[key]
+        for (const key in globalOptions) {
+            if (Object.hasOwnProperty.call(globalOptions, key)) {
+                const value = globalOptions[key]
                 switch (key) {
                     case "key":
                         this.setKey(value)
