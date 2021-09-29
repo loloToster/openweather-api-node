@@ -18,7 +18,7 @@ const weatherModel = {
     },
     weather: {
         temp: { // Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
-            main: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
+            cur: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
             morn: undefined, // Morning temperature.
             day: undefined, // Day temperature.
             eve: undefined, // Evening temperature.
@@ -27,7 +27,7 @@ const weatherModel = {
             max: undefined // Highest daily temperature.
         },
         feels_like: { // This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
-            main: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
+            cur: undefined, // Current temperature. Units - default: kelvin, metric: Celsius, imperial: Fahrenheit.
             morn: undefined, // Morning temperature.
             day: undefined, // Day temperature.
             eve: undefined, // Evening temperature.

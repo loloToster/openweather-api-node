@@ -1,10 +1,38 @@
+// for dev
+### What if:
+* user specify location name in global options and use coordinates in local options
+
+// for public
 # openweathermap-api ☁️
+![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
+![issues](https://img.shields.io/github/issues-raw/loloToster/openweathermap-api?style=flat-square)
+
 Description
 
 ## Table of contents
 
-* Methods
-* Unique features of this package
+* [Methods][methods]
+  * [getGlobalOptions][gglobalopt]
+  * [setKey][skey]
+  * [getKey][gkey]
+  * [setLanguage][slang]
+  * [getLanguage][glang]
+  * [setUnits][sunits]
+  * [getUnits][gunits]
+  * [setLocationByName][slocbyname]
+  * [setLocationByCoordinates][slocbycoor]
+  * [getLocation][gloc]
+  * [getCurrent][gcur]
+  * [getMinutelyForecast][gminutely]
+  * [getHourlyForecast][ghourly]
+  * [getDailyForecast][gdaily]
+  * [getToday][gtoday]
+  * [getAlerts][galerts]
+  * [getEverything][gevery]
+  * [mergeWeathers][mrgweathers]
+* [Unique features of this package][features]
+  * [Options][opt]
+  * [Weather Object][wobj]
 
 # Methods:
 
@@ -44,7 +72,7 @@ Global options - `Object`
 ```js
 let options = weather.getGlobalOptions()
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## setKey(key)
 
@@ -59,7 +87,7 @@ Sets global API key
 ```js
 weather.setKey("key")
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## getKey()
 
@@ -75,7 +103,7 @@ Global API key - `String`
 ```js
 let key = weather.getKey()
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## setLanguage(lang)
 
@@ -90,7 +118,7 @@ Sets global language (Language must be listed [here](https://openweathermap.org/
 ```js
 weather.setLanguage("en")
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## getLanguage()
 
@@ -106,7 +134,7 @@ Global language - `String`
 ```js
 let language = weather.getLanguage()
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 ## setUnits(units)
 
 **Description:**
@@ -120,7 +148,7 @@ Sets global units
 ```js
 weather.setUnits("imperial")
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## getUnits()
 
@@ -136,7 +164,7 @@ Units - `String`
 ```js
 let units = weather.getUnits()
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## setLocationByName(name)
 
@@ -151,7 +179,7 @@ Sets global location by provided name
 ```js
 weather.setLocationByName("London")
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## setLocationByCoordinates(lat, lon)
 
@@ -167,9 +195,9 @@ Sets global location by provided coordinates
 ```js
 weather.setLocationByCoordinates(40.71, -74)
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
-## `async` getLocation(options={})
+## `async` getLocation(options = {})
 
 **Description:**
 
@@ -184,7 +212,7 @@ let location = await weather.getLocation()
 // or with options
 location = await weather.getLocation({locationName: "Tokio"})
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getCurrent(options = {})
 
@@ -197,7 +225,7 @@ Getter for current weather
 
 **Returns:**
 
-[Weather object]() of current weather - `Object`
+[Weather object][wobj] of current weather - `Object`
 
 **Example:**
 ```js
@@ -205,7 +233,7 @@ let current = await weather.getCurrent()
 // or with options
 current = await weather.getCurrent({units: "metric"})
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {})
 
@@ -219,7 +247,7 @@ Getter for [minutely]() weather
 
 **Returns:**
 
-Array of [Weather objects](), one for every next minute (Empty if API returned no info about minutely weather) - `Array`
+Array of [Weather objects][wobj], one for every next minute (Empty if API returned no info about minutely weather) - `Array`
 
 **Example:**
 ```js
@@ -228,7 +256,7 @@ let minutely = await weather.getMinutelyForecast()
 minutely = await weather.getMinutelyForecast(10)
 // here minutely.length won't be larger than 10
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {})
 
@@ -242,7 +270,7 @@ Getter for [hourly]() weather
 
 **Returns:**
 
-Array of [Weather objects](), one for every next hour (Empty if API returned no info about hourly weather) - `Array`
+Array of [Weather objects][wobj], one for every next hour (Empty if API returned no info about hourly weather) - `Array`
 
 **Example:**
 ```js
@@ -251,7 +279,7 @@ let hourly = await weather.getMinutelyForecast()
 hourly = await weather.getMinutelyForecast(5)
 // here hourly.length won't be larger than 5
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {})
 
@@ -266,7 +294,7 @@ Getter for [daily]() weather
 
 **Returns:**
 
-Array of [Weather objects](), one for every next day (Empty if API returned no info about daily weather) - `Array`
+Array of [Weather objects][wobj], one for every next day (Empty if API returned no info about daily weather) - `Array`
 
 **Example:**
 ```js
@@ -275,7 +303,7 @@ let daily = await weather.getDailyForecast()
 daily = await weather.getDailyForecast(3)
 // here daily.length won't be larger than 3
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getToday(options = {})
 
@@ -292,7 +320,7 @@ let today = (await weather.getDailyForecast(1, true, options))[0]
 
 **Returns:**
 
-[Weather object]() of today's weather - `Object`
+[Weather object][wobj] of today's weather - `Object`
 
 **Example:**
 ```js
@@ -303,7 +331,7 @@ daily = await weather.getDailyForecast({coordinates:{
     lon: 151.18
 }})
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getAlerts(options = {})
 
@@ -322,7 +350,7 @@ Alerts (`undefined` if API returned no info about alerts) - `Object`
 ```js
 let alerts = await weather.getAlerts()
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## `async` getEverything(options = {})
 
@@ -357,13 +385,13 @@ let current = everything.current
 let minutely = everything.minutely
 // and so on...
 ```
-*See also:* [options]()
+*See also:* [options][opt]
 
 ## mergeWeathers(weathers)
 
 **Description:**
 
-Merges [weather objects](). Useful if for example you want to get minutely [weather object]() but with more data than only rain volume, in this case you can merge minutely [weather object]() with current [weather object]() and get full [weather object]() with data in nth minutes.
+Merges [weather objects][wobj]. Useful if for example you want to get minutely [weather object][wobj] but with more data than only rain volume, in this case you can merge minutely [weather object][wobj] with current [weather object][wobj] and get full [weather object][wobj] with data in nth minutes.
 
 **Arguments:**
 * **weathers** - Array of weather objects that you want to merge
@@ -384,8 +412,112 @@ let full = await weather.mergeWeathers([minutely[20], current])
 
 ## Options
 
-desc
+This package use so called *options*, options define: API key, coordinates, units etc.
+
+In the constructor of the class you can pass object that will define *global options*, they will be used by default in any method that uses options (ex. weather calls).
+
+Some methods have `options` argument which can be used to specify options only for this call. Options specified in `options` argument will override global options. for example if your global options look like this:
+```js
+{
+    key: "xyz",
+    locationName: "Moscow"
+} // global options
+```
+and you pass options that look like this:
+```js
+{
+    locationName: "Chicago"
+} // options passed to `options` argument
+```
+actual used options will look like this:
+```js
+{
+    key: "xyz",
+    locationName: "Chicago"
+} // actual used options
+```
+because every option specified in `options` argument will override the corresponding global option.
 
 ## Weather Object
 
-desc
+When using raw API the problem might be getting your head around how unorganised the responses might be. This package simplifies this and makes every returned object the same structure. Every weather object will look like this:
+```js
+// property: "Description" - type
+{
+    lat: "Geographical coordinates of the location (latitude) " - Number, 
+    lon: "Geographical coordinates of the location (longitude)" - Number,
+    dt: "Current time, Unix, UTC or Time of the forecasted data, Unix, UTC" - Date, 
+    timezone: "Timezone name for the requested location" - String,
+    timezone_offset: "Shift in seconds from UTC" - Number, 
+    astronomical: {
+        sunrise: "Sunrise time, Unix, UTC" - Date, 
+        sunset: "Sunset time, Unix, UTC" - Date,
+        moonrise: "The time of when the moon rises for this day, Unix, UTC" - Date,
+        moonset: "The time of when the moon sets for this day, Unix, UTC" - Date,
+        moon_phase: "Moon phase. 0 and 1 are 'new moon', 0.25 is 'first quarter moon', 0.5 is 'full moon' and 0.75 is 'last quarter moon'. The periods in between are called 'waxing crescent', 'waxing gibous', 'waning gibous', and 'waning crescent', respectively." - Number
+    },
+    weather: {
+        temp: { // Actual temperature. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+            cur: "Current temperature or estimated temperature (in hourly forecast)" - Number,
+            morn: "Morning temperature." - Number,  
+            day: "Day temperature." - Number,  
+            eve: "Evening temperature." - Number,  
+            night: "Night temperature." - Number,  
+            min: "Lowest daily temperature." - Number,  
+            max: "Highest daily temperature." - Number  
+        },
+        feels_like: { // This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+            cur: "Current temperature or estimated temperature (in hourly forecast)." - Number,  
+            morn: "Morning temperature." - Number,  
+            day: "Day temperature." - Number,  
+            eve: "Evening temperature." - Number,  
+            night: "Night temperature." - Number  
+        },
+        pressure: "Atmospheric pressure on the sea level, hPa" - Number,  
+        humidity: "Humidity, %" - Number,  
+        dew_point: "Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit." - Number,  
+        clouds: "Cloudiness, %" - Number,  
+        uvi: "The maximum value of UV index for the day" - Number,  
+        visibility: "Average visibility, metres" - Number,  
+        wind: { // Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+            speed: "Wind speed." - Number,   
+            gust: "Wind gust." - Number,  
+            deg: "Wind direction, degrees (meteorological)" - Number  
+        },
+        pop: "Probability of precipitation" - Number,  
+        rain: "Precipitation volume, mm" - Number,  
+        snow: "Snow volume, mm" - Number,  
+        condition_id: "Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)" - Number,  
+        main: "Group of weather parameters (Rain, Snow, Extreme etc.)" - String,  
+        description: "Description of the weather" - String,  
+        icon: {
+            url: "Weather icon url." - String,  
+            raw: "Weather icon id." - String   
+        }
+    }
+}
+```
+**API does not specify every value in every call so some of those values might be `undefined` for example daily weather object wont have weather.temp.cur!**
+
+[features]: #unique-features-of-this-package
+[opt]: #options
+[wobj]: #weather-object
+[methods]: #methods
+[gglobalopt]: #getglobaloptions
+[skey]: #setkeykey
+[gkey]: #getkey
+[slang]: #setlanguagelang
+[glang]: #getlanguage
+[sunits]: #setunitsunits
+[gunits]: #getunits
+[slocbyname]: #setlocationbynamename
+[slocbycoor]: #setlocationbycoordinateslat-lon
+[gloc]: #async-getlocationoptions
+[gcur]: #async-getcurrentoptions
+[gminutely]: #async-getminutelyforecastlimit--numberpositive_infinity-options--
+[ghourly]: #async-gethourlyforecastlimit--numberpositive_infinity-options--
+[gdaily]: #async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--
+[gtoday]: #async-gettodayoptions--
+[galerts]: #async-getalertsoptions--
+[gevery]: #async-geteverythingsoptions--
+[mrgweathers]: #mergeweathersweathers
