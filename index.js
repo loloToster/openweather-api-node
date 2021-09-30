@@ -76,6 +76,12 @@ class OpenWeatherAPI {
         locationName: undefined
     }
 
+    /**
+     * Constructor of the class. You can specify global options here
+     * 
+     * @param {Object} globalOptions - object that defines global options
+     * @returns OpenWeatherAPI object
+     */
     constructor(globalOptions = {}) {
         if (
             !(typeof globalOptions === "object") ||
@@ -114,23 +120,49 @@ class OpenWeatherAPI {
     }
 
     // setters and getters
+
+    /**
+     * Getter for global options
+     * 
+     * @returns {Object} global options
+     */
     getGlobalOptions() {
         return this.#globalOptions
     }
 
+    /**
+     * Sets global API key
+     * 
+     * @param {String} key 
+     */
     setKey(key) {
         if (!key) throw new Error("Empty value cannot be a key: " + key)
         this.#globalOptions.key = key
     }
 
+    /**
+     * Getter for global key
+     * 
+     * @returns global API key
+     */
     getKey() {
         return this.#globalOptions.key
     }
 
+    /**
+     * Sets global language (Language must be listed [here](https://openweathermap.org/current#multi))
+     * 
+     * @param {String} lang - language
+     */
     setLanguage(lang) {
         this.#globalOptions.lang = this.#evaluateLanguage(lang)
     }
 
+    /**
+     * Getter for global language
+     * 
+     * @returns global language
+     */
     getLanguage() {
         return this.#globalOptions.lang
     }
@@ -143,10 +175,20 @@ class OpenWeatherAPI {
             throw new Error("Unsupported language: " + lang)
     }
 
+    /**
+     * Sets global units
+     * 
+     * @param {String} units - units (Only **standard**, **metric** or **imperial** are supported)
+     */
     setUnits(units) {
         this.#globalOptions.units = this.#evaluateUnits(units)
     }
 
+    /**
+     * Getter for global units
+     * 
+     * @returns global units
+     */
     getUnits() {
         return this.#globalOptions.units
     }
@@ -159,6 +201,11 @@ class OpenWeatherAPI {
             throw new Error("Unsupported units: " + units)
     }
 
+    /**
+     * Sets global location by provided name
+     * 
+     * @param {String} name - name of the location
+     */
     setLocationByName(name) { // - location setter
         if (!name) throw new Error("Empty value cannot be a location name: " + name)
         this.#globalOptions.coordinates.lat = undefined
@@ -177,6 +224,12 @@ class OpenWeatherAPI {
         }
     }
 
+    /**
+     * Sets global location by provided coordinates
+     * 
+     * @param {Number} lat - latitude of the location
+     * @param {Number} lon - longitude of the location
+     */
     setLocationByCoordinates(lat, lon) { // - location setter
         let location = this.#evaluateLocationByCoordinates(lat, lon)
         this.#globalOptions.coordinates.lat = location.lat
@@ -192,6 +245,12 @@ class OpenWeatherAPI {
         }
     }
 
+    /**
+     * Getter for location
+     * 
+     * @param {Object} options - options used only for this call
+     * @returns location
+     */
     async getLocation(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -201,6 +260,13 @@ class OpenWeatherAPI {
     }
 
     // Weather getters
+
+    /**
+     * Getter for current weather
+     * 
+     * @param {Object} options - options used only for this call
+     * @returns weather object of current weather
+     */
     async getCurrent(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -209,6 +275,13 @@ class OpenWeatherAPI {
         return currentFormatter(data)
     }
 
+    /**
+     * Getter for minutely weather
+     * 
+     * @param {Number} limit - maximum length of returned array
+     * @param {Object} options - options used only for this call
+     * @returns array of Weather objects, one for every next minute (Empty if API returned no info about minutely weather)
+     */
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -217,6 +290,13 @@ class OpenWeatherAPI {
         return minutelyFormatter(data, limit)
     }
 
+    /**
+     * Getter for hourly weather
+     * 
+     * @param {Number} limit - maximum length of returned array
+     * @param {Object} options - options used only for this call
+     * @returns array of Weather objects, one for every next hour (Empty if API returned no info about hourly weather)
+     */
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -225,6 +305,13 @@ class OpenWeatherAPI {
         return hourlyFormatter(data, limit)
     }
 
+    /**
+     * 
+     * @param {Number} limit - maximum length of returned array
+     * @param {Boolean} includeToday - boolean indicating whether to include today's weather in returned array
+     * @param {Object} options - options used only for this call 
+     * @returns array of Weather objects, one for every next day (Empty if API returned no info about daily weather)
+     */
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -235,10 +322,22 @@ class OpenWeatherAPI {
         return dailyFormatter(data, limit)
     }
 
+    /**
+     * Getter for today's weather
+     * 
+     * @param {Object} options - options used only for this call 
+     * @returns weather object of today's weather **NOT the same as current!**
+     */
     async getToday(options = {}) {
         return (await this.getDailyForecast(1, true, options))[0]
     }
 
+    /**
+     * Getter for alerts
+     * 
+     * @param {Object} options - options used only for this call
+     * @returns alerts (undefined if API returned no info about alerts)
+     */
     async getAlerts(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -247,6 +346,12 @@ class OpenWeatherAPI {
         return data.alerts
     }
 
+    /**
+     * Getter for every type of weather call and alerts
+     * 
+     * @param {Object} options - options used only for this call
+     * @returns object that contains everything
+     */
     async getEverything(options = {}) {
         await this.#uncacheLocation()
         options = await this.#formatOptions(options)
@@ -266,6 +371,13 @@ class OpenWeatherAPI {
     }
 
     // Uncategorized Methods
+
+    /**
+     * Merges weather objects
+     * 
+     * @param {Array} weathers - array of weather objects that you want to merge
+     * @returns merged object of weather provided in weathers parameter
+     */
     mergeWeathers(weathers) {
         if (!Array.isArray(weathers)) throw new Error("Provide list of weather objects")
         weathers.reverse()
