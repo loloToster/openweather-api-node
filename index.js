@@ -55,9 +55,8 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
     DATA_PATH = "data/2.5/onecall"
 
-const axios = require("axios").default
-
-const _ = require("lodash")
+const axios = require("axios").default,
+    _ = require("lodash")
 
 const currentFormatter = require("./formaters/current-formatter"),
     minutelyFormatter = require("./formaters/minutely-formatter"),
@@ -65,6 +64,7 @@ const currentFormatter = require("./formaters/current-formatter"),
     dailyFormatter = require("./formaters/daily-formatter")
 
 class OpenWeatherAPI {
+
     #globalOptions = {
         key: undefined,
         lang: undefined,
@@ -79,6 +79,7 @@ class OpenWeatherAPI {
     /**
      * Constructor of the class. You can specify global options here
      * 
+     * @constructor
      * @param {Object} globalOptions - object that defines global options
      * @returns OpenWeatherAPI object
      */
