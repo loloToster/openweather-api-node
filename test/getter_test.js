@@ -22,7 +22,7 @@ describe("Getting tests:", function () {
     it("gets current", async () => {
         weather.setLocationByName("warsaw")
         let current = await weather.getCurrent()
-        assert(typeof current.weather.temp.main === "number")
+        assert(typeof current.weather.temp.cur === "number")
     })
 
     it("gets minutely", async () => {
@@ -67,7 +67,7 @@ describe("Getting tests:", function () {
     it("gets everything", async () => {
         weather.setLocationByCoordinates(0, 0)
         let everything = await weather.getEverything()
-        assert(typeof everything.current.weather.temp.main === "number" && typeof everything.minutely === "object" && typeof everything.hourly[Math.floor(Math.random() * 20)].weather.rain === "number" && typeof everything.daily[Math.floor(Math.random() * 5)].weather.rain === "number")
+        assert(typeof everything.current.weather.temp.cur === "number" && typeof everything.minutely === "object" && typeof everything.hourly[Math.floor(Math.random() * 20)].weather.rain === "number" && typeof everything.daily[Math.floor(Math.random() * 5)].weather.rain === "number")
     })
 
 })

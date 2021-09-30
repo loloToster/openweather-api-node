@@ -1,6 +1,6 @@
 // for dev
 ### What if:
-* user specify location name in global options and use coordinates in local options
+* user specify location name in global options and use coordinates in local options ✔️
 
 // for public
 # openweathermap-api ☁️
@@ -526,5 +526,5 @@ When using raw API the problem might be getting your head around how unorganised
 [gdaily]: #async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--
 [gtoday]: #async-gettodayoptions--
 [galerts]: #async-getalertsoptions--
-[gevery]: #async-geteverythingsoptions--
+[gevery]: #async-geteverythingoptions--
 [mrgweathers]: #mergeweathersweathers
