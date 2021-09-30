@@ -6,6 +6,9 @@
 # openweathermap-api ☁️
 ![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
 ![issues](https://img.shields.io/github/issues-raw/loloToster/openweathermap-api?style=flat-square)
+![license](https://img.shields.io/apm/l/openweathermap-api?style=flat-square)
+
+![NPM](https://nodei.co/npm/openweathermap-api.png?compact=true)
 
 Description
 
@@ -158,7 +161,7 @@ Getter for global units
 
 **Returns:**
 
-Units - `String`
+Global units - `String`
 
 **Example:**
 ```js
@@ -205,6 +208,10 @@ Getter for location
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+location - `Object`
 
 **Example:**
 ```js
@@ -398,7 +405,7 @@ Merges [weather objects][wobj]. Useful if for example you want to get minutely [
 
 **Returns:**
 
-Merged object of weather provided in weathers arg - `Object`
+Merged object of weather provided in weathers parameter - `Object`
 
 **Example:**
 ```js
