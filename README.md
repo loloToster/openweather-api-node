@@ -1,8 +1,3 @@
-// for dev
-### What if:
-* user specify location name in global options and use coordinates in local options ✔️
-
-// for public
 # openweathermap-api ☁️
 ![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
 ![issues](https://img.shields.io/github/issues-raw/loloToster/openweathermap-api?style=flat-square)
@@ -10,7 +5,7 @@
 
 ![NPM](https://nodei.co/npm/openweathermap-api.png?compact=true)
 
-Description
+Simple Node.js package that makes it easy to work with OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only some weather calls but we are planning on adding more features like: historical data, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 ## Table of contents
 
