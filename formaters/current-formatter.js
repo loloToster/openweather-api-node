@@ -1,6 +1,5 @@
 // TODO: add icon url
 const getWeatherModel = require("../weather-model")
-const ICON_URL = ""
 
 function formater(data) {
     let current = getWeatherModel()

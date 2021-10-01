@@ -1,5 +1,4 @@
 const getWeatherModel = require("../weather-model")
-const ICON_URL = ""
 
 function dailyFormater(data, limit) {
     if (!data.daily) return []

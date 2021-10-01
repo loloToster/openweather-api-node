@@ -1,5 +1,4 @@
 const getWeatherModel = require("../weather-model")
-const ICON_URL = ""
 
 function hourlyFormater(data, limit) {
     if (!data.hourly) return []
