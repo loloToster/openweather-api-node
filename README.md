@@ -1,13 +1,35 @@
 # openweathermap-api ☁️
 ![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
 ![issues](https://img.shields.io/github/issues-raw/loloToster/openweathermap-api?style=flat-square)
-![license](https://img.shields.io/apm/l/openweathermap-api?style=flat-square)
+![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
 ![NPM](https://nodei.co/npm/openweathermap-api.png?compact=true)
 
 Simple Node.js package that makes it easy to work with OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only some weather calls but we are planning on adding more features like: historical data, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
-## Table of contents
+## Simple Example
+```js
+const OpenWeatherAPI = require("openweathermap-api")
+
+let weather = new OpenWeatherAPI({
+    key: "put-key-here",
+    locationName: "New York",
+    units: "imperial"
+})
+
+/* 
+you can use setters as well:
+weather.setKey("put-key-here")
+weather.setLocationByName("New York")
+...
+*/
+
+weather.getCurrent().then(data => {
+    console.log(`Current temperature in New York is: ${data.weather.temp.cur}\u00B0F`)
+})
+```
+
+## Table of Contents
 
 * [Methods][methods]
   * [getGlobalOptions][gglobalopt]
