@@ -386,7 +386,7 @@ class OpenWeatherAPI {
     }
 
     // helpers
-    async #uncacheLocation() {
+    async #uncacheLocation() { // necessary for some setters to be synchronous
         if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return
         if (this.#globalOptions.locationName) {
             this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName)
@@ -396,8 +396,8 @@ class OpenWeatherAPI {
     #createURL(options, exclude) {
         let url = new URL(DATA_PATH, API_ENDPOINT)
         url.searchParams.append("appid", options.key)
-        url.searchParams.append("lat", this.#globalOptions.coordinates.lat)
-        url.searchParams.append("lon", this.#globalOptions.coordinates.lon)
+        url.searchParams.append("lat", options.coordinates.lat)
+        url.searchParams.append("lon", options.coordinates.lon)
         if (options.lang)
             url.searchParams.append("lang", options.lang)
         if (options.units)
