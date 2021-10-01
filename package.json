@@ -13,12 +13,24 @@
     "meteo"
   ],
   "author": "loloToster",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.21.4",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "mocha": "^9.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loloToster/openweathermap-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/loloToster/openweathermap-api/issues"
+  },
+  "homepage": "https://github.com/loloToster/openweathermap-api#readme",
+  "directories": {
+    "example": "examples",
+    "test": "test"
   }
 }
