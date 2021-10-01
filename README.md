@@ -1,4 +1,4 @@
-# openweathermap-api ☁️
+# openweather-api-node ☁️
 ![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
 ![issues](https://img.shields.io/github/issues-raw/loloToster/openweathermap-api?style=flat-square)
 ![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
@@ -9,7 +9,7 @@ Simple Node.js package that makes it easy to work with OpenWeather API. If you w
 
 ## Simple Example
 ```js
-const OpenWeatherAPI = require("openweathermap-api")
+const OpenWeatherAPI = require("openweather-api-node")
 
 let weather = new OpenWeatherAPI({
     key: "put-key-here",

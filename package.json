@@ -1,5 +1,5 @@
 {
-  "name": "openweathermap-api",
+  "name": "openweather-api-node",
   "version": "1.0.0",
   "description": "Simple Node.js package that makes it easy to work with OpenWeather API",
   "main": "index.js",
@@ -23,12 +23,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/loloToster/openweathermap-api.git"
+    "url": "https://github.com/loloToster/openweather-api-node.git"
   },
   "bugs": {
-    "url": "https://github.com/loloToster/openweathermap-api/issues"
+    "url": "https://github.com/loloToster/openweather-api-node/issues"
   },
-  "homepage": "https://github.com/loloToster/openweathermap-api#readme",
+  "homepage": "https://github.com/loloToster/openweather-api-node#readme",
   "directories": {
     "example": "examples",
     "test": "test"
