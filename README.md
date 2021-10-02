@@ -1,5 +1,5 @@
 # openweather-api-node ☁️
-![version](https://img.shields.io/badge/version-1.0.0-g?style=flat-square)
+![version](https://img.shields.io/npm/v/openweather-api-node?style=flat-square)
 ![issues](https://img.shields.io/github/issues-raw/loloToster/openweather-api-node?style=flat-square)
 ![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
@@ -107,7 +107,7 @@ Sets global API key
 ```js
 weather.setKey("key")
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [getKey][gkey]
 
 ## getKey()
 
@@ -123,7 +123,7 @@ Global API key - `String`
 ```js
 let key = weather.getKey()
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [setKey][skey]
 
 ## setLanguage(lang)
 
@@ -138,7 +138,7 @@ Sets global language (Language must be listed [here](https://openweathermap.org/
 ```js
 weather.setLanguage("en")
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [getLanguage][glang]
 
 ## getLanguage()
 
@@ -154,7 +154,7 @@ Global language - `String`
 ```js
 let language = weather.getLanguage()
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [setLanguage][slang]
 ## setUnits(units)
 
 **Description:**
@@ -168,7 +168,7 @@ Sets global units
 ```js
 weather.setUnits("imperial")
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [getUnits][gunits]
 
 ## getUnits()
 
@@ -184,7 +184,7 @@ Global units - `String`
 ```js
 let units = weather.getUnits()
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [setUnits][sunits]
 
 ## setLocationByName(name)
 
@@ -199,7 +199,7 @@ Sets global location by provided name
 ```js
 weather.setLocationByName("London")
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [getLocation][gloc]
 
 ## setLocationByCoordinates(lat, lon)
 
@@ -215,7 +215,7 @@ Sets global location by provided coordinates
 ```js
 weather.setLocationByCoordinates(40.71, -74)
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [getLocation][gloc]
 
 ## `async` getLocation(options = {})
 
@@ -236,7 +236,7 @@ let location = await weather.getLocation()
 // or with options
 location = await weather.getLocation({locationName: "Tokio"})
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [setLocationByName][slocbyname], [setLocationByCoordinates][slocbycoor]
 
 ## `async` getCurrent(options = {})
 
@@ -257,13 +257,13 @@ let current = await weather.getCurrent()
 // or with options
 current = await weather.getCurrent({units: "metric"})
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj]
 
 ## `async` getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {})
 
 **Description:**
 
-Getter for [minutely]() weather
+Getter for minutely weather
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -280,13 +280,13 @@ let minutely = await weather.getMinutelyForecast()
 minutely = await weather.getMinutelyForecast(10)
 // here minutely.length won't be larger than 10
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj]
 
 ## `async` getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {})
 
 **Description:**
 
-Getter for [hourly]() weather
+Getter for hourly weather
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -303,13 +303,13 @@ let hourly = await weather.getMinutelyForecast()
 hourly = await weather.getMinutelyForecast(5)
 // here hourly.length won't be larger than 5
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj]
 
 ## `async` getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {})
 
 **Description:**
 
-Getter for [daily]() weather
+Getter for daily weather
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -327,7 +327,7 @@ let daily = await weather.getDailyForecast()
 daily = await weather.getDailyForecast(3)
 // here daily.length won't be larger than 3
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj]
 
 ## `async` getToday(options = {})
 
@@ -350,18 +350,18 @@ let today = (await weather.getDailyForecast(1, true, options))[0]
 ```js
 let today = await weather.getToday()
 // or with options
-daily = await weather.getDailyForecast({coordinates:{
+today = await weather.getToday({coordinates:{
     lat: -33.84,
     lon: 151.18
 }})
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj], [getDailyForecast][gdaily]
 
 ## `async` getAlerts(options = {})
 
 **Description:**
 
-Getter for [alerts]()
+Getter for alerts
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
@@ -409,7 +409,7 @@ let current = everything.current
 let minutely = everything.minutely
 // and so on...
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Weather Object][wobj]
 
 ## mergeWeathers(weathers)
 
@@ -428,9 +428,9 @@ Merged object of weather provided in weathers parameter - `Object`
 ```js
 let current = await weather.getCurrent()
 let minutely = await weather.getMinutelyForecast()
-let full = await weather.mergeWeathers([minutely[20], current])
+let full = weather.mergeWeathers([minutely[20], current])
 ```
-*See also:*
+*See also:* [Weather Object][wobj]
 
 # Unique features of this package
 
