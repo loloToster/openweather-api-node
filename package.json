@@ -10,7 +10,9 @@
     "weather",
     "openweather",
     "openweathermap",
-    "meteo"
+    "meteo",
+    "weather-api",
+    "api"
   ],
   "author": "loloToster",
   "license": "MIT",
