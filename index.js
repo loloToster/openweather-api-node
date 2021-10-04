@@ -205,7 +205,7 @@ class OpenWeatherAPI {
     /**
      * Sets global location by provided name
      * 
-     * @param {String} name - name of the location
+     * @param {String} name - name of the location (`q` parameter [here](https://openweathermap.org/api/geocoding-api#direct_name))
      */
     setLocationByName(name) { // - location setter
         if (!name) throw new Error("Empty value cannot be a location name: " + name)
@@ -371,6 +371,28 @@ class OpenWeatherAPI {
         }
     }
 
+    /**
+     * Getter for historical data about weather
+     * 
+     * @param {Date|Number|String} dt - Date from the **previous five days** (Unix time, UTC time zone)
+     * @param {Object} options - options used only for this call
+     */
+    async getHistory(dt, options = {}) {
+        await this.#uncacheLocation()
+        dt = Math.round(new Date(dt).getTime() / 1000)
+        options = await this.#formatOptions(options)
+        let response = await this.#fetch(this.#createURL(options, false, dt))
+        let data = response.data
+        return {
+            lat: data.lat,
+            lon: data.lon,
+            timezone: data.timezone,
+            timezone_offset: data.timezone_offset,
+            current: currentFormatter(data),
+            hourly: hourlyFormatter(data, Number.POSITIVE_INFINITY)
+        }
+    }
+
     // Uncategorized Methods
 
     /**
@@ -393,8 +415,8 @@ class OpenWeatherAPI {
         }
     }
 
-    #createURL(options, exclude) {
-        let url = new URL(DATA_PATH, API_ENDPOINT)
+    #createURL(options, exclude = false, dt = false) {
+        let url = new URL(DATA_PATH + (dt === false ? "" : "/timemachine"), API_ENDPOINT)
         url.searchParams.append("appid", options.key)
         url.searchParams.append("lat", options.coordinates.lat)
         url.searchParams.append("lon", options.coordinates.lon)
@@ -404,11 +426,12 @@ class OpenWeatherAPI {
             url.searchParams.append("units", options.units)
         if (exclude)
             url.searchParams.append("exclude", exclude)
+        if (dt)
+            url.searchParams.append("dt", dt)
         return url.href
     }
 
     async #fetch(url) {
-        //console.log("fetching:", url) // ! delete this
         let response
         try {
             response = await axios.get(url)

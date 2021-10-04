@@ -5,7 +5,7 @@
 
 ![NPM](https://nodei.co/npm/openweather-api-node.png?compact=true)
 
-Simple Node.js package that makes it easy to work with OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only some weather calls but we are planning on adding more features like: historical data, maps and all the other stuff that is available for free in OpenWeatherMap API.
+Simple Node.js package that makes it easy to work with OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only some weather calls but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 ## Simple Example
 ```js
@@ -49,6 +49,7 @@ weather.getCurrent().then(data => {
   * [getToday][gtoday]
   * [getAlerts][galerts]
   * [getEverything][gevery]
+  * [getHistory][ghis]
   * [mergeWeathers][mrgweathers]
 * [Unique features of this package][features]
   * [Options][opt]
@@ -82,7 +83,7 @@ let example = await weather.method(arg)
 
 **Description:**
 
-Getter for global options
+Getter for global options.
 
 **Returns:**
 
@@ -98,7 +99,7 @@ let options = weather.getGlobalOptions()
 
 **Description:**
 
-Sets global API key
+Sets global API key.
 
 **Arguments:**
 * **key** - API key
@@ -113,7 +114,7 @@ weather.setKey("key")
 
 **Description:**
 
-Getter for global key
+Getter for global key.
 
 **Returns:**
 
@@ -129,7 +130,7 @@ let key = weather.getKey()
 
 **Description:**
 
-Sets global language (Language must be listed [here](https://openweathermap.org/current#multi))
+Sets global language (Language must be listed [here](https://openweathermap.org/current#multi)).
 
 **Arguments:**
 * **lang** - language
@@ -144,7 +145,7 @@ weather.setLanguage("en")
 
 **Description:**
 
-Getter for global language
+Getter for global language.
 
 **Returns:**
 
@@ -159,7 +160,7 @@ let language = weather.getLanguage()
 
 **Description:**
 
-Sets global units
+Sets global units.
 
 **Arguments:**
 * **units** - units (Only **standard**, **metric** or **imperial** are supported)
@@ -174,7 +175,7 @@ weather.setUnits("imperial")
 
 **Description:**
 
-Getter for global units
+Getter for global units.
 
 **Returns:**
 
@@ -190,7 +191,7 @@ let units = weather.getUnits()
 
 **Description:**
 
-Sets global location by provided name
+Sets global location by provided name. The `name` argument will basically replace the `q` parameter in call described [here](https://openweathermap.org/api/geocoding-api#direct_name).
 
 **Arguments:**
 * **name** - name of the location
@@ -205,7 +206,7 @@ weather.setLocationByName("London")
 
 **Description:**
 
-Sets global location by provided coordinates
+Sets global location by provided coordinates.
 
 **Arguments:**
 * **lat** - latitude of the location
@@ -221,7 +222,7 @@ weather.setLocationByCoordinates(40.71, -74)
 
 **Description:**
 
-Getter for location
+Getter for location.
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
@@ -242,7 +243,7 @@ location = await weather.getLocation({locationName: "Tokio"})
 
 **Description:**
 
-Getter for current weather
+Getter for current weather.
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
@@ -263,7 +264,7 @@ current = await weather.getCurrent({units: "metric"})
 
 **Description:**
 
-Getter for minutely weather
+Getter for minutely weather.
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -286,7 +287,7 @@ minutely = await weather.getMinutelyForecast(10)
 
 **Description:**
 
-Getter for hourly weather
+Getter for hourly weather.
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -309,7 +310,7 @@ hourly = await weather.getMinutelyForecast(5)
 
 **Description:**
 
-Getter for daily weather
+Getter for daily weather.
 
 **Arguments:**
 * **limit** - maximum length of returned array (defaults to positive infinity aka as much as possible)
@@ -361,7 +362,7 @@ today = await weather.getToday({coordinates:{
 
 **Description:**
 
-Getter for alerts
+Getter for alerts.
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
@@ -380,7 +381,7 @@ let alerts = await weather.getAlerts()
 
 **Description:**
 
-Getter for every type of weather call and alerts
+Getter for every type of weather call and alerts.
 
 **Arguments:**
 * **options** - options used only for this call (defaults to empty object)
@@ -408,6 +409,36 @@ let everything = await weather.getEverything()
 let current = everything.current
 let minutely = everything.minutely
 // and so on...
+```
+*See also:* [options][opt], [Weather Object][wobj]
+
+## `async` getHistory(dt, options = {})
+
+**Description:**
+
+Getter for historical data about weather.
+
+**Arguments:**
+* **dt** - Date from the **previous five days** (Unix time, UTC time zone)
+* **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+Object that looks like this:
+```
+{
+    lat: latitude of the location,
+    lon: longitude of the location,
+    timezone: timezone of the location,
+    timezone_offset: timezone offset of the location,
+    current: weather object of current data of the time given,
+    hourly: data block containing hourly historical data starting at 00:00 on the requested day and continues until 23:59 on the same day (UTC time)
+}
+```
+
+**Example:**
+```js
+let history = await weather.getHistory(new Date().getTime() - 7200)
 ```
 *See also:* [options][opt], [Weather Object][wobj]
 
@@ -544,4 +575,5 @@ When using raw API the problem might be getting your head around how unorganised
 [gtoday]: #async-gettodayoptions--
 [galerts]: #async-getalertsoptions--
 [gevery]: #async-geteverythingoptions--
+[ghis]: #async-gethistorydt-options--
 [mrgweathers]: #mergeweathersweathers
