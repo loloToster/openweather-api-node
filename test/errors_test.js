@@ -6,7 +6,8 @@ const OpenWeatherAPI = require("../index")
 let key = fs.readFileSync("./test/key.txt").toString().trim()
 
 let weather = new OpenWeatherAPI({
-    key: key
+    key: key,
+    locationName: "Hong Kong"
 })
 
 describe("Error tests:", function () {
@@ -99,6 +100,36 @@ describe("Error tests:", function () {
             }
         })
         assert(true)
+    })
+
+    it("handles future in history", async () => {
+        try {
+            await weather.getHistory(new Date().getTime() + 900000)
+        } catch (err) {
+            assert(err.message.toLowerCase().includes("requested time is in the future"))
+            return
+        }
+        assert(false)
+    })
+
+    it("handles not within 5 days in history", async () => {
+        try {
+            await weather.getHistory(new Date().getTime() - 6 * 24 * 60 * 60 * 1000)
+        } catch (err) {
+            assert(err.message.toLowerCase().includes("requested time is out of allowed range of 5 days back"))
+            return
+        }
+        assert(false)
+    })
+
+    it("handles no time in history", async () => {
+        try {
+            await weather.getHistory()
+        } catch (err) {
+            assert(err.message.toLowerCase().includes("no location or time specified"))
+            return
+        }
+        assert(false)
     })
 
 })
