@@ -70,4 +70,11 @@ describe("Getting tests:", function () {
         assert(typeof everything.current.weather.temp.cur === "number" && typeof everything.minutely === "object" && typeof everything.hourly[Math.floor(Math.random() * 20)].weather.rain === "number" && typeof everything.daily[Math.floor(Math.random() * 5)].weather.rain === "number")
     })
 
+    it("gets history", async () => {
+        weather.setLocationByCoordinates(49.84, 24.03)
+        let date = new Date().getTime() - 900000
+        let history = await weather.getHistory(date)
+        assert(Math.round(date / 1000) == history.current.dt_raw)
+    })
+
 })
