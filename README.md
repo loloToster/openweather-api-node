@@ -5,7 +5,14 @@
 
 ![NPM](https://nodei.co/npm/openweather-api-node.png?compact=true)
 
-Simple Node.js package that makes it easy to work with OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only some weather calls but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
+Simple Node.js package that makes it easy to work with OpenWeather API.
+
+Currently Supported APIs:
+  * Weather (from OneCall)
+  * Geocoding
+  * Historical (from OneCall)
+
+If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 ## Simple Example
 ```js
@@ -41,6 +48,7 @@ weather.getCurrent().then(data => {
   * [getUnits][gunits]
   * [setLocationByName][slocbyname]
   * [setLocationByCoordinates][slocbycoor]
+  * [setLocationByZipCode][slocbyzip]
   * [getLocation][gloc]
   * [getCurrent][gcur]
   * [getMinutelyForecast][gminutely]
@@ -215,6 +223,21 @@ Sets global location by provided coordinates.
 **Example:**
 ```js
 weather.setLocationByCoordinates(40.71, -74)
+```
+*See also:* [options][opt], [getLocation][gloc]
+
+## setLocationByZipCode(zipCode)
+
+**Description:**
+
+Sets global location by provided zip/post code. The `zipCode` argument will basically replace the `zip` parameter in call described [here](https://openweathermap.org/api/geocoding-api#direct_zip).
+
+**Arguments:**
+* **zipCode** - zip/post code and country code divided by comma. Please use ISO 3166 country codes: `{zip code},{country code}`
+
+**Example:**
+```js
+weather.setLocationByZipCode("E14,GB")
 ```
 *See also:* [options][opt], [getLocation][gloc]
 
@@ -567,6 +590,7 @@ When using raw API the problem might be getting your head around how unorganised
 [gunits]: #getunits
 [slocbyname]: #setlocationbynamename
 [slocbycoor]: #setlocationbycoordinateslat-lon
+[slocbyzip]:#setlocationbyzipcodezipcode
 [gloc]: #async-getlocationoptions
 [gcur]: #async-getcurrentoptions
 [gminutely]: #async-getminutelyforecastlimit--numberpositive_infinity-options--

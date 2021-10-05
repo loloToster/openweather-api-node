@@ -73,7 +73,8 @@ class OpenWeatherAPI {
             lat: undefined,
             lon: undefined
         },
-        locationName: undefined
+        locationName: undefined,
+        zipCode: undefined
     }
 
     /**
@@ -111,6 +112,10 @@ class OpenWeatherAPI {
 
                     case "coordinates":
                         this.setLocationByCoordinates(value.lat, value.lon)
+                        break
+
+                    case "zipCode":
+                        this.setLocationByZipCode(value)
                         break
 
                     default:
@@ -207,10 +212,11 @@ class OpenWeatherAPI {
      * 
      * @param {String} name - name of the location (`q` parameter [here](https://openweathermap.org/api/geocoding-api#direct_name))
      */
-    setLocationByName(name) { // - location setter
+    setLocationByName(name) {
         if (!name) throw new Error("Empty value cannot be a location name: " + name)
         this.#globalOptions.coordinates.lat = undefined
         this.#globalOptions.coordinates.lon = undefined
+        this.#globalOptions.zipCode = undefined
         this.#globalOptions.locationName = name
     }
 
@@ -231,11 +237,12 @@ class OpenWeatherAPI {
      * @param {Number} lat - latitude of the location
      * @param {Number} lon - longitude of the location
      */
-    setLocationByCoordinates(lat, lon) { // - location setter
+    setLocationByCoordinates(lat, lon) {
         let location = this.#evaluateLocationByCoordinates(lat, lon)
+        this.#globalOptions.locationName = undefined
+        this.#globalOptions.zipCode = undefined
         this.#globalOptions.coordinates.lat = location.lat
         this.#globalOptions.coordinates.lon = location.lon
-        this.#globalOptions.locationName = undefined
     }
 
     #evaluateLocationByCoordinates(lat, lon) {
@@ -243,6 +250,28 @@ class OpenWeatherAPI {
             return { lat: lat, lon: lon }
         } else {
             throw new Error("Wrong coordinates")
+        }
+    }
+
+    /**
+     * Sets global location by provided zip/post code
+     * 
+     * @param {String} zipCode - zip/post code and country code divided by comma (`zip` parameter [here](https://openweathermap.org/api/geocoding-api#direct_zip))
+     */
+    setLocationByZipCode(zipCode) {
+        if (!zipCode) throw new Error("Empty value cannot be a location zip code: " + zipCode)
+        this.#globalOptions.coordinates.lat = undefined
+        this.#globalOptions.coordinates.lon = undefined
+        this.#globalOptions.locationName = undefined
+        this.#globalOptions.zipCode = zipCode
+    }
+
+    async #evaluateLocationByZipCode(zipCode) {
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${zipCode}&appid=${this.#globalOptions.key}`)
+        let data = response.data
+        return {
+            lat: data.lat,
+            lon: data.lon
         }
     }
 
@@ -412,6 +441,8 @@ class OpenWeatherAPI {
         if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return
         if (this.#globalOptions.locationName) {
             this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName)
+        } else if (this.#globalOptions.zipCode) {
+            this.#globalOptions.coordinates = await this.#evaluateLocationByZipCode(this.#globalOptions.zipCode)
         }
     }
 
@@ -474,6 +505,10 @@ class OpenWeatherAPI {
 
                     case "coordinates":
                         options.coordinates = this.#evaluateLocationByCoordinates(value.lat, value.lon)
+                        break
+
+                    case "zipCode":
+                        options.coordinates = await this.#evaluateLocationByZipCode(value)
                         break
 
                     default:
