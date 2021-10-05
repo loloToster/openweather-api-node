@@ -1,6 +1,6 @@
 {
   "name": "openweather-api-node",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Simple Node.js package that makes it easy to work with OpenWeather API",
   "main": "index.js",
   "scripts": {
