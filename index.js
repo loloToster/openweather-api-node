@@ -56,7 +56,7 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     DATA_PATH = "data/2.5/onecall"
 
 const axios = require("axios").default,
-    _ = require("lodash")
+    _ = require("lodash") //todo: remove need of lodash
 
 const currentFormatter = require("./formaters/current-formatter"),
     minutelyFormatter = require("./formaters/minutely-formatter"),
@@ -220,8 +220,8 @@ class OpenWeatherAPI {
         this.#globalOptions.locationName = name
     }
 
-    async #evaluateLocationByName(name) {
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${this.#globalOptions.key}`)
+    async #evaluateLocationByName(name, key) {
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${key}`)
         let data = response.data
         if (data.length == 0) throw new Error("Unknown location name: " + name)
         data = response.data[0]
@@ -266,8 +266,8 @@ class OpenWeatherAPI {
         this.#globalOptions.zipCode = zipCode
     }
 
-    async #evaluateLocationByZipCode(zipCode) {
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${zipCode}&appid=${this.#globalOptions.key}`)
+    async #evaluateLocationByZipCode(zipCode, key) {
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${zipCode}&appid=${key}`)
         let data = response.data
         return {
             lat: data.lat,
@@ -440,9 +440,9 @@ class OpenWeatherAPI {
     async #uncacheLocation() { // necessary for some setters to be synchronous
         if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return
         if (this.#globalOptions.locationName) {
-            this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName)
+            this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName, this.#globalOptions.key)
         } else if (this.#globalOptions.zipCode) {
-            this.#globalOptions.coordinates = await this.#evaluateLocationByZipCode(this.#globalOptions.zipCode)
+            this.#globalOptions.coordinates = await this.#evaluateLocationByZipCode(this.#globalOptions.zipCode, this.#globalOptions.key)
         }
     }
 
@@ -463,6 +463,7 @@ class OpenWeatherAPI {
     }
 
     async #fetch(url) {
+        // console.log(url)
         let response
         try {
             response = await axios.get(url)
@@ -500,7 +501,7 @@ class OpenWeatherAPI {
                         break
 
                     case "locationName":
-                        options.coordinates = await this.#evaluateLocationByName(value)
+                        options.coordinates = await this.#evaluateLocationByName(value, options.key || this.#globalOptions.key)
                         break
 
                     case "coordinates":
@@ -508,7 +509,7 @@ class OpenWeatherAPI {
                         break
 
                     case "zipCode":
-                        options.coordinates = await this.#evaluateLocationByZipCode(value)
+                        options.coordinates = await this.#evaluateLocationByZipCode(value, options.key || this.#globalOptions.key)
                         break
 
                     default:
