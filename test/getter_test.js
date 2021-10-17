@@ -37,7 +37,7 @@ describe("Getting tests:", function () {
     })
 
     it("gets hourly", async () => {
-        weather.setLocationByName("London")
+        weather.setLocationByZipCode("E14,GB")
         let hourly = await weather.getHourlyForecast(10)
         if (!hourly.length) {
             console.log("\t\x1b[31mPuste hourly: ", hourly)
