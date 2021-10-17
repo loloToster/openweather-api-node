@@ -490,9 +490,21 @@ let full = weather.mergeWeathers([minutely[20], current])
 
 ## Options
 
-This package use so called *options*, options define: API key, coordinates, units etc.
-
-In the constructor of the class you can pass object that will define *global options*, they will be used by default in any method that uses options (ex. weather calls).
+This package use so called *options*, options define: API key, coordinates, units etc. Structure of options:
+```js
+{
+    key: "your API key" - String,
+    language: "language to use" - String,
+    units: "units to use" - String,
+    locationName: "name of the location" - String,
+    zipCode: "'zip code' of the location" - String,
+    coordinates: {
+        lat: "latitude of the location" - Number,
+        lon: "longitude of the location" - Number
+    }
+}
+```
+In the constructor of the class you can pass object that will define *global options*, they will be used by default in any method that uses options (ex. weather calls). 
 
 Some methods have `options` argument which can be used to specify options only for this call. Options specified in `options` argument will override global options. for example if your global options look like this:
 ```js
