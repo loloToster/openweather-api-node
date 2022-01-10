@@ -1,6 +1,6 @@
 const getWeatherModel = require("../weather-model")
 
-function dailyFormater(data, limit) {
+function dailyParser(data, limit) {
     if (!data.daily) return []
     let newDaily = []
     for (let i = 0; i < limit && i < data.daily.length; i++) {
@@ -52,5 +52,5 @@ function dailyFormater(data, limit) {
     return newDaily
 }
 
-module.exports = dailyFormater
+module.exports = dailyParser
 

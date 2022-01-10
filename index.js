@@ -58,10 +58,10 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
 const axios = require("axios").default,
     _ = require("lodash") //todo: remove need of lodash
 
-const currentFormatter = require("./formaters/current-formatter"),
-    minutelyFormatter = require("./formaters/minutely-formatter"),
-    hourlyFormatter = require("./formaters/hourly-formatter"),
-    dailyFormatter = require("./formaters/daily-formatter")
+const currentParser = require("./parsers/current-parser"),
+    minutelyParser = require("./parsers/minutely-parser"),
+    hourlyParser = require("./parsers/hourly-parser"),
+    dailyParser = require("./parsers/daily-parser")
 
 class OpenWeatherAPI {
 
@@ -283,7 +283,7 @@ class OpenWeatherAPI {
      */
     async getLocation(options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
         let data = response.data
         return data.length ? data[0] : null
@@ -299,10 +299,10 @@ class OpenWeatherAPI {
      */
     async getCurrent(options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
         let data = response.data
-        return currentFormatter(data)
+        return currentParser(data)
     }
 
     /**
@@ -314,10 +314,10 @@ class OpenWeatherAPI {
      */
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,hourly,daily"))
         let data = response.data
-        return minutelyFormatter(data, limit)
+        return minutelyParser(data, limit)
     }
 
     /**
@@ -329,10 +329,10 @@ class OpenWeatherAPI {
      */
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,daily"))
         let data = response.data
-        return hourlyFormatter(data, limit)
+        return hourlyParser(data, limit)
     }
 
     /**
@@ -344,12 +344,12 @@ class OpenWeatherAPI {
      */
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
         let data = response.data
         if (!includeToday)
             data.daily.shift()
-        return dailyFormatter(data, limit)
+        return dailyParser(data, limit)
     }
 
     /**
@@ -370,7 +370,7 @@ class OpenWeatherAPI {
      */
     async getAlerts(options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "current,minutely,hourly,daily"))
         let data = response.data
         return data.alerts
@@ -384,7 +384,7 @@ class OpenWeatherAPI {
      */
     async getEverything(options = {}) {
         await this.#uncacheLocation()
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options))
         let data = response.data
         return {
@@ -392,10 +392,10 @@ class OpenWeatherAPI {
             lon: data.lon,
             timezone: data.timezone,
             timezone_offset: data.timezone_offset,
-            current: currentFormatter(data),
-            minutely: minutelyFormatter(data, Number.POSITIVE_INFINITY),
-            hourly: hourlyFormatter(data, Number.POSITIVE_INFINITY),
-            daily: dailyFormatter(data, Number.POSITIVE_INFINITY),
+            current: currentParser(data),
+            minutely: minutelyParser(data, Number.POSITIVE_INFINITY),
+            hourly: hourlyParser(data, Number.POSITIVE_INFINITY),
+            daily: dailyParser(data, Number.POSITIVE_INFINITY),
             alerts: data.alerts
         }
     }
@@ -409,7 +409,7 @@ class OpenWeatherAPI {
     async getHistory(dt, options = {}) {
         await this.#uncacheLocation()
         dt = Math.round(new Date(dt).getTime() / 1000)
-        options = await this.#formatOptions(options)
+        options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, false, dt))
         let data = response.data
         return {
@@ -417,8 +417,8 @@ class OpenWeatherAPI {
             lon: data.lon,
             timezone: data.timezone,
             timezone_offset: data.timezone_offset,
-            current: currentFormatter(data),
-            hourly: hourlyFormatter(data, Number.POSITIVE_INFINITY)
+            current: currentParser(data),
+            hourly: hourlyParser(data, Number.POSITIVE_INFINITY)
         }
     }
 
@@ -478,7 +478,7 @@ class OpenWeatherAPI {
         }
     }
 
-    async #formatOptions(options) {
+    async #parseOptions(options) {
         if (
             !(typeof options === "object") ||
             Array.isArray(options) ||

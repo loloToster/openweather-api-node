@@ -1,6 +1,6 @@
 const getWeatherModel = require("../weather-model")
 
-function formater(data) {
+function currentParser(data) {
     let current = getWeatherModel()
     current.lat = data.lat
     current.lon = data.lon
@@ -34,4 +34,4 @@ function formater(data) {
     return current
 }
 
-module.exports = formater
+module.exports = currentParser

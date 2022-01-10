@@ -1,6 +1,6 @@
 const getWeatherModel = require("../weather-model")
 
-function hourlyFormater(data, limit) {
+function hourlyParser(data, limit) {
     if (!data.hourly) return []
     let newHourly = []
     for (let i = 0; i < limit && i < data.hourly.length; i++) {
@@ -36,4 +36,4 @@ function hourlyFormater(data, limit) {
     return newHourly
 }
 
-module.exports = hourlyFormater
+module.exports = hourlyParser
