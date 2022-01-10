@@ -16,7 +16,7 @@ describe("Getting tests:", function () {
     it("gets location", async () => {
         weather.setLocationByCoordinates(40.71, -74)
         let location = await weather.getLocation()
-        assert(location.name === "New York City")
+        assert(location.name.toLowerCase().includes("new york"))
     })
 
     it("gets current", async () => {
