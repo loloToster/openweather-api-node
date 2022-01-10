@@ -1,20 +1,44 @@
-# openweather-api-node ☁️
-![version](https://img.shields.io/npm/v/openweather-api-node?style=flat-square)
-![issues](https://img.shields.io/github/issues-raw/loloToster/openweather-api-node?style=flat-square)
-![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+<br>
+<br>
+<p align="center">
+<img src="logo/logo.png" alt="logo" width="65%">
+</p>
+<br>
+<p align="center">
+Simple package that makes it easy to work with OpenWeather API.
+</p>
+<br>
+<p align="center">
+<a href="https://npmjs.org/package/openweather-api-node">
+    <img src="https://img.shields.io/npm/v/openweather-api-node?style=flat-square" alt="Version">
+</a>
+<a href="https://npmjs.org/package/openweather-api-node">
+    <img src="https://img.shields.io/npm/dt/openweather-api-node?style=flat-square" alt="Version">
+</a>
+<a href="https://npmjs.org/package/openweather-api-node">
+    <img src="https://img.shields.io/github/issues-raw/loloToster/openweather-api-node?style=flat-square" alt="Issues">
+</a>
+<a href="https://github.com/loloToster/openweather-api-node/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License">
+</a>
 
-![NPM](https://nodei.co/npm/openweather-api-node.png?compact=true)
+</p>
 
-Simple Node.js package that makes it easy to work with OpenWeather API.
+# About
+
+This package is a wrapper for OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 Currently Supported APIs:
   * Weather (from OneCall)
   * Geocoding
   * Historical (from OneCall)
 
-If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
+# Installation
+```
+npm i openweather-api-node
+```
 
-## Simple Example
+# Simple Example
 ```js
 const OpenWeatherAPI = require("openweather-api-node")
 
@@ -36,7 +60,7 @@ weather.getCurrent().then(data => {
 })
 ```
 
-## Table of Contents
+# Docs
 
 * [Methods][methods]
   * [getGlobalOptions][gglobalopt]
@@ -59,7 +83,7 @@ weather.getCurrent().then(data => {
   * [getEverything][gevery]
   * [getHistory][ghis]
   * [mergeWeathers][mrgweathers]
-* [Unique features of this package][features]
+* [Models][models]
   * [Options][opt]
   * [Weather Object][wobj]
 
@@ -486,7 +510,7 @@ let full = weather.mergeWeathers([minutely[20], current])
 ```
 *See also:* [Weather Object][wobj]
 
-# Unique features of this package
+# Models
 
 ## Options
 
@@ -587,9 +611,9 @@ When using raw API the problem might be getting your head around how unorganised
     }
 }
 ```
-**API does not specify every value in every call so some of those values might be `undefined` for example daily weather object wont have weather.temp.cur!**
+**⚠️ API does not specify every value in every call so some of those values might be `undefined` for example daily weather object won't have weather.temp.cur!**
 
-[features]: #unique-features-of-this-package
+[models]: #models
 [opt]: #options
 [wobj]: #weather-object
 [methods]: #methods
