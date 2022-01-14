@@ -304,7 +304,7 @@ class OpenWeatherAPI {
      * @returns location
      */
     async getLocation(options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
         let data = response.data
@@ -320,7 +320,7 @@ class OpenWeatherAPI {
      * @returns weather object of current weather
      */
     async getCurrent(options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
         let data = response.data
@@ -335,7 +335,7 @@ class OpenWeatherAPI {
      * @returns array of Weather objects, one for every next minute (Empty if API returned no info about minutely weather)
      */
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,hourly,daily"))
         let data = response.data
@@ -350,7 +350,7 @@ class OpenWeatherAPI {
      * @returns array of Weather objects, one for every next hour (Empty if API returned no info about hourly weather)
      */
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,daily"))
         let data = response.data
@@ -365,7 +365,7 @@ class OpenWeatherAPI {
      * @returns array of Weather objects, one for every next day (Empty if API returned no info about daily weather)
      */
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
         let data = response.data
@@ -391,7 +391,7 @@ class OpenWeatherAPI {
      * @returns alerts (undefined if API returned no info about alerts)
      */
     async getAlerts(options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, "current,minutely,hourly,daily"))
         let data = response.data
@@ -405,7 +405,7 @@ class OpenWeatherAPI {
      * @returns object that contains everything
      */
     async getEverything(options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options))
         let data = response.data
@@ -429,7 +429,7 @@ class OpenWeatherAPI {
      * @param {Object} options - options used only for this call
      */
     async getHistory(dt, options = {}) {
-        await this.#uncacheLocation()
+        await this.#uncacheLocation(options.key)
         dt = Math.round(new Date(dt).getTime() / 1000)
         options = await this.#parseOptions(options)
         let response = await this.#fetch(this.#createURL(options, false, dt))
@@ -459,12 +459,16 @@ class OpenWeatherAPI {
     }
 
     // helpers
-    async #uncacheLocation() { // necessary for some setters to be synchronous
-        if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return
+    async #uncacheLocation(key) { // necessary for some setters to be synchronous
+        if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return // ! what if lat or lon = 0  ?
+
+        key = this.#globalOptions.key ?? key
+        if (!key) return
+
         if (this.#globalOptions.locationName) {
-            this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName, this.#globalOptions.key)
+            this.#globalOptions.coordinates = await this.#evaluateLocationByName(this.#globalOptions.locationName, key)
         } else if (this.#globalOptions.zipCode) {
-            this.#globalOptions.coordinates = await this.#evaluateLocationByZipCode(this.#globalOptions.zipCode, this.#globalOptions.key)
+            this.#globalOptions.coordinates = await this.#evaluateLocationByZipCode(this.#globalOptions.zipCode, key)
         }
     }
 
