@@ -17,8 +17,7 @@
   "author": "loloToster",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.4",
-    "lodash": "^4.17.21"
+    "axios": "^0.21.4"
   },
   "devDependencies": {
     "mocha": "^9.1.2"

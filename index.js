@@ -55,13 +55,35 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
     DATA_PATH = "data/2.5/onecall"
 
-const axios = require("axios").default,
-    _ = require("lodash") //todo: remove need of lodash
+const axios = require("axios").default
 
 const currentParser = require("./parsers/current-parser"),
     minutelyParser = require("./parsers/minutely-parser"),
     hourlyParser = require("./parsers/hourly-parser"),
     dailyParser = require("./parsers/daily-parser")
+
+function isObject(item) {
+    return item && typeof item === "object" && !Array.isArray(item)
+}
+
+// https://stackoverflow.com/questions/27936772/how-to-deep-merge-instead-of-shallow-merge
+function mergeObj(target, ...sources) {
+    if (!sources.length) return target
+    const source = sources.shift()
+
+    if (isObject(target) && isObject(source)) {
+        for (const key in source) {
+            if (isObject(source[key])) {
+                if (!target[key]) Object.assign(target, { [key]: {} })
+                mergeObj(target[key], source[key])
+            } else {
+                Object.assign(target, { [key]: source[key] })
+            }
+        }
+    }
+
+    return mergeObj(target, ...sources)
+}
 
 class OpenWeatherAPI {
 
@@ -433,7 +455,7 @@ class OpenWeatherAPI {
     mergeWeathers(weathers) {
         if (!Array.isArray(weathers)) throw new Error("Provide list of weather objects")
         weathers.reverse()
-        return _.merge({}, ...weathers)
+        return mergeObj({}, ...weathers)
     }
 
     // helpers
@@ -463,7 +485,6 @@ class OpenWeatherAPI {
     }
 
     async #fetch(url) {
-        // console.log(url)
         let response
         try {
             response = await axios.get(url)
@@ -517,7 +538,7 @@ class OpenWeatherAPI {
                 }
             }
         }
-        return _.merge({}, this.#globalOptions, options)
+        return mergeObj({}, this.#globalOptions, options)
     }
 }
 
