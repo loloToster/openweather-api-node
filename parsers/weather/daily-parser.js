@@ -1,4 +1,4 @@
-const getWeatherModel = require("../weather-model")
+const getWeatherModel = require("../../models/weather-model")
 
 function dailyParser(data, limit) {
     if (!data.daily) return []

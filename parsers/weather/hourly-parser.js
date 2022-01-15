@@ -1,4 +1,4 @@
-const getWeatherModel = require("../weather-model")
+const getWeatherModel = require("../../models/weather-model")
 
 function hourlyParser(data, limit) {
     if (!data.hourly) return []

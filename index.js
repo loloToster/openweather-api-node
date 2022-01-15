@@ -57,10 +57,10 @@ const API_ENDPOINT = "https://api.openweathermap.org/",
 
 const axios = require("axios").default
 
-const currentParser = require("./parsers/current-parser"),
-    minutelyParser = require("./parsers/minutely-parser"),
-    hourlyParser = require("./parsers/hourly-parser"),
-    dailyParser = require("./parsers/daily-parser")
+const currentParser = require("./parsers/weather/current-parser"),
+    minutelyParser = require("./parsers/weather/minutely-parser"),
+    hourlyParser = require("./parsers/weather/hourly-parser"),
+    dailyParser = require("./parsers/weather/daily-parser")
 
 function isObject(item) {
     return item && typeof item === "object" && !Array.isArray(item)

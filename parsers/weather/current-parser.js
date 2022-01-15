@@ -1,4 +1,4 @@
-const getWeatherModel = require("../weather-model")
+const getWeatherModel = require("../../models/weather-model")
 
 function currentParser(data) {
     let current = getWeatherModel()
