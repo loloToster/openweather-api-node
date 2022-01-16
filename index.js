@@ -565,8 +565,8 @@ class OpenWeatherAPI {
      * Getter for historical data about air pollution 
      * WARNING: Historical data is accessible from 27th November 2020
      * 
-     * @param {Date|Number|String} from
-     * @param {Date|Number|String} to
+     * @param {Date|Number|String} from - Start date (unix time, UTC time zone)
+     * @param {Date|Number|String} to - End date (unix time, UTC time zone)
      * @param {Options} options - options used only for this call
      */
     async getHistoryAirPollution(from, to, options = {}) {
