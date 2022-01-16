@@ -29,7 +29,7 @@ describe("Getting tests:", function () {
         weather.setLocationByCoordinates(40.71, -74)
         let minutely = await weather.getMinutelyForecast(48)
         if (!minutely.length) {
-            console.log("\t\x1b[31mPuste minutely: ", minutely)
+            console.log("\t\x1b[31mEmpty minutely: ", minutely)
             assert(typeof minutely === "object")
         } else {
             assert(minutely.length == 48 && typeof minutely[Math.floor(Math.random() * 40)].weather.rain === "number")
@@ -40,7 +40,7 @@ describe("Getting tests:", function () {
         weather.setLocationByZipCode("E14,GB")
         let hourly = await weather.getHourlyForecast(10)
         if (!hourly.length) {
-            console.log("\t\x1b[31mPuste hourly: ", hourly)
+            console.log("\t\x1b[31mEmpty hourly: ", hourly)
             assert(typeof hourly === "object")
         } else {
             assert(hourly.length == 10 && typeof hourly[Math.floor(Math.random() * 5)].weather.rain === "number")
@@ -51,7 +51,7 @@ describe("Getting tests:", function () {
         weather.setLocationByCoordinates(10, -40)
         let daily = await weather.getDailyForecast(3)
         if (!daily.length) {
-            console.log("\t\x1b[31mPuste daily: ", daily)
+            console.log("\t\x1b[31mEmpty daily: ", daily)
             assert(typeof daily === "object")
         } else {
             assert(daily.length == 3 && typeof daily[Math.floor(Math.random() * 2)].weather.rain === "number")
@@ -75,6 +75,23 @@ describe("Getting tests:", function () {
         let date = new Date().getTime() - 900000
         let history = await weather.getHistory(date)
         assert(Math.round(date / 1000) == history.current.dt_raw)
+    })
+
+    it("gets current air pollution", async () => {
+        let pollution = await weather.getCurrentAirPollution({ locationName: "Paris" })
+        assert(Object.values(pollution.components).every(v => typeof v === "number"))
+    })
+
+    it("gets forecasted air pollution", async () => {
+        let pollution = await weather.getForecastedAirPollution(10, { locationName: "Chicago" })
+        assert(pollution.length == 10 && Object.values(pollution[Math.floor(Math.random() * 9)].components).every(v => typeof v === "number"))
+    })
+
+    it("gets historical air pollution", async () => {
+        let currentDate = new Date()
+        let dateFrom12HoursAgo = new Date().setHours(currentDate.getHours() - 12)
+        let pollution = await weather.getHistoryAirPollution(dateFrom12HoursAgo, currentDate, { coordinates: { lat: 10, lon: 10 } })
+        assert(pollution.length == 12 && Object.values(pollution[Math.floor(Math.random() * 10)].components).every(v => typeof v === "number"))
     })
 
 })
