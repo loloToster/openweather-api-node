@@ -8,8 +8,8 @@ function listParser(data, limit) {
     for (let i = 0; i < limit && i < data.list.length; i++) {
         let element = data.list[i]
         let newElement = getAirPollutionModel()
-        newElement.lat = data.coord[0]
-        newElement.lon = data.coord[1]
+        newElement.lat = data.coord.lat
+        newElement.lon = data.coord.lon
         newElement.dt = new Date(element.dt * 1000)
         newElement.dt_raw = element.dt
         newElement.aqi = element.main.aqi

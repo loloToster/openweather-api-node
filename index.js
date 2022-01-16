@@ -53,7 +53,9 @@ const SUP_LANGS = [
 
 const API_ENDPOINT = "https://api.openweathermap.org/",
     GEO_PATH = "geo/1.0/",
-    DATA_PATH = "data/2.5/onecall"
+    DATA_PATH = "data/2.5",
+    ONECALL_PATH = DATA_PATH + "/onecall",
+    AIR_POLLUTION_PATH = DATA_PATH + "/air_pollution"
 
 const axios = require("axios").default
 
@@ -61,6 +63,9 @@ const currentParser = require("./parsers/weather/current-parser"),
     minutelyParser = require("./parsers/weather/minutely-parser"),
     hourlyParser = require("./parsers/weather/hourly-parser"),
     dailyParser = require("./parsers/weather/daily-parser")
+
+const singleAirPollutionParser = require("./parsers/air-pollution/single-parser"),
+    listAirPollutionParser = require("./parsers/air-pollution/list-parser")
 
 function isObject(item) {
     return item && typeof item === "object" && !Array.isArray(item)
@@ -339,7 +344,13 @@ class OpenWeatherAPI {
     async getCurrent(options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, "alerts,minutely,hourly,daily"))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH, { exclude: "alerts,minutely,hourly,daily" }
+            )
+        )
+
         let data = response.data
         return currentParser(data)
     }
@@ -354,7 +365,13 @@ class OpenWeatherAPI {
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, "alerts,current,hourly,daily"))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH, { exclude: "alerts,current,hourly,daily" }
+            )
+        )
+
         let data = response.data
         return minutelyParser(data, limit)
     }
@@ -369,7 +386,13 @@ class OpenWeatherAPI {
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,daily"))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH, { exclude: "alerts,current,minutely,daily" }
+            )
+        )
+
         let data = response.data
         return hourlyParser(data, limit)
     }
@@ -384,7 +407,13 @@ class OpenWeatherAPI {
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, "alerts,current,minutely,hourly"))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH, { exclude: "alerts,current,minutely,hourly" }
+            )
+        )
+
         let data = response.data
         if (!includeToday)
             data.daily.shift()
@@ -410,7 +439,13 @@ class OpenWeatherAPI {
     async getAlerts(options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, "current,minutely,hourly,daily"))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH, { exclude: "current,minutely,hourly,daily" }
+            )
+        )
+
         let data = response.data
         return data.alerts
     }
@@ -424,7 +459,13 @@ class OpenWeatherAPI {
     async getEverything(options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH
+            )
+        )
+
         let data = response.data
         return {
             lat: data.lat,
@@ -449,7 +490,13 @@ class OpenWeatherAPI {
         await this.#uncacheLocation(options.key)
         dt = Math.round(new Date(dt).getTime() / 1000)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(this.#createURL(options, false, dt))
+
+        let response = await this.#fetch(
+            this.#createURL(
+                options, ONECALL_PATH + "/timemachine", { dt }
+            )
+        )
+
         let data = response.data
         return {
             lat: data.lat,
@@ -484,6 +531,14 @@ class OpenWeatherAPI {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
 
+        let response = await this.#fetch(
+            this.#createURL(
+                options, AIR_POLLUTION_PATH
+            )
+        )
+
+        let data = response.data
+        return singleAirPollutionParser(data)
     }
 
     /**
@@ -496,10 +551,19 @@ class OpenWeatherAPI {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
 
+        let response = await this.#fetch(
+            this.#createURL(
+                options, AIR_POLLUTION_PATH + "/forecast"
+            )
+        )
+
+        let data = response.data
+        return listAirPollutionParser(data, limit)
     }
 
     /**
-     * Getter for historical data about air pollution
+     * Getter for historical data about air pollution 
+     * WARNING: Historical data is accessible from 27th November 2020
      * 
      * @param {Date|Number|String} from
      * @param {Date|Number|String} to
@@ -509,6 +573,17 @@ class OpenWeatherAPI {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
 
+        let response = await this.#fetch(
+            this.#createURL(
+                options, AIR_POLLUTION_PATH + "/history", {
+                start: Math.round(new Date(from).getTime() / 1000),
+                end: Math.round(new Date(to).getTime() / 1000)
+            }
+            )
+        )
+
+        let data = response.data
+        return listAirPollutionParser(data, Number.POSITIVE_INFINITY)
     }
 
     // helpers
@@ -525,19 +600,22 @@ class OpenWeatherAPI {
         }
     }
 
-    #createURL(options, exclude = false, dt = false) {
-        let url = new URL(DATA_PATH + (dt === false ? "" : "/timemachine"), API_ENDPOINT)
+    #createURL(options, path = "", additionalParams = {}) {
+        let url = new URL(path, API_ENDPOINT)
+
         url.searchParams.append("appid", options.key)
         url.searchParams.append("lat", options.coordinates.lat)
         url.searchParams.append("lon", options.coordinates.lon)
+
         if (options.lang)
             url.searchParams.append("lang", options.lang)
         if (options.units)
             url.searchParams.append("units", options.units)
-        if (exclude)
-            url.searchParams.append("exclude", exclude)
-        if (dt)
-            url.searchParams.append("dt", dt)
+
+        for (const [key, value] of Object.entries(additionalParams)) {
+            url.searchParams.append(key, value)
+        }
+
         return url.href
     }
 
