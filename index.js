@@ -85,6 +85,23 @@ function mergeObj(target, ...sources) {
     return mergeObj(target, ...sources)
 }
 
+/**
+ * @typedef Coordinates
+ * @property {Number} lat
+ * @property {Number} lon
+ */
+
+/**
+ * @typedef Options
+ * @property {String} key
+ * @property {String} lang
+ * @property {String} units
+ * @property {Coordinates} coordinates
+ * @property {String} units
+ * @property {String} locationName
+ * @property {String} zipCode
+ */
+
 class OpenWeatherAPI {
 
     #globalOptions = {
@@ -103,7 +120,7 @@ class OpenWeatherAPI {
      * Constructor of the class. You can specify global options here
      * 
      * @constructor
-     * @param {Object} globalOptions - object that defines global options
+     * @param {Options} globalOptions - object that defines global options
      * @returns OpenWeatherAPI object
      */
     constructor(globalOptions = {}) {
@@ -300,7 +317,7 @@ class OpenWeatherAPI {
     /**
      * Getter for location
      * 
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns location
      */
     async getLocation(options = {}) {
@@ -316,7 +333,7 @@ class OpenWeatherAPI {
     /**
      * Getter for current weather
      * 
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns weather object of current weather
      */
     async getCurrent(options = {}) {
@@ -331,7 +348,7 @@ class OpenWeatherAPI {
      * Getter for minutely weather
      * 
      * @param {Number} limit - maximum length of returned array
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns array of Weather objects, one for every next minute (Empty if API returned no info about minutely weather)
      */
     async getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
@@ -346,7 +363,7 @@ class OpenWeatherAPI {
      * Getter for hourly weather
      * 
      * @param {Number} limit - maximum length of returned array
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns array of Weather objects, one for every next hour (Empty if API returned no info about hourly weather)
      */
     async getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {}) {
@@ -361,7 +378,7 @@ class OpenWeatherAPI {
      * 
      * @param {Number} limit - maximum length of returned array
      * @param {Boolean} includeToday - boolean indicating whether to include today's weather in returned array
-     * @param {Object} options - options used only for this call 
+     * @param {Options} options - options used only for this call 
      * @returns array of Weather objects, one for every next day (Empty if API returned no info about daily weather)
      */
     async getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {}) {
@@ -377,7 +394,7 @@ class OpenWeatherAPI {
     /**
      * Getter for today's weather
      * 
-     * @param {Object} options - options used only for this call 
+     * @param {Options} options - options used only for this call 
      * @returns weather object of today's weather **NOT the same as current!**
      */
     async getToday(options = {}) {
@@ -387,7 +404,7 @@ class OpenWeatherAPI {
     /**
      * Getter for alerts
      * 
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns alerts (undefined if API returned no info about alerts)
      */
     async getAlerts(options = {}) {
@@ -401,7 +418,7 @@ class OpenWeatherAPI {
     /**
      * Getter for every type of weather call and alerts
      * 
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      * @returns object that contains everything
      */
     async getEverything(options = {}) {
@@ -426,7 +443,7 @@ class OpenWeatherAPI {
      * Getter for historical data about weather
      * 
      * @param {Date|Number|String} dt - Date from the **previous five days** (Unix time, UTC time zone)
-     * @param {Object} options - options used only for this call
+     * @param {Options} options - options used only for this call
      */
     async getHistory(dt, options = {}) {
         await this.#uncacheLocation(options.key)
@@ -456,6 +473,42 @@ class OpenWeatherAPI {
         if (!Array.isArray(weathers)) throw new Error("Provide list of weather objects")
         weathers.reverse()
         return mergeObj({}, ...weathers)
+    }
+
+    /**
+     * Getter for current data about air pollution
+     * 
+     * @param {Options} options - options used only for this call
+     */
+    async getCurrentAirPollution(options = {}) {
+        await this.#uncacheLocation(options.key)
+        options = await this.#parseOptions(options)
+
+    }
+
+    /**
+     * Getter for future data about air pollution
+     * 
+     * @param {Number} limit - maximum length of returned array
+     * @param {Options} options - options used only for this call
+     */
+    async getForecastedAirPollution(limit = Number.POSITIVE_INFINITY, options = {}) {
+        await this.#uncacheLocation(options.key)
+        options = await this.#parseOptions(options)
+
+    }
+
+    /**
+     * Getter for historical data about air pollution
+     * 
+     * @param {Date|Number|String} from
+     * @param {Date|Number|String} to
+     * @param {Options} options - options used only for this call
+     */
+    async getHistoryAirPollution(from, to, options = {}) {
+        await this.#uncacheLocation(options.key)
+        options = await this.#parseOptions(options)
+
     }
 
     // helpers
