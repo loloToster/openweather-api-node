@@ -26,12 +26,13 @@ Simple package that makes it easy to work with OpenWeather API.
 
 # About
 
-This package is a wrapper for OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: air pollution, maps and all the other stuff that is available for free in OpenWeatherMap API.
+This package is a wrapper for OpenWeather API. If you want to learn how to use this package check out examples in *examples* folder. The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: triggers, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 Currently Supported APIs:
-  * Weather (from OneCall)
-  * Geocoding
-  * Historical (from OneCall)
+  * Weather (from OneCall) - get **current weather** and weather **forecast for up to 7 days**
+  * Geocoding - get location **latitude and longitude from its name** and vice versa
+  * Historical (from OneCall) - get weather from **previous 5 days**
+  * Air pollution - get **current, forecasted and historical data about air pollution**
 
 # Installation
 ```
@@ -63,29 +64,36 @@ weather.getCurrent().then(data => {
 # Docs
 
 * [Methods][methods]
-  * [getGlobalOptions][gglobalopt]
-  * [setKey][skey]
-  * [getKey][gkey]
-  * [setLanguage][slang]
-  * [getLanguage][glang]
-  * [setUnits][sunits]
-  * [getUnits][gunits]
-  * [setLocationByName][slocbyname]
-  * [setLocationByCoordinates][slocbycoor]
-  * [setLocationByZipCode][slocbyzip]
-  * [getLocation][gloc]
-  * [getCurrent][gcur]
-  * [getMinutelyForecast][gminutely]
-  * [getHourlyForecast][ghourly]
-  * [getDailyForecast][gdaily]
-  * [getToday][gtoday]
-  * [getAlerts][galerts]
-  * [getEverything][gevery]
-  * [getHistory][ghis]
-  * [mergeWeathers][mrgweathers]
+  * [Setting & Getting options][gglobalopt]
+    * [getGlobalOptions][gglobalopt]
+    * [setKey][skey]
+    * [getKey][gkey]
+    * [setLanguage][slang]
+    * [getLanguage][glang]
+    * [setUnits][sunits]
+    * [getUnits][gunits]
+    * [setLocationByName][slocbyname]
+    * [setLocationByCoordinates][slocbycoor]
+    * [setLocationByZipCode][slocbyzip]
+    * [getLocation][gloc]
+  * [Getting & Manipulating Weather Data][gcur]
+    * [getCurrent][gcur]
+    * [getMinutelyForecast][gminutely]
+    * [getHourlyForecast][ghourly]
+    * [getDailyForecast][gdaily]
+    * [getToday][gtoday]
+    * [getAlerts][galerts]
+    * [getEverything][gevery]
+    * [getHistory][ghis]
+    * [mergeWeathers][mrgweathers]
+  * [Getting Air Pollution Data][apcur]
+    * [getCurrentAirPollution][apcur]
+    * [getForecastedAirPollution][apfut]
+    * [getHistoryAirPollution][aphis]
 * [Models][models]
   * [Options][opt]
   * [Weather Object][wobj]
+  * [Air Pollution Object][apobj]
 
 # Methods:
 
@@ -510,6 +518,67 @@ let full = weather.mergeWeathers([minutely[20], current])
 ```
 *See also:* [Weather Object][wobj]
 
+## `async` getCurrentAirPollution(options = {})
+
+**Description:**
+
+Getter for current data about air pollution.
+
+**Arguments:**
+* **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+[Air Pollution Object][apobj] with data about current pollution - `Object`
+
+**Example:**
+```js
+let currentAirPollution = await weather.getCurrentAirPollution()
+```
+*See also:* [options][opt], [Air Pollution Object][apobj]
+
+## `async` getForecastedAirPollution(limit = Number.POSITIVE_INFINITY, options = {})
+
+**Description:**
+
+Getter for future data about air pollution. (Only five days ahead)
+
+**Arguments:**
+* limit - maximum length of returned array
+* options - options used only for this call
+
+**Returns:**
+
+Array of [Air Pollution Objects][apobj] with data about future pollution - `Array`
+
+**Example:**
+```js
+let futureAirPollution = await weather.getForecastedAirPollution(12) // limit to 12 hours
+```
+*See also:* [options][opt], [Air Pollution Object][apobj]
+
+## `async` getHistoryAirPollution(from, to, options = {})
+
+**Description:**
+
+Getter for historical data about air pollution\
+**WARNING⚠️**- Historical data is accessible from 27th November 2020
+
+**Arguments:**
+* from - start date (unix time, UTC time zone)
+* to - end date (unix time, UTC time zone)
+* options - options used only for this call
+
+**Returns:**
+
+Array of [Air Pollution Objects][apobj] with data about historical pollution - `Array`
+
+**Example:**
+```js
+let historyAirPollution = await weather.getHistoryAirPollution(new Date(2021, 9, 27), new Date(2021, 10, 11)) // get data from 27 October 2021 to 11 November 2021
+```
+*See also:* [options][opt], [Air Pollution Object][apobj]
+
 # Models
 
 ## Options
@@ -613,9 +682,33 @@ When using raw API the problem might be getting your head around how unorganised
 ```
 **⚠️ API does not specify every value in every call so some of those values might be `undefined` for example daily weather object won't have weather.temp.cur!**
 
+## Air Pollution Object
+```js
+// property: "Description" - type
+{
+    lat: "Geographical coordinates of the location (latitude)" - Number,
+    lon: "Geographical coordinates of the location (longitude)" - Number,
+    dt: "Date and time, UTC" - Date,
+    dt_raw: "Date and time, Unix, UTC" - Number,
+    aqi: "Air Quality Index" - Number,
+    aqi_name: "String substitute of aqi field (only english)" - String,
+    components: {
+        co: "Сoncentration of CO (Carbon monoxide), μg/m3" - Number,
+        no: "Сoncentration of NO (Nitrogen monoxide), μg/m3" - Number,
+        no2: "Сoncentration of NO2 (Nitrogen dioxide), μg/m3" - Number,
+        o3: "Сoncentration of O3 (Ozone), μg/m3" - Number,
+        so2: "Сoncentration of SO2 (Sulphur dioxide), μg/m3" - Number,
+        pm2_5: "Сoncentration of PM2.5 (Fine particles matter), μg/m3" - Number,
+        pm10: "Сoncentration of PM10 (Coarse particulate matter), μg/m3" - Number,
+        nh3: "Сoncentration of NH3 (Ammonia), μg/m3" - Number
+    }
+}
+```
+
 [models]: #models
 [opt]: #options
 [wobj]: #weather-object
+[apobj]: #air-pollution-object
 [methods]: #methods
 [gglobalopt]: #getglobaloptions
 [skey]: #setkeykey
@@ -637,3 +730,6 @@ When using raw API the problem might be getting your head around how unorganised
 [gevery]: #async-geteverythingoptions--
 [ghis]: #async-gethistorydt-options--
 [mrgweathers]: #mergeweathersweathers
+[apcur]: #async-getcurrentairpollutionoptions--
+[apfut]: #async-getforecastedairpollutionlimit--numberpositive_infinity-options--
+[aphis]: #async-gethistoryairpollutionfrom-to-options--
