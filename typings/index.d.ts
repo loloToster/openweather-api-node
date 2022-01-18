@@ -1,11 +1,11 @@
 export = OpenWeatherAPI;
 /**
- * @typedef Coordinates
+ * @typedef {Object} Coordinates
  * @property {Number} lat
  * @property {Number} lon
  */
 /**
- * @typedef Options
+ * @typedef {Object} Options
  * @property {String} [key]
  * @property {Language} [lang]
  * @property {String} [units]
@@ -15,7 +15,7 @@ export = OpenWeatherAPI;
  * @property {String} [zipCode]
  */
 /**
- * @typedef Location
+ * @typedef {Object} Location
  * @property {String} name Name of the found location
  * @property {Object} local_names
  * * local_names.[language code] - Name of the found location in different languages. The list of names can be different for different locations
@@ -23,8 +23,49 @@ export = OpenWeatherAPI;
  * * local_names.feature_name - Internal field
  * @property {Number} lat Geographical coordinates of the found location (latitude)
  * @property {Number} lon Geographical coordinates of the found location (longitude)
- * @property {String} country Geographical coordinates of the found location (longitude)
+ * @property {String} country Country of the found location
  * @property {String|undefined} state State of the found location (where available)
+ */
+/**
+ * @typedef {Object} Alert
+ * @property {String} sender_name Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
+ * @property {String} event Alert event name
+ * @property {Number} start Date and time of the start of the alert, Unix, UTC
+ * @property {Number} end Date and time of the end of the alert, Unix, UTC
+ * @property {String} description Description of the alert
+ * @property {String[]} tags Type of severe weather
+ */
+/**
+ * @typedef {import("./parsers/weather/current-parser").CurrentWeather} CurrentWeather
+ * @typedef {import("./parsers/weather/minutely-parser").MinutelyWeather} MinutelyWeather
+ * @typedef {import("./parsers/weather/hourly-parser").HourlyWeather} HourlyWeather
+ * @typedef {import("./parsers/weather/daily-parser").DailyWeather} DailyWeather
+ */
+/**
+ * @typedef {Partial<import("./models/weather-model").Astronomical>} Astronomical
+ * @typedef {Partial<import("./models/weather-model").Temperatures>} Temperatures
+ * @typedef {Partial<import("./models/weather-model").FeelsLike>} FeelsLike
+ * @typedef {Partial<import("./models/weather-model").WindData>} WindData
+ * @typedef {Partial<import("./models/weather-model").Icon>} Icon
+ */
+/**
+ * @typedef {Object} Conditions
+ * @property {Temperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {FeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {Number} [pressure] Atmospheric pressure on the sea level, hPa
+ * @property {Number} [humidity] Humidity, %
+ * @property {Number} [dew_point] Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {Number} [clouds] Cloudiness, %
+ * @property {Number} [uvi] The maximum value of UV index for the day
+ * @property {Number} [visibility] Average visibility, metres
+ * @property {WindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+ * @property {Number} [pop] Probability of precipitation
+ * @property {Number} rain Precipitation volume, mm
+ * @property {Number} [snow] Snow volume, mm
+ * @property {Number} [condition_id] Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
+ * @property {String} [main] Group of weather parameters (Rain, Snow, Extreme etc.)
+ * @property {String} [description] Description of the weather
+ * @property {Icon} icon
  */
 declare class OpenWeatherAPI {
     /**
@@ -117,7 +158,7 @@ declare class OpenWeatherAPI {
      * @param {Options} [options={}] - options used only for this call
      * @returns array of Weather objects, one for every next minute (Empty if API returned no info about minutely weather)
      */
-    getMinutelyForecast(limit?: number, options?: Options): Promise<minutelyParser.MinutelyWeather>;
+    getMinutelyForecast(limit?: number, options?: Options): Promise<minutelyParser.MinutelyWeather[]>;
     /**
      * Getter for hourly weather
      *
@@ -125,7 +166,7 @@ declare class OpenWeatherAPI {
      * @param {Options} [options={}] - options used only for this call
      * @returns array of Weather objects, one for every next hour (Empty if API returned no info about hourly weather)
      */
-    getHourlyForecast(limit?: number, options?: Options): Promise<hourlyParser.HourlyWeather>;
+    getHourlyForecast(limit?: number, options?: Options): Promise<hourlyParser.HourlyWeather[]>;
     /**
      *
      * @param {Number} [limit=Number.POSITIVE_INFINITY] - maximum length of returned array
@@ -133,7 +174,7 @@ declare class OpenWeatherAPI {
      * @param {Options} [options={}] - options used only for this call
      * @returns array of Weather objects, one for every next day (Empty if API returned no info about daily weather)
      */
-    getDailyForecast(limit?: number, includeToday?: boolean, options?: Options): Promise<dailyParser.DailyWeather>;
+    getDailyForecast(limit?: number, includeToday?: boolean, options?: Options): Promise<dailyParser.DailyWeather[]>;
     /**
      * Getter for today's weather
      *
@@ -142,47 +183,13 @@ declare class OpenWeatherAPI {
      */
     getToday(options?: Options): Promise<dailyParser.DailyWeather>;
     /**
-     * @typedef {Object} Alert
-     * @property {String} sender_name Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
-     * @property {String} event Alert event name
-     * @property {Number} start Date and time of the start of the alert, Unix, UTC
-     * @property {Number} end Date and time of the end of the alert, Unix, UTC
-     * @property {String} description Description of the alert
-     * @property {String[]} tags Type of severe weather
-     */
-    /**
      * Getter for alerts\
      * **Note:** some agencies provide the alert’s description only in a local language.
      *
      * @param {Options} [options={}] - options used only for this call
      * @returns {Promise<Alert[]>} alerts
      */
-    getAlerts(options?: Options): Promise<{
-        /**
-         * Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
-         */
-        sender_name: string;
-        /**
-         * Alert event name
-         */
-        event: string;
-        /**
-         * Date and time of the start of the alert, Unix, UTC
-         */
-        start: number;
-        /**
-         * Date and time of the end of the alert, Unix, UTC
-         */
-        end: number;
-        /**
-         * Description of the alert
-         */
-        description: string;
-        /**
-         * Type of severe weather
-         */
-        tags: string[];
-    }[]>;
+    getAlerts(options?: Options): Promise<Alert[]>;
     /**
      * Getter for every type of weather call and alerts
      *
@@ -208,32 +215,7 @@ declare class OpenWeatherAPI {
         minutely: minutelyParser.MinutelyWeather;
         hourly: hourlyParser.HourlyWeather;
         daily: dailyParser.DailyWeather;
-        alerts: {
-            /**
-             * Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
-             */
-            sender_name: string;
-            /**
-             * Alert event name
-             */
-            event: string;
-            /**
-             * Date and time of the start of the alert, Unix, UTC
-             */
-            start: number;
-            /**
-             * Date and time of the end of the alert, Unix, UTC
-             */
-            end: number;
-            /**
-             * Description of the alert
-             */
-            description: string;
-            /**
-             * Type of severe weather
-             */
-            tags: string[];
-        }[];
+        alerts: Alert[];
     }>;
     /**
      * Getter for historical data about weather
@@ -292,7 +274,7 @@ declare class OpenWeatherAPI {
     #private;
 }
 declare namespace OpenWeatherAPI {
-    export { Language, Unit, Coordinates, Options, Location };
+    export { Language, Unit, Coordinates, Options, Location, Alert, CurrentWeather, MinutelyWeather, HourlyWeather, DailyWeather, Astronomical, Temperatures, FeelsLike, WindData, Icon, Conditions };
 }
 type Options = {
     key?: string;
@@ -324,7 +306,7 @@ type Location = {
      */
     lon: number;
     /**
-     * Geographical coordinates of the found location (longitude)
+     * Country of the found location
      */
     country: string;
     /**
@@ -336,7 +318,105 @@ import currentParser = require("./parsers/weather/current-parser");
 import minutelyParser = require("./parsers/weather/minutely-parser");
 import hourlyParser = require("./parsers/weather/hourly-parser");
 import dailyParser = require("./parsers/weather/daily-parser");
+type DailyWeather = import("./parsers/weather/daily-parser").DailyWeather;
+type Alert = {
+    /**
+     * Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
+     */
+    sender_name: string;
+    /**
+     * Alert event name
+     */
+    event: string;
+    /**
+     * Date and time of the start of the alert, Unix, UTC
+     */
+    start: number;
+    /**
+     * Date and time of the end of the alert, Unix, UTC
+     */
+    end: number;
+    /**
+     * Description of the alert
+     */
+    description: string;
+    /**
+     * Type of severe weather
+     */
+    tags: string[];
+};
+type CurrentWeather = import("./parsers/weather/current-parser").CurrentWeather;
+type MinutelyWeather = import("./parsers/weather/minutely-parser").MinutelyWeather;
+type HourlyWeather = import("./parsers/weather/hourly-parser").HourlyWeather;
 type Coordinates = {
     lat: number;
     lon: number;
+};
+type Astronomical = Partial<import("./models/weather-model").Astronomical>;
+type Temperatures = Partial<import("./models/weather-model").Temperatures>;
+type FeelsLike = Partial<import("./models/weather-model").FeelsLike>;
+type WindData = Partial<import("./models/weather-model").WindData>;
+type Icon = Partial<import("./models/weather-model").Icon>;
+type Conditions = {
+    /**
+     * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+     */
+    temp: Temperatures;
+    /**
+     * This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+     */
+    feels_like: FeelsLike;
+    /**
+     * Atmospheric pressure on the sea level, hPa
+     */
+    pressure?: number;
+    /**
+     * Humidity, %
+     */
+    humidity?: number;
+    /**
+     * Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+     */
+    dew_point?: number;
+    /**
+     * Cloudiness, %
+     */
+    clouds?: number;
+    /**
+     * The maximum value of UV index for the day
+     */
+    uvi?: number;
+    /**
+     * Average visibility, metres
+     */
+    visibility?: number;
+    /**
+     * Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+     */
+    wind: WindData;
+    /**
+     * Probability of precipitation
+     */
+    pop?: number;
+    /**
+     * Precipitation volume, mm
+     */
+    rain: number;
+    /**
+     * Snow volume, mm
+     */
+    snow?: number;
+    /**
+     * Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
+     */
+    condition_id?: number;
+    /**
+     * Group of weather parameters (Rain, Snow, Extreme etc.)
+     */
+    main?: string;
+    /**
+     * Description of the weather
+     */
+    description?: string;
+    icon: Icon;
 };

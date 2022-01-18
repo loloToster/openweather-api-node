@@ -100,13 +100,13 @@ function mergeObj(target, ...sources) {
 }
 
 /**
- * @typedef Coordinates
+ * @typedef {Object} Coordinates
  * @property {Number} lat
  * @property {Number} lon
  */
 
 /**
- * @typedef Options
+ * @typedef {Object} Options
  * @property {String} [key]
  * @property {Language} [lang]
  * @property {String} [units]
@@ -117,7 +117,7 @@ function mergeObj(target, ...sources) {
  */
 
 /**
- * @typedef Location 
+ * @typedef {Object} Location 
  * @property {String} name Name of the found location 
  * @property {Object} local_names 
  * * local_names.[language code] - Name of the found location in different languages. The list of names can be different for different locations
@@ -127,6 +127,51 @@ function mergeObj(target, ...sources) {
  * @property {Number} lon Geographical coordinates of the found location (longitude)
  * @property {String} country Country of the found location
  * @property {String|undefined} state State of the found location (where available) 
+ */
+
+/**
+ * @typedef {Object} Alert
+ * @property {String} sender_name Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
+ * @property {String} event Alert event name
+ * @property {Number} start Date and time of the start of the alert, Unix, UTC 
+ * @property {Number} end Date and time of the end of the alert, Unix, UTC 
+ * @property {String} description Description of the alert
+ * @property {String[]} tags Type of severe weather
+ */
+
+/**
+ * @typedef {import("./parsers/weather/current-parser").CurrentWeather} CurrentWeather
+ * @typedef {import("./parsers/weather/minutely-parser").MinutelyWeather} MinutelyWeather
+ * @typedef {import("./parsers/weather/hourly-parser").HourlyWeather} HourlyWeather
+ * @typedef {import("./parsers/weather/daily-parser").DailyWeather} DailyWeather
+ */
+
+/**
+ * @typedef {Partial<import("./models/weather-model").Astronomical>} Astronomical
+ * @typedef {Partial<import("./models/weather-model").Temperatures>} Temperatures
+ * @typedef {Partial<import("./models/weather-model").FeelsLike>} FeelsLike
+ * @typedef {Partial<import("./models/weather-model").WindData>} WindData
+ * @typedef {Partial<import("./models/weather-model").Icon>} Icon
+ */
+
+/**
+ * @typedef {Object} Conditions
+ * @property {Temperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {FeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {Number} [pressure] Atmospheric pressure on the sea level, hPa
+ * @property {Number} [humidity] Humidity, %
+ * @property {Number} [dew_point] Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {Number} [clouds] Cloudiness, %
+ * @property {Number} [uvi] The maximum value of UV index for the day
+ * @property {Number} [visibility] Average visibility, metres
+ * @property {WindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+ * @property {Number} [pop] Probability of precipitation
+ * @property {Number} rain Precipitation volume, mm
+ * @property {Number} [snow] Snow volume, mm
+ * @property {Number} [condition_id] Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
+ * @property {String} [main] Group of weather parameters (Rain, Snow, Extreme etc.)
+ * @property {String} [description] Description of the weather
+ * @property {Icon} icon
  */
 
 class OpenWeatherAPI {
@@ -454,16 +499,6 @@ class OpenWeatherAPI {
     }
 
     // ToDo: Add Date() substitues to start and end: 
-
-    /**
-     * @typedef {Object} Alert
-     * @property {String} sender_name Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
-     * @property {String} event Alert event name
-     * @property {Number} start Date and time of the start of the alert, Unix, UTC 
-     * @property {Number} end Date and time of the end of the alert, Unix, UTC 
-     * @property {String} description Description of the alert
-     * @property {String[]} tags Type of severe weather
-     */
 
     /**
      * Getter for alerts\

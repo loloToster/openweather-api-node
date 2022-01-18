@@ -1,6 +1,6 @@
 export = minutelyParser;
 /**
- * @typedef {Object} Conditions
+ * @typedef {Object} MinutelyConditions
  * @property {{}} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {{}} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {{}} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
@@ -16,14 +16,14 @@ export = minutelyParser;
  * @property {String} timezone Date and time, Unix, UTC
  * @property {Number} timezone_offset Date and time, Unix, UTC
  * @property {{}} astronomical
- * @property {Conditions} weather
+ * @property {MinutelyConditions} weather
  */
 /**
- * @returns {MinutelyWeather}
+ * @returns {MinutelyWeather[]}
  */
-declare function minutelyParser(data: any, limit: any): MinutelyWeather;
+declare function minutelyParser(data: any, limit: any): MinutelyWeather[];
 declare namespace minutelyParser {
-    export { Conditions, MinutelyWeather };
+    export { MinutelyConditions, MinutelyWeather };
 }
 type MinutelyWeather = {
     /**
@@ -51,9 +51,9 @@ type MinutelyWeather = {
      */
     timezone_offset: number;
     astronomical: {};
-    weather: Conditions;
+    weather: MinutelyConditions;
 };
-type Conditions = {
+type MinutelyConditions = {
     /**
      * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
      */

@@ -1,7 +1,7 @@
 const getWeatherModel = require("../../models/weather-model")
 
 /**
- * @typedef {Object} Astronomical
+ * @typedef {Object} DailyAstronomical
  * @property {Date} sunrise Sunrise time, Unix, UTC
  * @property {Number} sunrise_raw
  * @property {Date} sunset Sunset time, Unix, UTC
@@ -14,7 +14,7 @@ const getWeatherModel = require("../../models/weather-model")
  */
 
 /**
- * @typedef {Object} Temperatures
+ * @typedef {Object} DailyTemperatures
  * @property {Number} morn Morning temperature
  * @property {Number} day Day temperature
  * @property {Number} eve Evening temperature
@@ -24,7 +24,7 @@ const getWeatherModel = require("../../models/weather-model")
  */
 
 /**
- * @typedef {Object} FeelsLike
+ * @typedef {Object} DailyFeelsLike
  * @property {Number} morn Morning temperature
  * @property {Number} day Day temperature
  * @property {Number} eve Evening temperature
@@ -32,35 +32,35 @@ const getWeatherModel = require("../../models/weather-model")
  */
 
 /**
- * @typedef {Object} WindData
+ * @typedef {Object} DailyWindData
  * @property {Number} speed Wind speed
  * @property {Number} gust Wind gust
  * @property {Number} deg Wind direction, degrees (meteorological)
  */
 
 /**
- * @typedef {Object} Icon
+ * @typedef {Object} DailyIcon
  * @property {String} url Weather icon url
  * @property {String} raw Weather icon id
  */
 
 /**
- * @typedef {Object} Conditions
- * @property {Temperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
- * @property {FeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @typedef {Object} DailyConditions
+ * @property {DailyTemperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {DailyFeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} pressure Atmospheric pressure on the sea level, hPa
  * @property {Number} humidity Humidity, %
  * @property {Number} dew_point Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} clouds Cloudiness, %
  * @property {Number} uvi The maximum value of UV index for the day
- * @property {WindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+ * @property {DailyWindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
  * @property {Number} pop Probability of precipitation
  * @property {Number} rain Precipitation volume, mm
  * @property {Number} snow Snow volume, mm
  * @property {Number} condition_id Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
  * @property {String} main Group of weather parameters (Rain, Snow, Extreme etc.)
  * @property {String} description Description of the weather
- * @property {Icon} icon
+ * @property {DailyIcon} icon
  */
 
 /**
@@ -71,13 +71,13 @@ const getWeatherModel = require("../../models/weather-model")
  * @property {Number} dt_raw Date and time, Unix, UTC
  * @property {String} timezone Date and time, Unix, UTC
  * @property {Number} timezone_offset Date and time, Unix, UTC
- * @property {Astronomical} astronomical
- * @property {Conditions} weather
+ * @property {DailyAstronomical} astronomical
+ * @property {DailyConditions} weather
  */
 
 
 /**
- * @returns {DailyWeather}
+ * @returns {DailyWeather[]}
  */
 function dailyParser(data, limit) {
     if (!data.daily) return []

@@ -1,6 +1,6 @@
 export = dailyParser;
 /**
- * @typedef {Object} Astronomical
+ * @typedef {Object} DailyAstronomical
  * @property {Date} sunrise Sunrise time, Unix, UTC
  * @property {Number} sunrise_raw
  * @property {Date} sunset Sunset time, Unix, UTC
@@ -12,7 +12,7 @@ export = dailyParser;
  * @property {Number} moon_phase Moon phase. 0 and 1 are 'new moon', 0.25 is 'first quarter moon', 0.5 is 'full moon' and 0.75 is 'last quarter moon'. The periods in between are called 'waxing crescent', 'waxing gibous', 'waning gibous', and 'waning crescent', respectively.
  */
 /**
- * @typedef {Object} Temperatures
+ * @typedef {Object} DailyTemperatures
  * @property {Number} morn Morning temperature
  * @property {Number} day Day temperature
  * @property {Number} eve Evening temperature
@@ -21,40 +21,40 @@ export = dailyParser;
  * @property {Number} max Highest daily temperature
  */
 /**
- * @typedef {Object} FeelsLike
+ * @typedef {Object} DailyFeelsLike
  * @property {Number} morn Morning temperature
  * @property {Number} day Day temperature
  * @property {Number} eve Evening temperature
  * @property {Number} night Night temperature
  */
 /**
- * @typedef {Object} WindData
+ * @typedef {Object} DailyWindData
  * @property {Number} speed Wind speed
  * @property {Number} gust Wind gust
  * @property {Number} deg Wind direction, degrees (meteorological)
  */
 /**
- * @typedef {Object} Icon
+ * @typedef {Object} DailyIcon
  * @property {String} url Weather icon url
  * @property {String} raw Weather icon id
  */
 /**
- * @typedef {Object} Conditions
- * @property {Temperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
- * @property {FeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @typedef {Object} DailyConditions
+ * @property {DailyTemperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {DailyFeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} pressure Atmospheric pressure on the sea level, hPa
  * @property {Number} humidity Humidity, %
  * @property {Number} dew_point Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} clouds Cloudiness, %
  * @property {Number} uvi The maximum value of UV index for the day
- * @property {WindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+ * @property {DailyWindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
  * @property {Number} pop Probability of precipitation
  * @property {Number} rain Precipitation volume, mm
  * @property {Number} snow Snow volume, mm
  * @property {Number} condition_id Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
  * @property {String} main Group of weather parameters (Rain, Snow, Extreme etc.)
  * @property {String} description Description of the weather
- * @property {Icon} icon
+ * @property {DailyIcon} icon
  */
 /**
  * @typedef {Object} DailyWeather
@@ -64,15 +64,15 @@ export = dailyParser;
  * @property {Number} dt_raw Date and time, Unix, UTC
  * @property {String} timezone Date and time, Unix, UTC
  * @property {Number} timezone_offset Date and time, Unix, UTC
- * @property {Astronomical} astronomical
- * @property {Conditions} weather
+ * @property {DailyAstronomical} astronomical
+ * @property {DailyConditions} weather
  */
 /**
- * @returns {DailyWeather}
+ * @returns {DailyWeather[]}
  */
-declare function dailyParser(data: any, limit: any): DailyWeather;
+declare function dailyParser(data: any, limit: any): DailyWeather[];
 declare namespace dailyParser {
-    export { Astronomical, Temperatures, FeelsLike, WindData, Icon, Conditions, DailyWeather };
+    export { DailyAstronomical, DailyTemperatures, DailyFeelsLike, DailyWindData, DailyIcon, DailyConditions, DailyWeather };
 }
 type DailyWeather = {
     /**
@@ -99,10 +99,10 @@ type DailyWeather = {
      * Date and time, Unix, UTC
      */
     timezone_offset: number;
-    astronomical: Astronomical;
-    weather: Conditions;
+    astronomical: DailyAstronomical;
+    weather: DailyConditions;
 };
-type Astronomical = {
+type DailyAstronomical = {
     /**
      * Sunrise time, Unix, UTC
      */
@@ -128,7 +128,7 @@ type Astronomical = {
      */
     moon_phase: number;
 };
-type Temperatures = {
+type DailyTemperatures = {
     /**
      * Morning temperature
      */
@@ -154,7 +154,7 @@ type Temperatures = {
      */
     max: number;
 };
-type FeelsLike = {
+type DailyFeelsLike = {
     /**
      * Morning temperature
      */
@@ -172,7 +172,7 @@ type FeelsLike = {
      */
     night: number;
 };
-type WindData = {
+type DailyWindData = {
     /**
      * Wind speed
      */
@@ -186,7 +186,7 @@ type WindData = {
      */
     deg: number;
 };
-type Icon = {
+type DailyIcon = {
     /**
      * Weather icon url
      */
@@ -196,15 +196,15 @@ type Icon = {
      */
     raw: string;
 };
-type Conditions = {
+type DailyConditions = {
     /**
      * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
      */
-    temp: Temperatures;
+    temp: DailyTemperatures;
     /**
      * This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
      */
-    feels_like: FeelsLike;
+    feels_like: DailyFeelsLike;
     /**
      * Atmospheric pressure on the sea level, hPa
      */
@@ -228,7 +228,7 @@ type Conditions = {
     /**
      * Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
      */
-    wind: WindData;
+    wind: DailyWindData;
     /**
      * Probability of precipitation
      */
@@ -253,5 +253,5 @@ type Conditions = {
      * Description of the weather
      */
     description: string;
-    icon: Icon;
+    icon: DailyIcon;
 };

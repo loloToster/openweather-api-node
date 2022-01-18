@@ -1,7 +1,7 @@
 const getWeatherModel = require("../../models/weather-model")
 
 /**
- * @typedef {Object} Conditions
+ * @typedef {Object} MinutelyConditions
  * @property {{}} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {{}} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {{}} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
@@ -18,11 +18,11 @@ const getWeatherModel = require("../../models/weather-model")
  * @property {String} timezone Date and time, Unix, UTC
  * @property {Number} timezone_offset Date and time, Unix, UTC
  * @property {{}} astronomical
- * @property {Conditions} weather
+ * @property {MinutelyConditions} weather
  */
 
 /**
- * @returns {MinutelyWeather}
+ * @returns {MinutelyWeather[]}
  */
 function minutelyParser(data, limit) {
     if (!data.minutely) return []

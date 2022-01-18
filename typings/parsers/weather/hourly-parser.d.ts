@@ -1,41 +1,41 @@
 export = hourlyParser;
 /**
- * @typedef {Object} Temperatures
+ * @typedef {Object} HourlyTemperatures
  * @property {Number} cur Current temperature or estimated temperature (in hourly forecast)
  */
 /**
- * @typedef {Object} FeelsLike
+ * @typedef {Object} HourlyFeelsLike
  * @property {Number} cur Current temperature or estimated temperature (in hourly forecast)
  */
 /**
- * @typedef {Object} WindData
+ * @typedef {Object} HourlyWindData
  * @property {Number} speed Wind speed
  * @property {Number} gust Wind gust
  * @property {Number} deg Wind direction, degrees (meteorological)
  */
 /**
- * @typedef {Object} Icon
+ * @typedef {Object} HourlyIcon
  * @property {String} url Weather icon url
  * @property {String} raw Weather icon id
  */
 /**
- * @typedef {Object} Conditions
- * @property {Temperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
- * @property {FeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @typedef {Object} HourlyConditions
+ * @property {HourlyTemperatures} temp Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+ * @property {HourlyFeelsLike} feels_like This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} pressure Atmospheric pressure on the sea level, hPa
  * @property {Number} humidity Humidity, %
  * @property {Number} dew_point Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
  * @property {Number} clouds Cloudiness, %
  * @property {Number} uvi The maximum value of UV index for the day
  * @property {Number} visibility Average visibility, metres
- * @property {WindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
+ * @property {HourlyWindData} wind Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
  * @property {Number} pop Probability of precipitation
  * @property {Number} rain Precipitation volume, mm
  * @property {Number} snow Snow volume, mm
  * @property {Number} condition_id Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
  * @property {String} main Group of weather parameters (Rain, Snow, Extreme etc.)
  * @property {String} description Description of the weather
- * @property {Icon} icon
+ * @property {HourlyIcon} icon
  */
 /**
  * @typedef {Object} HourlyWeather
@@ -46,14 +46,14 @@ export = hourlyParser;
  * @property {String} timezone Date and time, Unix, UTC
  * @property {Number} timezone_offset Date and time, Unix, UTC
  * @property {{}} astronomical
- * @property {Conditions} weather
+ * @property {HourlyConditions} weather
  */
 /**
- * @returns {HourlyWeather}
+ * @returns {HourlyWeather[]}
  */
-declare function hourlyParser(data: any, limit: any): HourlyWeather;
+declare function hourlyParser(data: any, limit: any): HourlyWeather[];
 declare namespace hourlyParser {
-    export { Temperatures, FeelsLike, WindData, Icon, Conditions, HourlyWeather };
+    export { HourlyTemperatures, HourlyFeelsLike, HourlyWindData, HourlyIcon, HourlyConditions, HourlyWeather };
 }
 type HourlyWeather = {
     /**
@@ -81,21 +81,21 @@ type HourlyWeather = {
      */
     timezone_offset: number;
     astronomical: {};
-    weather: Conditions;
+    weather: HourlyConditions;
 };
-type Temperatures = {
+type HourlyTemperatures = {
     /**
      * Current temperature or estimated temperature (in hourly forecast)
      */
     cur: number;
 };
-type FeelsLike = {
+type HourlyFeelsLike = {
     /**
      * Current temperature or estimated temperature (in hourly forecast)
      */
     cur: number;
 };
-type WindData = {
+type HourlyWindData = {
     /**
      * Wind speed
      */
@@ -109,7 +109,7 @@ type WindData = {
      */
     deg: number;
 };
-type Icon = {
+type HourlyIcon = {
     /**
      * Weather icon url
      */
@@ -119,15 +119,15 @@ type Icon = {
      */
     raw: string;
 };
-type Conditions = {
+type HourlyConditions = {
     /**
      * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
      */
-    temp: Temperatures;
+    temp: HourlyTemperatures;
     /**
      * This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
      */
-    feels_like: FeelsLike;
+    feels_like: HourlyFeelsLike;
     /**
      * Atmospheric pressure on the sea level, hPa
      */
@@ -155,7 +155,7 @@ type Conditions = {
     /**
      * Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.
      */
-    wind: WindData;
+    wind: HourlyWindData;
     /**
      * Probability of precipitation
      */
@@ -180,5 +180,5 @@ type Conditions = {
      * Description of the weather
      */
     description: string;
-    icon: Icon;
+    icon: HourlyIcon;
 };
