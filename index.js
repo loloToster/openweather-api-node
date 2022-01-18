@@ -125,7 +125,7 @@ function mergeObj(target, ...sources) {
  * * local_names.feature_name - Internal field
  * @property {Number} lat Geographical coordinates of the found location (latitude)
  * @property {Number} lon Geographical coordinates of the found location (longitude)
- * @property {String} country Geographical coordinates of the found location (longitude)
+ * @property {String} country Country of the found location
  * @property {String|undefined} state State of the found location (where available) 
  */
 
@@ -452,6 +452,8 @@ class OpenWeatherAPI {
     async getToday(options = {}) {
         return (await this.getDailyForecast(1, true, options))[0]
     }
+
+    // ToDo: Add Date() substitues to start and end: 
 
     /**
      * @typedef {Object} Alert
