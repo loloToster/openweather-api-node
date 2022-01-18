@@ -1,0 +1,15 @@
+{
+  "include": [
+    "index.js",
+    "models",
+    "parsers"
+  ],
+  "compilerOptions": {
+    "target": "ES6",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "typings",
+  }
+}

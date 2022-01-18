@@ -12,6 +12,8 @@
     "openweathermap",
     "meteo",
     "weather-api",
+    "air",
+    "pollution",
     "api"
   ],
   "author": "loloToster",
@@ -33,5 +35,6 @@
   "directories": {
     "example": "examples",
     "test": "test"
-  }
+  },
+  "types": "typings/index.d.js"
 }

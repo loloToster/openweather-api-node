@@ -1,0 +1,5 @@
+node_modules/
+.github/
+temp.*
+key.txt
+tsconfig.json
