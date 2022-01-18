@@ -120,6 +120,7 @@ weather.getCurrent().then(data => {
   * [Weather Object][wobj]
   * [Air Pollution Object][apobj]
   * [Alert Object][aobj]
+  * [Location Object][lobj]
 
 # Methods:
 
@@ -310,7 +311,7 @@ Getter for location.
 
 **Returns:**
 
-location - `Object`
+[Location Object][lobj] - `Object`
 
 **Example:**
 ```js
@@ -708,6 +709,24 @@ When using raw API the problem might be getting your head around how unorganised
 ```
 **⚠️ API does not specify every value in every call so some of those values might be `undefined` for example daily weather object won't have weather.temp.cur!**
 
+## Location Object
+```js
+// property: "Description" - type
+{
+    lat: "Geographical coordinates of the found location (latitude)" - Number,
+    lon: "Geographical coordinates of the found location (longitude)" - Number,
+    name: "Name of the found location" - String,
+    country: "Country of the found location" - Number,
+    state: "State of the found location (where available) " - String | undefined,
+    aqi_name: "String substitute of aqi field (only english)" - String,
+    local_names: {
+        [language_code]: "Name of the found location in different languages. The list of names can be different for different locations" - String,
+        ascii: "Internal field" - String,
+        feature_name: "Сoncentration of NO2 (Nitrogen dioxide), μg/m3" - String
+    }
+}
+```
+
 ## Air Pollution Object
 ```js
 // property: "Description" - type
@@ -748,6 +767,7 @@ When using raw API the problem might be getting your head around how unorganised
 [models]: #models
 [opt]: #options
 [wobj]: #weather-object
+[lobj]: #location-object
 [apobj]: #air-pollution-object
 [aobj]: #alert-object
 [methods]: #methods
