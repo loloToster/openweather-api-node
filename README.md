@@ -15,7 +15,7 @@ Simple package that makes it easy to work with OpenWeather API.
 <a href="https://npmjs.org/package/openweather-api-node">
     <img src="https://img.shields.io/npm/dt/openweather-api-node?style=flat-square" alt="Version">
 </a>
-<a href="https://npmjs.org/package/openweather-api-node">
+<a href="https://github.com/loloToster/openweather-api-node/issues">
     <img src="https://img.shields.io/github/issues-raw/loloToster/openweather-api-node?style=flat-square" alt="Issues">
 </a>
 <a href="https://github.com/loloToster/openweather-api-node/blob/master/LICENSE">
@@ -40,8 +40,33 @@ npm i openweather-api-node
 ```
 
 # Simple Example
+## JS:
 ```js
 const OpenWeatherAPI = require("openweather-api-node")
+
+let weather = new OpenWeatherAPI({
+    key: "put-key-here",
+    locationName: "New York",
+    units: "imperial"
+})
+
+/* 
+you can use setters as well:
+weather.setKey("put-key-here")
+weather.setLocationByName("New York")
+...
+*/
+
+weather.getCurrent().then(data => {
+    console.log(`Current temperature in New York is: ${data.weather.temp.cur}\u00B0F`)
+})
+```
+
+## TS:
+```ts
+import OpenWeatherAPI from "openweather-api-node"
+// or `import * as OpenWeatherAPI from "openweather-api-node"` 
+// if there is no `"esModuleInterop": true` in tsconfig.json
 
 let weather = new OpenWeatherAPI({
     key: "put-key-here",
@@ -94,6 +119,7 @@ weather.getCurrent().then(data => {
   * [Options][opt]
   * [Weather Object][wobj]
   * [Air Pollution Object][apobj]
+  * [Alert Object][aobj]
 
 # Methods:
 
@@ -424,13 +450,13 @@ Getter for alerts.
 
 **Returns:**
 
-Alerts (`undefined` if API returned no info about alerts) - `Object`
+Array of [Alert Objects][aobj] - `Array`
 
 **Example:**
 ```js
 let alerts = await weather.getAlerts()
 ```
-*See also:* [options][opt]
+*See also:* [options][opt], [Alert Object][aobj]
 
 ## `async` getEverything(options = {})
 
@@ -454,7 +480,7 @@ Object that looks like this:
     minutely: array of minutely weather objects,
     hourly: array of hourly weather objects,
     daily: array of daily weather objects,
-    alerts: alerts
+    alerts: array of alert objects
 }
 ```
 
@@ -465,7 +491,7 @@ let current = everything.current
 let minutely = everything.minutely
 // and so on...
 ```
-*See also:* [options][opt], [Weather Object][wobj]
+*See also:* [options][opt], [Weather Object][wobj], [Alert Object][aobj]
 
 ## `async` getHistory(dt, options = {})
 
@@ -705,10 +731,25 @@ When using raw API the problem might be getting your head around how unorganised
 }
 ```
 
+## Alert Object
+```js
+// property: "Description" - type
+{
+    sender_name: "Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource" - String,
+    event: "Alert event name" - Number,
+    start: "Date and time of the start of the alert, Unix, UTC" - Number,
+    end: "Date and time of the start of the alert, Unix, UTC" - Number,
+    description: "Description of the alert" - String,
+    tags: "Type of severe weather" - Array
+}
+```
+*made by loloToster* 🍞
+
 [models]: #models
 [opt]: #options
 [wobj]: #weather-object
 [apobj]: #air-pollution-object
+[aobj]: #alert-object
 [methods]: #methods
 [gglobalopt]: #getglobaloptions
 [skey]: #setkeykey
