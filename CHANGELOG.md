@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## `v1.3.0` -  18.01.2022
+### Added
+* Typescript Definitions
+
 ## `v1.2.0` -  16.01.2022
 ### Added
 * Air pollution data
