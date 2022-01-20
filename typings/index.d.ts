@@ -1,8 +1,8 @@
 export = OpenWeatherAPI;
 /**
  * @typedef {Object} Coordinates
- * @property {Number} lat
- * @property {Number} lon
+ * @property {Number} [lat]
+ * @property {Number} [lon]
  */
 /**
  * @typedef {Object} Options
@@ -200,9 +200,9 @@ declare class OpenWeatherAPI {
      *  timezone: String,
      *  timezone_offset: Number,
      *  current: currentParser.CurrentWeather,
-     *  minutely: minutelyParser.MinutelyWeather,
-     *  hourly: hourlyParser.HourlyWeather,
-     *  daily: dailyParser.DailyWeather,
+     *  minutely: minutelyParser.MinutelyWeather[],
+     *  hourly: hourlyParser.HourlyWeather[],
+     *  daily: dailyParser.DailyWeather[],
      *  alerts: Alert[]
      * }>} object that contains everything
      */
@@ -212,9 +212,9 @@ declare class OpenWeatherAPI {
         timezone: string;
         timezone_offset: number;
         current: currentParser.CurrentWeather;
-        minutely: minutelyParser.MinutelyWeather;
-        hourly: hourlyParser.HourlyWeather;
-        daily: dailyParser.DailyWeather;
+        minutely: minutelyParser.MinutelyWeather[];
+        hourly: hourlyParser.HourlyWeather[];
+        daily: dailyParser.DailyWeather[];
         alerts: Alert[];
     }>;
     /**
@@ -228,7 +228,7 @@ declare class OpenWeatherAPI {
      *  timezone: String,
      *  timezone_offset: Number,
      *  current: currentParser.CurrentWeather,
-     *  hourly: hourlyParser.HourlyWeather
+     *  hourly: hourlyParser.HourlyWeather[]
      * }>}
      */
     getHistory(dt: Date | number | string, options?: Options): Promise<{
@@ -237,7 +237,7 @@ declare class OpenWeatherAPI {
         timezone: string;
         timezone_offset: number;
         current: currentParser.CurrentWeather;
-        hourly: hourlyParser.HourlyWeather;
+        hourly: hourlyParser.HourlyWeather[];
     }>;
     /**
      * Merges weather objects
@@ -349,8 +349,8 @@ type CurrentWeather = import("./parsers/weather/current-parser").CurrentWeather;
 type MinutelyWeather = import("./parsers/weather/minutely-parser").MinutelyWeather;
 type HourlyWeather = import("./parsers/weather/hourly-parser").HourlyWeather;
 type Coordinates = {
-    lat: number;
-    lon: number;
+    lat?: number;
+    lon?: number;
 };
 type Astronomical = Partial<import("./models/weather-model").Astronomical>;
 type Temperatures = Partial<import("./models/weather-model").Temperatures>;

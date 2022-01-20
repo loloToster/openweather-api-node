@@ -101,8 +101,8 @@ function mergeObj(target, ...sources) {
 
 /**
  * @typedef {Object} Coordinates
- * @property {Number} lat
- * @property {Number} lon
+ * @property {Number} [lat]
+ * @property {Number} [lon]
  */
 
 /**
@@ -531,9 +531,9 @@ class OpenWeatherAPI {
      *  timezone: String,
      *  timezone_offset: Number,
      *  current: currentParser.CurrentWeather,
-     *  minutely: minutelyParser.MinutelyWeather,
-     *  hourly: hourlyParser.HourlyWeather,
-     *  daily: dailyParser.DailyWeather,
+     *  minutely: minutelyParser.MinutelyWeather[],
+     *  hourly: hourlyParser.HourlyWeather[],
+     *  daily: dailyParser.DailyWeather[],
      *  alerts: Alert[]
      * }>} object that contains everything
      */
@@ -572,7 +572,7 @@ class OpenWeatherAPI {
      *  timezone: String,
      *  timezone_offset: Number,
      *  current: currentParser.CurrentWeather,
-     *  hourly: hourlyParser.HourlyWeather
+     *  hourly: hourlyParser.HourlyWeather[]
      * }>}
      */
     async getHistory(dt, options = {}) {
