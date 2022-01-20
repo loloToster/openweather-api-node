@@ -1,6 +1,6 @@
 const fs = require("fs")
 const assert = require("assert")
-const OpenWeatherAPI = require("../index")
+const OpenWeatherAPI = require("..")
 
 // ! Remeber to specify key in key.txt file
 let key = fs.readFileSync("./test/key.txt").toString().trim()

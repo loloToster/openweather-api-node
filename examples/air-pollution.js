@@ -1,4 +1,4 @@
-const OpenWeatherAPI = require("../index")
+const OpenWeatherAPI = require("..")
 
 const location = "Paris"
 

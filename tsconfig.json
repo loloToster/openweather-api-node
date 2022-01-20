@@ -1,8 +1,6 @@
 {
   "include": [
-    "index.js",
-    "models",
-    "parsers"
+    "src/**/*"
   ],
   "compilerOptions": {
     "target": "ES6",
