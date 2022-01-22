@@ -576,6 +576,7 @@ class OpenWeatherAPI {
      * }>}
      */
     async getHistory(dt, options = {}) {
+        if (dt === undefined) throw new Error("Provide time")
         await this.#uncacheLocation(options.key)
         dt = Math.round(new Date(dt).getTime() / 1000)
         options = await this.#parseOptions(options)

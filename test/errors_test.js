@@ -126,7 +126,7 @@ describe("Error tests:", function () {
         try {
             await weather.getHistory()
         } catch (err) {
-            assert(err.message.toLowerCase().includes("no location or time specified"))
+            assert(err.message.toLowerCase().includes("provide time"))
             return
         }
         assert(false)
