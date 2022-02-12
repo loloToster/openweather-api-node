@@ -101,6 +101,7 @@ weather.getCurrent().then(data => {
     * [setLocationByCoordinates][slocbycoor]
     * [setLocationByZipCode][slocbyzip]
     * [getLocation][gloc]
+    * [getAllLocations][gallloc]
   * [Getting & Manipulating Weather Data][gcur]
     * [getCurrent][gcur]
     * [getMinutelyForecast][gminutely]
@@ -320,6 +321,26 @@ let location = await weather.getLocation()
 location = await weather.getLocation({locationName: "Tokio"})
 ```
 *See also:* [options][opt], [setLocationByName][slocbyname], [setLocationByCoordinates][slocbycoor]
+
+## `async` getAllLocations(query, options = {})
+
+**Description:**
+
+Getter for all locations from query
+
+**Arguments:**
+* **query** - query used to search the locations
+* **options** - options used only for this call (defaults to empty object)
+
+**Returns:**
+
+Array of [Location Objects][lobj] - `Array`
+
+**Example:**
+```js
+let locations = await weather.getAllLocations("London")
+```
+*See also:* [options][opt]
 
 ## `async` getCurrent(options = {})
 
@@ -782,6 +803,7 @@ When using raw API the problem might be getting your head around how unorganised
 [slocbycoor]: #setlocationbycoordinateslat-lon
 [slocbyzip]:#setlocationbyzipcodezipcode
 [gloc]: #async-getlocationoptions
+[gallloc]: #async-getAllLocationsquery-options--
 [gcur]: #async-getcurrentoptions
 [gminutely]: #async-getminutelyforecastlimit--numberpositive_infinity-options--
 [ghourly]: #async-gethourlyforecastlimit--numberpositive_infinity-options--

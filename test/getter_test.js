@@ -19,6 +19,11 @@ describe("Getting tests:", function () {
         assert(location.name.toLowerCase().includes("new york"))
     })
 
+    it("gets all locations", async () => {
+        let locations = await weather.getAllLocations("London")
+        assert(locations.length == 5)
+    })
+
     it("gets current", async () => {
         weather.setLocationByName("warsaw")
         let current = await weather.getCurrent()

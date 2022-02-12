@@ -145,6 +145,14 @@ declare class OpenWeatherAPI {
      */
     getLocation(options?: Options): Promise<Location | null>;
     /**
+     * Getter for locations from query
+     *
+     * @param {String} query - query used to search the locations (`q` parameter [here](https://openweathermap.org/api/geocoding-api#direct_name))
+     * @param {Options} [options={}] - options used only for this call
+     * @returns {Promise<Location[]>} all found locations
+     */
+    getAllLocations(query: string, options?: Options): Promise<Location[]>;
+    /**
      * Getter for current weather
      *
      * @param {Options} options - options used only for this call

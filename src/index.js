@@ -401,6 +401,21 @@ class OpenWeatherAPI {
         return data.length ? data[0] : null
     }
 
+    /**
+     * Getter for locations from query
+     * 
+     * @param {String} query - query used to search the locations (`q` parameter [here](https://openweathermap.org/api/geocoding-api#direct_name))
+     * @param {Options} [options={}] - options used only for this call
+     * @returns {Promise<Location[]>} all found locations
+     */
+    async getAllLocations(query, options = {}) {
+        if (!query) throw new Error("No query")
+        options = await this.#parseOptions(options)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${query}&limit=5&appid=${options.key}`)
+        let data = response.data
+        return data
+    }
+
     // Weather getters
 
     /**
