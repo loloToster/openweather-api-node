@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## `v1.4.0` -  12.02.2022
+### Added
+* `getAllLocations` method
+
 ## `v1.3.0` -  18.01.2022
 ### Added
 * Typescript Definitions
