@@ -333,7 +333,7 @@ class OpenWeatherAPI {
     }
 
     async #evaluateLocationByName(name, key) {
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${name}&limit=1&appid=${key}`)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${encodeURIComponent(name)}&limit=1&appid=${encodeURIComponent(key)}`)
         let data = response.data
         if (data.length == 0) throw new Error("Unknown location name: " + name)
         data = response.data[0]
@@ -359,7 +359,7 @@ class OpenWeatherAPI {
 
     #evaluateLocationByCoordinates(lat, lon) {
         if (typeof lat === "number" && typeof lon === "number" && -90 <= lat && lat <= 90 && -180 <= lon && lon <= 180) {
-            return { lat: lat, lon: lon }
+            return { lat, lon }
         } else {
             throw new Error("Wrong coordinates")
         }
@@ -379,7 +379,7 @@ class OpenWeatherAPI {
     }
 
     async #evaluateLocationByZipCode(zipCode, key) {
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${zipCode}&appid=${key}`)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}zip?zip=${encodeURIComponent(zipCode)}&appid=${encodeURIComponent(key)}`)
         let data = response.data
         return {
             lat: data.lat,
@@ -396,7 +396,7 @@ class OpenWeatherAPI {
     async getLocation(options = {}) {
         await this.#uncacheLocation(options.key)
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${options.key}`)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}reverse?lat=${options.coordinates.lat}&lon=${options.coordinates.lon}&limit=1&appid=${encodeURIComponent(options.key)}`)
         let data = response.data
         return data.length ? data[0] : null
     }
@@ -411,7 +411,7 @@ class OpenWeatherAPI {
     async getAllLocations(query, options = {}) {
         if (!query) throw new Error("No query")
         options = await this.#parseOptions(options)
-        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${query}&limit=5&appid=${options.key}`)
+        let response = await this.#fetch(`${API_ENDPOINT}${GEO_PATH}direct?q=${encodeURIComponent(query)}&limit=5&appid=${encodeURIComponent(options.key)}`)
         let data = response.data
         return data
     }
@@ -696,7 +696,7 @@ class OpenWeatherAPI {
 
     // helpers
     async #uncacheLocation(key) { // necessary for some setters to be synchronous
-        if (this.#globalOptions.coordinates.lat && this.#globalOptions.coordinates.lon) return // ! what if lat or lon = 0  ?
+        if (typeof this.#globalOptions.coordinates.lat == "number" && typeof this.#globalOptions.coordinates.lon == "number") return
 
         key = this.#globalOptions.key ?? key
         if (!key) return

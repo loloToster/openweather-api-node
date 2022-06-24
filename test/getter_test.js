@@ -20,8 +20,8 @@ describe("Getting tests:", function () {
     })
 
     it("gets all locations", async () => {
-        let locations = await weather.getAllLocations("London")
-        assert(locations.length == 5)
+        let locations = await weather.getAllLocations("Lousã")
+        assert(locations.length > 0)
     })
 
     it("gets current", async () => {
