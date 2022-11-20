@@ -21,7 +21,9 @@ Simple package that makes it easy to work with OpenWeather API.
 <a href="https://github.com/loloToster/openweather-api-node/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License">
 </a>
-
+<a href="https://github.com/loloToster/openweather-api-node">
+    <img src="https://img.shields.io/github/stars/loloToster/openweather-api-node?label=give%20a%20star&logo=github&style=flat-square" alt="GitHub Stars">
+</a>
 </p>
 
 # About
