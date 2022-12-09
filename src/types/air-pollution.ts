@@ -49,7 +49,7 @@ export interface AirPollution {
   /**
    * Date and time, Unix, UTC
    */
-  dt_raw: number;
+  dtRaw: number;
   /**
    * Air Quality Index.
    */
@@ -57,6 +57,6 @@ export interface AirPollution {
   /**
    * String substitute of aqi field (only english)
    */
-  aqi_name: string;
+  aqiName: string;
   components: Components;
 }

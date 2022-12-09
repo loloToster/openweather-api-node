@@ -81,6 +81,6 @@ export interface CurrentAstronomical {
 }
 
 export interface CurrentWeather extends WeatherBase {
-  conditions: CurrentConditions;
   astronomical: CurrentAstronomical;
+  weather: CurrentConditions;
 }

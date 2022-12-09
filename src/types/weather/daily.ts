@@ -135,4 +135,5 @@ export interface DailyAstronomical {
 
 export interface DailyWeather extends WeatherBase {
   astronomical: DailyAstronomical;
+  weather: DailyConditions;
 }

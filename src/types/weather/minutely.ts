@@ -22,5 +22,5 @@ export interface MinutelyConditions {
 
 export interface MinutelyWeather extends WeatherBase {
   astronomical: {};
-  conditions: MinutelyConditions;
+  weather: MinutelyConditions;
 }
