@@ -8,6 +8,33 @@ export * from "./minutely";
 export * from "./hourly";
 export * from "./daily";
 
+export interface Alert {
+  /**
+   * Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource
+   */
+  sender_name: string;
+  /**
+   * Alert event name
+   */
+  event: string;
+  /**
+   * Date and time of the start of the alert, Unix, UTC
+   */
+  start: number;
+  /**
+   * Date and time of the end of the alert, Unix, UTC
+   */
+  end: number;
+  /**
+   * Description of the alert
+   */
+  description: string;
+  /**
+   * Type of severe weather
+   */
+  tags: string[];
+}
+
 export interface WindData {
   /**
    * Wind speed
