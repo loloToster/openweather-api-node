@@ -1,13 +1,12 @@
 {
-  "include": [
-    "src/**/*"
-  ],
-  "compilerOptions": {
-    "target": "ES6",
+ "compilerOptions": {
+    "target": "ES2017",
     "esModuleInterop": true,
-    "allowJs": true,
+    "moduleResolution": "node",
     "declaration": true,
-    "emitDeclarationOnly": true,
-    "outDir": "typings",
+    "strict": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "./dist"
   }
 }
