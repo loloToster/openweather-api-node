@@ -1,4 +1,7 @@
 node_modules/
+src/
+media/
+docs/
 .github/
 temp.*
 key.txt
