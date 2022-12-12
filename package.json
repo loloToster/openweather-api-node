@@ -2,9 +2,11 @@
   "name": "openweather-api-node",
   "version": "1.4.2",
   "description": "Simple Node.js package that makes it easy to work with OpenWeather API",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [
     "weather",
@@ -39,6 +41,5 @@
   "directories": {
     "example": "examples",
     "test": "test"
-  },
-  "types": "typings/index.d.js"
+  }
 }
