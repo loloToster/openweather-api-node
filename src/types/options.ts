@@ -5,15 +5,15 @@ export type Language = typeof SUP_LANGS[number];
 export type Unit = typeof SUP_UNITS[number];
 
 export interface Coordinates {
-  lat?: number;
-  lon?: number;
+  lat: number;
+  lon: number;
 }
 
 export interface Options {
   key?: string;
   lang?: Language;
   units?: string;
-  coordinates: Coordinates;
+  coordinates?: Coordinates;
   locationName?: string;
   zipCode?: string;
 }
