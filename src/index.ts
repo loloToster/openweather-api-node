@@ -17,8 +17,7 @@ import {
   SUP_UNITS,
 } from "./constants";
 
-import { Alert, Language, Location, Options, Unit } from "types";
-import { Coordinates } from "../typings";
+import { Alert, Language, Location, Options, Unit, Coordinates } from "./types";
 
 function isObject<T = Record<string, unknown>>(x: unknown): x is T {
   return Boolean(x) && typeof x === "object" && !Array.isArray(x);
@@ -216,9 +215,7 @@ export class OpenWeatherAPI {
     this.globalOptions.coordinates = { lat: location.lat, lon: location.lon };
   }
 
-  private evaluateLocationByCoordinates(
-    coords: unknown
-  ): Required<Coordinates> {
+  private evaluateLocationByCoordinates(coords: unknown): Coordinates {
     if (
       !isObject(coords) ||
       typeof coords.lat !== "number" ||
