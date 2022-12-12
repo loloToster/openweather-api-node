@@ -32,12 +32,12 @@ function currentParser(data: any): CurrentWeather {
       },
       rain: data.current.rain ? data.current.rain["1h"] : 0,
       snow: data.current.snow ? data.current.snow["1h"] : 0,
-      conditionId: w.weather.id,
-      main: w.weather.main,
-      description: w.weather.description,
+      conditionId: w.id,
+      main: w.main,
+      description: w.description,
       icon: {
-        url: `http://openweathermap.org/img/wn/${w.weather.icon}@2x.png`,
-        raw: w.weather.icon,
+        url: `http://openweathermap.org/img/wn/${w.icon}@2x.png`,
+        raw: w.icon,
       },
     },
   };

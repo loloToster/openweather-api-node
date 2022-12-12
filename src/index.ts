@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 
-import currentParser from "parsers/weather/current-parser";
-import minutelyParser from "parsers/weather/minutely-parser";
-import hourlyParser from "parsers/weather/hourly-parser";
-import dailyParser from "parsers/weather/daily-parser";
+import currentParser from "./parsers/weather/current-parser";
+import minutelyParser from "./parsers/weather/minutely-parser";
+import hourlyParser from "./parsers/weather/hourly-parser";
+import dailyParser from "./parsers/weather/daily-parser";
 
-import singleAirPollutionParser from "parsers/air-pollution/single-parser";
-import listAirPollutionParser from "../typings/parsers/air-pollution/list-parser";
+import singleAirPollutionParser from "./parsers/air-pollution/single-parser";
+import listAirPollutionParser from "./parsers/air-pollution/list-parser";
 
 import {
   AIR_POLLUTION_PATH,
@@ -15,7 +15,7 @@ import {
   ONECALL_PATH,
   SUP_LANGS,
   SUP_UNITS,
-} from "constants";
+} from "./constants";
 
 import { Alert, Language, Location, Options, Unit } from "types";
 import { Coordinates } from "../typings";
@@ -603,8 +603,7 @@ export class OpenWeatherAPI {
     additionalParams: Record<string, string> = {}
   ) {
     if (!options.key) throw new Error("Invalid key");
-    if (!options.coordinates?.lat || !options.coordinates.lon)
-      throw new Error("Invalid coordinates");
+    if (!options.coordinates) throw new Error("Invalid coordinates");
 
     let url = new URL(path, API_ENDPOINT);
 
@@ -704,4 +703,4 @@ export class OpenWeatherAPI {
 }
 
 export default OpenWeatherAPI;
-export * from "types";
+export * from "./types";

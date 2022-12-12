@@ -1,4 +1,4 @@
-import { SUP_LANGS, SUP_UNITS } from "constants";
+import { SUP_LANGS, SUP_UNITS } from "../constants";
 
 export type Language = typeof SUP_LANGS[number];
 
