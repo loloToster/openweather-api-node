@@ -1,0 +1,629 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>openweather-api-node</title><meta name="description" content="Documentation for openweather-api-node"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">openweather-api-node</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>openweather-api-node</h2></div>
+<div class="tsd-panel tsd-typography"><br>
+<br>
+<p align="center">
+<img src="media/logo.png" alt="logo" width="65%">
+</p>
+<br>
+<p align="center">
+Simple package that makes it easy to work with OpenWeather API.
+</p>
+<br>
+<p align="center">
+<a href="https://npmjs.org/package/openweather-api-node">
+    <img src="https://img.shields.io/npm/v/openweather-api-node?style=flat-square" alt="Version">
+</a>
+<a href="https://npmjs.org/package/openweather-api-node">
+    <img src="https://img.shields.io/npm/dt/openweather-api-node?style=flat-square" alt="Version">
+</a>
+<a href="https://github.com/loloToster/openweather-api-node/issues">
+    <img src="https://img.shields.io/github/issues-raw/loloToster/openweather-api-node?style=flat-square" alt="Issues">
+</a>
+<a href="https://github.com/loloToster/openweather-api-node/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License">
+</a>
+<a href="https://github.com/loloToster/openweather-api-node">
+    <img src="https://img.shields.io/github/stars/loloToster/openweather-api-node?label=give%20a%20star&logo=github&style=flat-square" alt="GitHub Stars">
+</a>
+</p>
+
+
+<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+  <h1>About</h1>
+</a>
+<p>This package is a wrapper for OpenWeather API. If you want to learn how to use this package check out examples in <em>examples</em> folder. The only thing that you need to get started is API key if you don&#39;t have one go to <a href="https://openweathermap.org/">OpenWeatherMap website</a> and get it. For now this package supports only a part of the API but we are planning on adding more features like: triggers, maps and all the other stuff that is available for free in OpenWeatherMap API.</p>
+<p>Currently Supported APIs:</p>
+<ul>
+<li>Weather (from OneCall) - get <strong>current weather</strong> and weather <strong>forecast for up to 7 days</strong></li>
+<li>Geocoding - get location <strong>latitude and longitude from its name</strong> and vice versa</li>
+<li>Historical (from OneCall) - get weather from <strong>previous 5 days</strong></li>
+<li>Air pollution - get <strong>current, forecasted and historical data about air pollution</strong></li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h1>Installation</h1>
+</a>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> </span><span class="hl-0">openweather</span><span class="hl-1">-</span><span class="hl-0">api</span><span class="hl-1">-</span><span class="hl-0">node</span>
+</code></pre>
+
+<a href="#simple-example" id="simple-example" style="color: inherit; text-decoration: none;">
+  <h1>Simple Example</h1>
+</a>
+
+<a href="#js" id="js" style="color: inherit; text-decoration: none;">
+  <h2>JS:</h2>
+</a>
+<pre><code class="language-js"><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-3">OpenWeatherAPI</span><span class="hl-1"> = </span><span class="hl-4">require</span><span class="hl-1">(</span><span class="hl-5">&quot;openweather-api-node&quot;</span><span class="hl-1">)</span><br/><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> = </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">OpenWeatherAPI</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-0">key:</span><span class="hl-1"> </span><span class="hl-5">&quot;put-key-here&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">locationName:</span><span class="hl-1"> </span><span class="hl-5">&quot;New York&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">units:</span><span class="hl-1"> </span><span class="hl-5">&quot;imperial&quot;</span><br/><span class="hl-1">})</span><br/><br/><span class="hl-6">/* </span><br/><span class="hl-6">you can use setters as well:</span><br/><span class="hl-6">weather.setKey(&quot;put-key-here&quot;)</span><br/><span class="hl-6">weather.setLocationByName(&quot;New York&quot;)</span><br/><span class="hl-6">...</span><br/><span class="hl-6">*/</span><br/><br/><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrent</span><span class="hl-1">().</span><span class="hl-4">then</span><span class="hl-1">(</span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-2">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">`Current temperature in New York is: </span><span class="hl-2">${</span><span class="hl-0">data</span><span class="hl-7">.</span><span class="hl-0">weather</span><span class="hl-7">.</span><span class="hl-0">temp</span><span class="hl-7">.</span><span class="hl-0">cur</span><span class="hl-2">}</span><span class="hl-8">\u00B0</span><span class="hl-5">F`</span><span class="hl-1">)</span><br/><span class="hl-1">})</span>
+</code></pre>
+
+<a href="#ts" id="ts" style="color: inherit; text-decoration: none;">
+  <h2>TS:</h2>
+</a>
+<pre><code class="language-ts"><span class="hl-9">import</span><span class="hl-1"> </span><span class="hl-0">OpenWeatherAPI</span><span class="hl-1"> </span><span class="hl-9">from</span><span class="hl-1"> </span><span class="hl-5">&quot;openweather-api-node&quot;</span><br/><span class="hl-6">// or `import * as OpenWeatherAPI from &quot;openweather-api-node&quot;` </span><br/><span class="hl-6">// if there is no `&quot;esModuleInterop&quot;: true` in tsconfig.json</span><br/><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> = </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">OpenWeatherAPI</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-0">key:</span><span class="hl-1"> </span><span class="hl-5">&quot;put-key-here&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">locationName:</span><span class="hl-1"> </span><span class="hl-5">&quot;New York&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">units:</span><span class="hl-1"> </span><span class="hl-5">&quot;imperial&quot;</span><br/><span class="hl-1">})</span><br/><br/><span class="hl-6">/* </span><br/><span class="hl-6">you can use setters as well:</span><br/><span class="hl-6">weather.setKey(&quot;put-key-here&quot;)</span><br/><span class="hl-6">weather.setLocationByName(&quot;New York&quot;)</span><br/><span class="hl-6">...</span><br/><span class="hl-6">*/</span><br/><br/><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrent</span><span class="hl-1">().</span><span class="hl-4">then</span><span class="hl-1">(</span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-2">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-5">`Current temperature in New York is: </span><span class="hl-2">${</span><span class="hl-0">data</span><span class="hl-7">.</span><span class="hl-0">weather</span><span class="hl-7">.</span><span class="hl-0">temp</span><span class="hl-7">.</span><span class="hl-0">cur</span><span class="hl-2">}</span><span class="hl-8">\u00B0</span><span class="hl-5">F`</span><span class="hl-1">)</span><br/><span class="hl-1">})</span>
+</code></pre>
+
+<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+  <h1>Docs</h1>
+</a>
+<ul>
+<li><a href="#methods">Methods</a><ul>
+<li><a href="#getglobaloptions">Setting &amp; Getting options</a><ul>
+<li><a href="#getglobaloptions">getGlobalOptions</a></li>
+<li><a href="#setkeykey">setKey</a></li>
+<li><a href="#getkey">getKey</a></li>
+<li><a href="#setlanguagelang">setLanguage</a></li>
+<li><a href="#getlanguage">getLanguage</a></li>
+<li><a href="#setunitsunits">setUnits</a></li>
+<li><a href="#getunits">getUnits</a></li>
+<li><a href="#setlocationbynamename">setLocationByName</a></li>
+<li><a href="#setlocationbycoordinateslat-lon">setLocationByCoordinates</a></li>
+<li><a href="#setlocationbyzipcodezipcode">setLocationByZipCode</a></li>
+<li><a href="#async-getlocationoptions">getLocation</a></li>
+<li><a href="#async-getAllLocationsquery-options--">getAllLocations</a></li>
+</ul>
+</li>
+<li><a href="#async-getcurrentoptions">Getting &amp; Manipulating Weather Data</a><ul>
+<li><a href="#async-getcurrentoptions">getCurrent</a></li>
+<li><a href="#async-getminutelyforecastlimit--numberpositive_infinity-options--">getMinutelyForecast</a></li>
+<li><a href="#async-gethourlyforecastlimit--numberpositive_infinity-options--">getHourlyForecast</a></li>
+<li><a href="#async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--">getDailyForecast</a></li>
+<li><a href="#async-gettodayoptions--">getToday</a></li>
+<li><a href="#async-getalertsoptions--">getAlerts</a></li>
+<li><a href="#async-geteverythingoptions--">getEverything</a></li>
+<li><a href="#async-gethistorydt-options--">getHistory</a></li>
+<li><a href="#mergeweathersweathers">mergeWeathers</a></li>
+</ul>
+</li>
+<li><a href="#async-getcurrentairpollutionoptions--">Getting Air Pollution Data</a><ul>
+<li><a href="#async-getcurrentairpollutionoptions--">getCurrentAirPollution</a></li>
+<li><a href="#async-getforecastedairpollutionlimit--numberpositive_infinity-options--">getForecastedAirPollution</a></li>
+<li><a href="#async-gethistoryairpollutionfrom-to-options--">getHistoryAirPollution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#models">Models</a><ul>
+<li><a href="#options">Options</a></li>
+<li><a href="#weather-object">Weather Object</a></li>
+<li><a href="#air-pollution-object">Air Pollution Object</a></li>
+<li><a href="#alert-object">Alert Object</a></li>
+<li><a href="#location-object">Location Object</a></li>
+</ul>
+</li>
+</ul>
+
+<a href="#methods" id="methods" style="color: inherit; text-decoration: none;">
+  <h1>Methods:</h1>
+</a>
+<!--
+## method(args)
+
+**Description:**
+
+Description of the method
+
+**Arguments:**
+* **arg** - arg description
+
+**Returns:**
+
+What does it return - `type`
+
+**Example:**
+```js
+let example = await weather.method(arg)
+```
+*See also:*
+-->
+
+
+
+<a href="#getglobaloptions" id="getglobaloptions" style="color: inherit; text-decoration: none;">
+  <h2>getGlobalOptions()</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for global options.</p>
+<p><strong>Returns:</strong></p>
+<p>Global options - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">options</span><span class="hl-1"> = </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getGlobalOptions</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a></p>
+
+<a href="#setkeykey" id="setkeykey" style="color: inherit; text-decoration: none;">
+  <h2>setKey(key)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global API key.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>key</strong> - API key</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setKey</span><span class="hl-1">(</span><span class="hl-5">&quot;key&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#getkey">getKey</a></p>
+
+<a href="#getkey" id="getkey" style="color: inherit; text-decoration: none;">
+  <h2>getKey()</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for global key.</p>
+<p><strong>Returns:</strong></p>
+<p>Global API key - <code>String</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">key</span><span class="hl-1"> = </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getKey</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#setkeykey">setKey</a></p>
+
+<a href="#setlanguagelang" id="setlanguagelang" style="color: inherit; text-decoration: none;">
+  <h2>setLanguage(lang)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global language (Language must be listed <a href="https://openweathermap.org/current#multi">here</a>).</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>lang</strong> - language</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setLanguage</span><span class="hl-1">(</span><span class="hl-5">&quot;en&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#getlanguage">getLanguage</a></p>
+
+<a href="#getlanguage" id="getlanguage" style="color: inherit; text-decoration: none;">
+  <h2>getLanguage()</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for global language.</p>
+<p><strong>Returns:</strong></p>
+<p>Global language - <code>String</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">language</span><span class="hl-1"> = </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getLanguage</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#setlanguagelang">setLanguage</a></p>
+
+<a href="#setunitsunits" id="setunitsunits" style="color: inherit; text-decoration: none;">
+  <h2>setUnits(units)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global units.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>units</strong> - units (Only <strong>standard</strong>, <strong>metric</strong> or <strong>imperial</strong> are supported)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setUnits</span><span class="hl-1">(</span><span class="hl-5">&quot;imperial&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#getunits">getUnits</a></p>
+
+<a href="#getunits" id="getunits" style="color: inherit; text-decoration: none;">
+  <h2>getUnits()</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for global units.</p>
+<p><strong>Returns:</strong></p>
+<p>Global units - <code>String</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">units</span><span class="hl-1"> = </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getUnits</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#setunitsunits">setUnits</a></p>
+
+<a href="#setlocationbynamename" id="setlocationbynamename" style="color: inherit; text-decoration: none;">
+  <h2>setLocationByName(name)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global location by provided name. The <code>name</code> argument will basically replace the <code>q</code> parameter in call described <a href="https://openweathermap.org/api/geocoding-api#direct_name">here</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>name</strong> - name of the location</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setLocationByName</span><span class="hl-1">(</span><span class="hl-5">&quot;London&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#async-getlocationoptions">getLocation</a></p>
+
+<a href="#setlocationbycoordinateslat-lon" id="setlocationbycoordinateslat-lon" style="color: inherit; text-decoration: none;">
+  <h2>setLocationByCoordinates(lat, lon)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global location by provided coordinates.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>lat</strong> - latitude of the location</li>
+<li><strong>lon</strong> - longitude of the location</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setLocationByCoordinates</span><span class="hl-1">(</span><span class="hl-10">40.71</span><span class="hl-1">, -</span><span class="hl-10">74</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#async-getlocationoptions">getLocation</a></p>
+
+<a href="#setlocationbyzipcodezipcode" id="setlocationbyzipcodezipcode" style="color: inherit; text-decoration: none;">
+  <h2>setLocationByZipCode(zipCode)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Sets global location by provided zip/post code. The <code>zipCode</code> argument will basically replace the <code>zip</code> parameter in call described <a href="https://openweathermap.org/api/geocoding-api#direct_zip">here</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>zipCode</strong> - zip/post code and country code divided by comma. Please use ISO 3166 country codes: <code>{zip code},{country code}</code></li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">setLocationByZipCode</span><span class="hl-1">(</span><span class="hl-5">&quot;E14,GB&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#async-getlocationoptions">getLocation</a></p>
+
+<a href="#async-getlocationoptions--" id="async-getlocationoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getLocation(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for location.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><a href="#location-object">Location Object</a> - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getLocation</span><span class="hl-1">()</span><br/><span class="hl-6">// or with options</span><br/><span class="hl-0">location</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getLocation</span><span class="hl-1">({</span><span class="hl-0">locationName:</span><span class="hl-1"> </span><span class="hl-5">&quot;Tokio&quot;</span><span class="hl-1">})</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#setlocationbynamename">setLocationByName</a>, <a href="#setlocationbycoordinateslat-lon">setLocationByCoordinates</a></p>
+
+<a href="#async-getalllocationsquery-options--" id="async-getalllocationsquery-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getAllLocations(query, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for all locations from query</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>query</strong> - query used to search the locations</li>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#location-object">Location Objects</a> - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">locations</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getAllLocations</span><span class="hl-1">(</span><span class="hl-5">&quot;London&quot;</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a></p>
+
+<a href="#async-getcurrentoptions--" id="async-getcurrentoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getCurrent(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for current weather.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><a href="#weather-object">Weather object</a> of current weather - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">current</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrent</span><span class="hl-1">()</span><br/><span class="hl-6">// or with options</span><br/><span class="hl-0">current</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrent</span><span class="hl-1">({</span><span class="hl-0">units:</span><span class="hl-1"> </span><span class="hl-5">&quot;metric&quot;</span><span class="hl-1">})</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a></p>
+
+<a href="#async-getminutelyforecastlimit--numberpositive_infinity-options--" id="async-getminutelyforecastlimit--numberpositive_infinity-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getMinutelyForecast(limit = Number.POSITIVE_INFINITY, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for minutely weather.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>limit</strong> - maximum length of returned array (defaults to positive infinity aka as much as possible)</li>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#weather-object">Weather objects</a>, one for every next minute (Empty if API returned no info about minutely weather) - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">minutely</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getMinutelyForecast</span><span class="hl-1">()</span><br/><span class="hl-6">// or with limit</span><br/><span class="hl-0">minutely</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getMinutelyForecast</span><span class="hl-1">(</span><span class="hl-10">10</span><span class="hl-1">)</span><br/><span class="hl-6">// here minutely.length won&#39;t be larger than 10</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a></p>
+
+<a href="#async-gethourlyforecastlimit--numberpositive_infinity-options--" id="async-gethourlyforecastlimit--numberpositive_infinity-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getHourlyForecast(limit = Number.POSITIVE_INFINITY, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for hourly weather.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>limit</strong> - maximum length of returned array (defaults to positive infinity aka as much as possible)</li>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#weather-object">Weather objects</a>, one for every next hour (Empty if API returned no info about hourly weather) - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">hourly</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getMinutelyForecast</span><span class="hl-1">()</span><br/><span class="hl-6">// or with limit</span><br/><span class="hl-0">hourly</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getMinutelyForecast</span><span class="hl-1">(</span><span class="hl-10">5</span><span class="hl-1">)</span><br/><span class="hl-6">// here hourly.length won&#39;t be larger than 5</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a></p>
+
+<a href="#async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--" id="async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getDailyForecast(limit = Number.POSITIVE_INFINITY, includeToday = false, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for daily weather.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>limit</strong> - maximum length of returned array (defaults to positive infinity aka as much as possible)</li>
+<li><strong>includeToday</strong> - boolean indicating whether to include today&#39;s weather in returned array (defaults to false)</li>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#weather-object">Weather objects</a>, one for every next day (Empty if API returned no info about daily weather) - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">daily</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getDailyForecast</span><span class="hl-1">()</span><br/><span class="hl-6">// or with limit</span><br/><span class="hl-0">daily</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getDailyForecast</span><span class="hl-1">(</span><span class="hl-10">3</span><span class="hl-1">)</span><br/><span class="hl-6">// here daily.length won&#39;t be larger than 3</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a></p>
+
+<a href="#async-gettodayoptions--" id="async-gettodayoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getToday(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for today&#39;s weather. Equivalent to:</p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">today</span><span class="hl-1"> = (</span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getDailyForecast</span><span class="hl-1">(</span><span class="hl-10">1</span><span class="hl-1">, </span><span class="hl-2">true</span><span class="hl-1">, </span><span class="hl-0">options</span><span class="hl-1">))[</span><span class="hl-10">0</span><span class="hl-1">]</span>
+</code></pre>
+<p><strong>Not</strong> the same as current weather. <a href=""><code>getCurrent()</code></a> returns <em>current</em> weather and this method returns summary of the <em>whole</em> present day.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><a href="#weather-object">Weather object</a> of today&#39;s weather - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">today</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getToday</span><span class="hl-1">()</span><br/><span class="hl-6">// or with options</span><br/><span class="hl-0">today</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getToday</span><span class="hl-1">({</span><span class="hl-0">coordinates:</span><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-0">lat:</span><span class="hl-1"> -</span><span class="hl-10">33.84</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">lon:</span><span class="hl-1"> </span><span class="hl-10">151.18</span><br/><span class="hl-1">}})</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a>, <a href="#async-getdailyforecastlimit--numberpositive_infinity-includetoday--false-options--">getDailyForecast</a></p>
+
+<a href="#async-getalertsoptions--" id="async-getalertsoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getAlerts(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for alerts.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#alert-object">Alert Objects</a> - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">alerts</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getAlerts</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#alert-object">Alert Object</a></p>
+
+<a href="#async-geteverythingoptions--" id="async-geteverythingoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getEverything(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for every type of weather call and alerts.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Object that looks like this:</p>
+<pre><code><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-0">latitude</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-0">longitude</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">timezone</span><span class="hl-1">: </span><span class="hl-0">timezone</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">timezone_offset</span><span class="hl-1">: </span><span class="hl-0">timezone</span><span class="hl-1"> </span><span class="hl-0">offset</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">current</span><span class="hl-1">: </span><span class="hl-0">current</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> </span><span class="hl-0">object</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">minutely</span><span class="hl-1">: </span><span class="hl-0">array</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">minutely</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> </span><span class="hl-0">objects</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">hourly</span><span class="hl-1">: </span><span class="hl-0">array</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">hourly</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> </span><span class="hl-0">objects</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">daily</span><span class="hl-1">: </span><span class="hl-0">array</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">daily</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1"> </span><span class="hl-0">objects</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">alerts</span><span class="hl-1">: </span><span class="hl-0">array</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">alert</span><span class="hl-1"> </span><span class="hl-0">objects</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">everything</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getEverything</span><span class="hl-1">()</span><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">current</span><span class="hl-1"> = </span><span class="hl-0">everything</span><span class="hl-1">.</span><span class="hl-0">current</span><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">minutely</span><span class="hl-1"> = </span><span class="hl-0">everything</span><span class="hl-1">.</span><span class="hl-0">minutely</span><br/><span class="hl-6">// and so on...</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a>, <a href="#alert-object">Alert Object</a></p>
+
+<a href="#async-gethistorydt-options--" id="async-gethistorydt-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getHistory(dt, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for historical data about weather.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>dt</strong> - Date from the <strong>previous five days</strong> (Unix time, UTC time zone)</li>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Object that looks like this:</p>
+<pre><code><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-0">latitude</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-0">longitude</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">timezone</span><span class="hl-1">: </span><span class="hl-0">timezone</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">timezone_offset</span><span class="hl-1">: </span><span class="hl-0">timezone</span><span class="hl-1"> </span><span class="hl-0">offset</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">location</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">current</span><span class="hl-1">: </span><span class="hl-0">weather</span><span class="hl-1"> </span><span class="hl-0">object</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">current</span><span class="hl-1"> </span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-2">of</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">time</span><span class="hl-1"> </span><span class="hl-0">given</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">hourly</span><span class="hl-1">: </span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-0">block</span><span class="hl-1"> </span><span class="hl-0">containing</span><span class="hl-1"> </span><span class="hl-0">hourly</span><span class="hl-1"> </span><span class="hl-0">historical</span><span class="hl-1"> </span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-0">starting</span><span class="hl-1"> </span><span class="hl-0">at</span><span class="hl-1"> </span><span class="hl-10">00</span><span class="hl-1">:</span><span class="hl-10">00</span><span class="hl-1"> </span><span class="hl-0">on</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">requested</span><span class="hl-1"> </span><span class="hl-0">day</span><span class="hl-1"> </span><span class="hl-0">and</span><span class="hl-1"> </span><span class="hl-0">continues</span><span class="hl-1"> </span><span class="hl-0">until</span><span class="hl-1"> </span><span class="hl-10">23</span><span class="hl-1">:</span><span class="hl-10">59</span><span class="hl-1"> </span><span class="hl-0">on</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">same</span><span class="hl-1"> </span><span class="hl-4">day</span><span class="hl-1"> (</span><span class="hl-3">UTC</span><span class="hl-1"> </span><span class="hl-0">time</span><span class="hl-1">)</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">history</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getHistory</span><span class="hl-1">(</span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">Date</span><span class="hl-1">().</span><span class="hl-4">getTime</span><span class="hl-1">() - </span><span class="hl-10">7200</span><span class="hl-1">)</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#weather-object">Weather Object</a></p>
+
+<a href="#mergeweathersweathers" id="mergeweathersweathers" style="color: inherit; text-decoration: none;">
+  <h2>mergeWeathers(weathers)</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Merges <a href="#weather-object">weather objects</a>. Useful if for example you want to get minutely <a href="#weather-object">weather object</a> but with more data than only rain volume, in this case you can merge minutely <a href="#weather-object">weather object</a> with current <a href="#weather-object">weather object</a> and get full <a href="#weather-object">weather object</a> with data in nth minutes.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>weathers</strong> - Array of weather objects that you want to merge</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Merged object of weather provided in weathers parameter - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">current</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrent</span><span class="hl-1">()</span><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">minutely</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getMinutelyForecast</span><span class="hl-1">()</span><br/><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">full</span><span class="hl-1"> = </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">mergeWeathers</span><span class="hl-1">([</span><span class="hl-0">minutely</span><span class="hl-1">[</span><span class="hl-10">20</span><span class="hl-1">], </span><span class="hl-0">current</span><span class="hl-1">])</span>
+</code></pre>
+<p><em>See also:</em> <a href="#weather-object">Weather Object</a></p>
+
+<a href="#async-getcurrentairpollutionoptions--" id="async-getcurrentairpollutionoptions--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getCurrentAirPollution(options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for current data about air pollution.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>options</strong> - options used only for this call (defaults to empty object)</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><a href="#air-pollution-object">Air Pollution Object</a> with data about current pollution - <code>Object</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">currentAirPollution</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getCurrentAirPollution</span><span class="hl-1">()</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#air-pollution-object">Air Pollution Object</a></p>
+
+<a href="#async-getforecastedairpollutionlimit--numberpositive_infinity-options--" id="async-getforecastedairpollutionlimit--numberpositive_infinity-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getForecastedAirPollution(limit = Number.POSITIVE_INFINITY, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for future data about air pollution. (Only five days ahead)</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>limit - maximum length of returned array</li>
+<li>options - options used only for this call</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#air-pollution-object">Air Pollution Objects</a> with data about future pollution - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">futureAirPollution</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getForecastedAirPollution</span><span class="hl-1">(</span><span class="hl-10">12</span><span class="hl-1">) </span><span class="hl-6">// limit to 12 hours</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#air-pollution-object">Air Pollution Object</a></p>
+
+<a href="#async-gethistoryairpollutionfrom-to-options--" id="async-gethistoryairpollutionfrom-to-options--" style="color: inherit; text-decoration: none;">
+  <h2><code>async</code> getHistoryAirPollution(from, to, options = {})</h2>
+</a>
+<p><strong>Description:</strong></p>
+<p>Getter for historical data about air pollution<br><strong>WARNING⚠️</strong>- Historical data is accessible from 27th November 2020</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>from - start date (unix time, UTC time zone)</li>
+<li>to - end date (unix time, UTC time zone)</li>
+<li>options - options used only for this call</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Array of <a href="#air-pollution-object">Air Pollution Objects</a> with data about historical pollution - <code>Array</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-js"><span class="hl-2">let</span><span class="hl-1"> </span><span class="hl-0">historyAirPollution</span><span class="hl-1"> = </span><span class="hl-9">await</span><span class="hl-1"> </span><span class="hl-0">weather</span><span class="hl-1">.</span><span class="hl-4">getHistoryAirPollution</span><span class="hl-1">(</span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">Date</span><span class="hl-1">(</span><span class="hl-10">2021</span><span class="hl-1">, </span><span class="hl-10">9</span><span class="hl-1">, </span><span class="hl-10">27</span><span class="hl-1">), </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">Date</span><span class="hl-1">(</span><span class="hl-10">2021</span><span class="hl-1">, </span><span class="hl-10">10</span><span class="hl-1">, </span><span class="hl-10">11</span><span class="hl-1">)) </span><span class="hl-6">// get data from 27 October 2021 to 11 November 2021</span>
+</code></pre>
+<p><em>See also:</em> <a href="#options">options</a>, <a href="#air-pollution-object">Air Pollution Object</a></p>
+
+<a href="#models" id="models" style="color: inherit; text-decoration: none;">
+  <h1>Models</h1>
+</a>
+
+<a href="#options" id="options" style="color: inherit; text-decoration: none;">
+  <h2>Options</h2>
+</a>
+<p>This package use so called <em>options</em>, options define: API key, coordinates, units etc. Structure of options:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">key</span><span class="hl-1">: </span><span class="hl-5">&quot;your API key&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">language</span><span class="hl-1">: </span><span class="hl-5">&quot;language to use&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">units</span><span class="hl-1">: </span><span class="hl-5">&quot;units to use&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">locationName</span><span class="hl-1">: </span><span class="hl-5">&quot;name of the location&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">zipCode</span><span class="hl-1">: </span><span class="hl-5">&quot;&#39;zip code&#39; of the location&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">coordinates</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-5">&quot;latitude of the location&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-5">&quot;longitude of the location&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>In the constructor of the class you can pass object that will define <em>global options</em>, they will be used by default in any method that uses options (ex. weather calls). </p>
+<p>Some methods have <code>options</code> argument which can be used to specify options only for this call. Options specified in <code>options</code> argument will override global options. for example if your global options look like this:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">key</span><span class="hl-1">: </span><span class="hl-5">&quot;xyz&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">locationName</span><span class="hl-1">: </span><span class="hl-5">&quot;Moscow&quot;</span><br/><span class="hl-1">} </span><span class="hl-6">// global options</span>
+</code></pre>
+<p>and you pass options that look like this:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">locationName</span><span class="hl-1">: </span><span class="hl-5">&quot;Chicago&quot;</span><br/><span class="hl-1">} </span><span class="hl-6">// options passed to `options` argument</span>
+</code></pre>
+<p>actual used options will look like this:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">key</span><span class="hl-1">: </span><span class="hl-5">&quot;xyz&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">locationName</span><span class="hl-1">: </span><span class="hl-5">&quot;Chicago&quot;</span><br/><span class="hl-1">} </span><span class="hl-6">// actual used options</span>
+</code></pre>
+<p>because every option specified in <code>options</code> argument will override the corresponding global option.</p>
+
+<a href="#weather-object" id="weather-object" style="color: inherit; text-decoration: none;">
+  <h2>Weather Object</h2>
+</a>
+<p>When using raw API the problem might be getting your head around how unorganised the responses might be. This package simplifies this and makes every returned object the same structure. Every weather object will look like this:</p>
+<pre><code class="language-js"><span class="hl-6">// property: &quot;Description&quot; - type</span><br/><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the location (latitude) &quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the location (longitude)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">dt</span><span class="hl-1">: </span><span class="hl-5">&quot;Current time, Unix, UTC or Time of the forecasted data, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-11">timezone</span><span class="hl-1">: </span><span class="hl-5">&quot;Timezone name for the requested location&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">timezone_offset</span><span class="hl-1">: </span><span class="hl-5">&quot;Shift in seconds from UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-11">astronomical</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-11">sunrise</span><span class="hl-1">: </span><span class="hl-5">&quot;Sunrise time, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">, </span><br/><span class="hl-1">        </span><span class="hl-11">sunset</span><span class="hl-1">: </span><span class="hl-5">&quot;Sunset time, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">moonrise</span><span class="hl-1">: </span><span class="hl-5">&quot;The time of when the moon rises for this day, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">moonset</span><span class="hl-1">: </span><span class="hl-5">&quot;The time of when the moon sets for this day, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">moon_phase</span><span class="hl-1">: </span><span class="hl-5">&quot;Moon phase. 0 and 1 are &#39;new moon&#39;, 0.25 is &#39;first quarter moon&#39;, 0.5 is &#39;full moon&#39; and 0.75 is &#39;last quarter moon&#39;. The periods in between are called &#39;waxing crescent&#39;, &#39;waxing gibous&#39;, &#39;waning gibous&#39;, and &#39;waning crescent&#39;, respectively.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-11">weather</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-11">temp</span><span class="hl-1">: { </span><span class="hl-6">// Actual temperature. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.</span><br/><span class="hl-1">            </span><span class="hl-11">cur</span><span class="hl-1">: </span><span class="hl-5">&quot;Current temperature or estimated temperature (in hourly forecast)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-11">morn</span><span class="hl-1">: </span><span class="hl-5">&quot;Morning temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">day</span><span class="hl-1">: </span><span class="hl-5">&quot;Day temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">eve</span><span class="hl-1">: </span><span class="hl-5">&quot;Evening temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">night</span><span class="hl-1">: </span><span class="hl-5">&quot;Night temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">min</span><span class="hl-1">: </span><span class="hl-5">&quot;Lowest daily temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">max</span><span class="hl-1">: </span><span class="hl-5">&quot;Highest daily temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">  </span><br/><span class="hl-1">        },</span><br/><span class="hl-1">        </span><span class="hl-11">feels_like</span><span class="hl-1">: { </span><span class="hl-6">// This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.</span><br/><span class="hl-1">            </span><span class="hl-11">cur</span><span class="hl-1">: </span><span class="hl-5">&quot;Current temperature or estimated temperature (in hourly forecast).&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">morn</span><span class="hl-1">: </span><span class="hl-5">&quot;Morning temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">day</span><span class="hl-1">: </span><span class="hl-5">&quot;Day temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">eve</span><span class="hl-1">: </span><span class="hl-5">&quot;Evening temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">night</span><span class="hl-1">: </span><span class="hl-5">&quot;Night temperature.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">  </span><br/><span class="hl-1">        },</span><br/><span class="hl-1">        </span><span class="hl-11">pressure</span><span class="hl-1">: </span><span class="hl-5">&quot;Atmospheric pressure on the sea level, hPa&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">humidity</span><span class="hl-1">: </span><span class="hl-5">&quot;Humidity, %&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">dew_point</span><span class="hl-1">: </span><span class="hl-5">&quot;Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">clouds</span><span class="hl-1">: </span><span class="hl-5">&quot;Cloudiness, %&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">uvi</span><span class="hl-1">: </span><span class="hl-5">&quot;The maximum value of UV index for the day&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">visibility</span><span class="hl-1">: </span><span class="hl-5">&quot;Average visibility, metres&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">wind</span><span class="hl-1">: { </span><span class="hl-6">// Wind statistics. Units – default: metre/sec, metric: metre/sec, imperial: miles/hour.</span><br/><span class="hl-1">            </span><span class="hl-11">speed</span><span class="hl-1">: </span><span class="hl-5">&quot;Wind speed.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,   </span><br/><span class="hl-1">            </span><span class="hl-11">gust</span><span class="hl-1">: </span><span class="hl-5">&quot;Wind gust.&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">deg</span><span class="hl-1">: </span><span class="hl-5">&quot;Wind direction, degrees (meteorological)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">  </span><br/><span class="hl-1">        },</span><br/><span class="hl-1">        </span><span class="hl-11">pop</span><span class="hl-1">: </span><span class="hl-5">&quot;Probability of precipitation&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">rain</span><span class="hl-1">: </span><span class="hl-5">&quot;Precipitation volume, mm&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">snow</span><span class="hl-1">: </span><span class="hl-5">&quot;Snow volume, mm&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">condition_id</span><span class="hl-1">: </span><span class="hl-5">&quot;Weather condition id (https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">main</span><span class="hl-1">: </span><span class="hl-5">&quot;Group of weather parameters (Rain, Snow, Extreme etc.)&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">description</span><span class="hl-1">: </span><span class="hl-5">&quot;Description of the weather&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,  </span><br/><span class="hl-1">        </span><span class="hl-11">icon</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-11">url</span><span class="hl-1">: </span><span class="hl-5">&quot;Weather icon url.&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,  </span><br/><span class="hl-1">            </span><span class="hl-11">raw</span><span class="hl-1">: </span><span class="hl-5">&quot;Weather icon id.&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">   </span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><strong>⚠️ API does not specify every value in every call so some of those values might be <code>undefined</code> for example daily weather object won&#39;t have weather.temp.cur!</strong></p>
+
+<a href="#location-object" id="location-object" style="color: inherit; text-decoration: none;">
+  <h2>Location Object</h2>
+</a>
+<pre><code class="language-js"><span class="hl-6">// property: &quot;Description&quot; - type</span><br/><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the found location (latitude)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the found location (longitude)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">name</span><span class="hl-1">: </span><span class="hl-5">&quot;Name of the found location&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">country</span><span class="hl-1">: </span><span class="hl-5">&quot;Country of the found location&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">state</span><span class="hl-1">: </span><span class="hl-5">&quot;State of the found location (where available) &quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1"> | </span><span class="hl-2">undefined</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">aqi_name</span><span class="hl-1">: </span><span class="hl-5">&quot;String substitute of aqi field (only english)&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">local_names</span><span class="hl-1">: {</span><br/><span class="hl-1">        [</span><span class="hl-0">language_code</span><span class="hl-1">]: </span><span class="hl-5">&quot;Name of the found location in different languages. The list of names can be different for different locations&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">ascii</span><span class="hl-1">: </span><span class="hl-5">&quot;Internal field&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">feature_name</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of NO2 (Nitrogen dioxide), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#air-pollution-object" id="air-pollution-object" style="color: inherit; text-decoration: none;">
+  <h2>Air Pollution Object</h2>
+</a>
+<pre><code class="language-js"><span class="hl-6">// property: &quot;Description&quot; - type</span><br/><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">lat</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the location (latitude)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">lon</span><span class="hl-1">: </span><span class="hl-5">&quot;Geographical coordinates of the location (longitude)&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">dt</span><span class="hl-1">: </span><span class="hl-5">&quot;Date and time, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Date</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">dt_raw</span><span class="hl-1">: </span><span class="hl-5">&quot;Date and time, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">aqi</span><span class="hl-1">: </span><span class="hl-5">&quot;Air Quality Index&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">aqi_name</span><span class="hl-1">: </span><span class="hl-5">&quot;String substitute of aqi field (only english)&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">components</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-11">co</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of CO (Carbon monoxide), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">no</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of NO (Nitrogen monoxide), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">no2</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of NO2 (Nitrogen dioxide), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">o3</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of O3 (Ozone), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">so2</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of SO2 (Sulphur dioxide), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">pm2_5</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of PM2.5 (Fine particles matter), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">pm10</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of PM10 (Coarse particulate matter), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-11">nh3</span><span class="hl-1">: </span><span class="hl-5">&quot;Сoncentration of NH3 (Ammonia), μg/m3&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#alert-object" id="alert-object" style="color: inherit; text-decoration: none;">
+  <h2>Alert Object</h2>
+</a>
+<pre><code class="language-js"><span class="hl-6">// property: &quot;Description&quot; - type</span><br/><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-11">sender_name</span><span class="hl-1">: </span><span class="hl-5">&quot;Name of the alert source. Please read here the full list of alert sources: https://openweathermap.org/api/one-call-api#listsource&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">event</span><span class="hl-1">: </span><span class="hl-5">&quot;Alert event name&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">start</span><span class="hl-1">: </span><span class="hl-5">&quot;Date and time of the start of the alert, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">end</span><span class="hl-1">: </span><span class="hl-5">&quot;Date and time of the start of the alert, Unix, UTC&quot;</span><span class="hl-1"> - </span><span class="hl-0">Number</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">description</span><span class="hl-1">: </span><span class="hl-5">&quot;Description of the alert&quot;</span><span class="hl-1"> - </span><span class="hl-0">String</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-11">tags</span><span class="hl-1">: </span><span class="hl-5">&quot;Type of severe weather&quot;</span><span class="hl-1"> - </span><span class="hl-0">Array</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p><em>made by loloToster</em> 🍞</p>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">openweather-<wbr/>api-<wbr/>node</a>
+<ul></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="tsd-kind-reference"><a href="modules.html#default" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4D82" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-8388608-path"></rect><path d="M10.354 17V8.24H13.066C13.586 8.24 14.042 8.348 14.434 8.564C14.826 8.772 15.13 9.064 15.346 9.44C15.562 9.816 15.67 10.256 15.67 10.76C15.67 11.352 15.514 11.86 15.202 12.284C14.898 12.708 14.482 13 13.954 13.16L15.79 17H14.518L12.838 13.28H11.434V17H10.354ZM11.434 12.308H13.066C13.514 12.308 13.874 12.168 14.146 11.888C14.418 11.6 14.554 11.224 14.554 10.76C14.554 10.288 14.418 9.912 14.146 9.632C13.874 9.352 13.514 9.212 13.066 9.212H11.434V12.308Z" fill="var(--color-text)" id="icon-8388608-text"></path></svg>default</a></li>
+<li class="tsd-kind-class"><a href="classes/OpenWeatherAPI.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg>Open<wbr/>WeatherAPI</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/AirPollution.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-256-path"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)" id="icon-256-text"></path></svg>Air<wbr/>Pollution</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Alert.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Alert</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Components.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Components</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Coordinates.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Coordinates</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/CurrentAstronomical.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Current<wbr/>Astronomical</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/CurrentConditions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Current<wbr/>Conditions</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/CurrentTemperatures.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Current<wbr/>Temperatures</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/CurrentWeather.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Current<wbr/>Weather</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/DailyAstronomical.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Daily<wbr/>Astronomical</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/DailyConditions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Daily<wbr/>Conditions</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/DailyFeelsLike.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Daily<wbr/>Feels<wbr/>Like</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/DailyTemperatures.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Daily<wbr/>Temperatures</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/DailyWeather.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Daily<wbr/>Weather</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/HourlyConditions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Hourly<wbr/>Conditions</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/HourlyTemperatures.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Hourly<wbr/>Temperatures</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/HourlyWeather.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Hourly<wbr/>Weather</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Icon.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Icon</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Location.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Location</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/MinutelyConditions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Minutely<wbr/>Conditions</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/MinutelyWeather.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Minutely<wbr/>Weather</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/Options.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Options</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/WeatherBase.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Weather<wbr/>Base</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/WindData.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Wind<wbr/>Data</a></li>
+<li class="tsd-kind-type-alias"><a href="types/Language.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>Language</a></li>
+<li class="tsd-kind-type-alias"><a href="types/Unit.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Unit</a></li>
+<li class="tsd-kind-type-alias"><a href="types/Weather.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Weather</a></li></ul></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>
