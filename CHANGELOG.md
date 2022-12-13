@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## `v2.0.0` -  13.12.2022 🎉
+
+Rewritten entire package in typescript
+
+### Added
+* better docs generated with typedoc and hosted on github pages
+* better typescript support
+### Changed
+* variable style in Weather Objects to camelCase
+### Removed
+* `mergeWeathers` method
+### Fixed
+* global options having priority over local options in some cases
+* other minor bugs
+
 ## `v1.4.0` -  12.02.2022
 ### Added
 * `getAllLocations` method
@@ -17,10 +32,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 * Historical data
 * Setting location by zip code
-### Fixed:
+### Fixed
 * Bugs
 
-## `v1.0.0` -  01.10.2021
+## `v1.0.0` -  01.10.2021 🎉
 ### Added
 * Basic weather methods
 
