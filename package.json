@@ -49,7 +49,7 @@
   "bugs": {
     "url": "https://github.com/loloToster/openweather-api-node/issues"
   },
-  "homepage": "https://github.com/loloToster/openweather-api-node#readme",
+  "homepage": "https://lolotoster.github.io/openweather-api-node/",
   "directories": {
     "example": "examples",
     "test": "test"
