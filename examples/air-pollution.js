@@ -1,4 +1,4 @@
-const OpenWeatherAPI = require("..")
+const { OpenWeatherAPI } = require("..")
 
 const location = "Paris"
 
@@ -10,7 +10,7 @@ let weather = new OpenWeatherAPI({
 
 // getCurrentAirPollution is asynchronous so we can use .then()
 weather.getCurrentAirPollution().then(data => {
-    console.log(`Currently air quality in ${location} is ${data.aqi_name.toLowerCase()}.`)
+    console.log(`Currently air quality in ${location} is ${data.aqiName.toLowerCase()}.`)
 })
 
 // We set the limit to 24 to get only 24 hours out of 5 days
@@ -27,5 +27,5 @@ let currentDate = new Date()
 let dateFrom12HoursAgo = new Date().setHours(currentDate.getHours() - 12)
 
 weather.getHistoryAirPollution(dateFrom12HoursAgo, currentDate).then(data => {
-    console.log(`Air quality in ${location} 12 hours ago was ${data[0].aqi_name.toLowerCase()}.`)
+    console.log(`Air quality in ${location} 12 hours ago was ${data[0].aqiName.toLowerCase()}.`)
 })

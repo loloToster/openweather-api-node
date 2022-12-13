@@ -44,7 +44,7 @@ npm i openweather-api-node
 # Examples
 ## JS:
 ```js
-const OpenWeatherAPI = require("openweather-api-node")
+const { OpenWeatherAPI } = require("openweather-api-node")
 
 let weather = new OpenWeatherAPI({
     key: "put-key-here",
