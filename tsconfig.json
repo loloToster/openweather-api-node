@@ -1,13 +1,14 @@
 {
-  "include": [
-    "src/**/*"
-  ],
-  "compilerOptions": {
-    "target": "ES6",
+ "include": ["./src/**/*"],
+ "compilerOptions": {
+    "target": "ES2020",
     "esModuleInterop": true,
-    "allowJs": true,
+    "moduleResolution": "node",
+    "module": "CommonJS",
     "declaration": true,
-    "emitDeclarationOnly": true,
-    "outDir": "typings",
+    "strict": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "./dist"
   }
 }

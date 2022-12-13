@@ -1,4 +1,4 @@
-const OpenWeatherAPI = require("..")
+const { OpenWeatherAPI } = require("..")
 
 // Set global key, location and units
 let weather = new OpenWeatherAPI({
@@ -14,7 +14,6 @@ weather.getCurrent({
     units: "imperial"
 }).then(data => {
     console.log(`Current temperature in Tokio is: ${data.weather.temp.cur}\u00B0F`)
-    console.log(data.lon)
 
     // this call will use global options
     weather.getCurrent().then(data => {

@@ -1,4 +1,4 @@
-const OpenWeatherAPI = require("..")
+const { OpenWeatherAPI } = require("..")
 
 // Set global key, location and units
 let weather = new OpenWeatherAPI({
