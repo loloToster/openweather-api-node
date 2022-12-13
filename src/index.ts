@@ -666,6 +666,7 @@ export class OpenWeatherAPI {
           }
 
           case "locationName": {
+            parsedOptions.locationName = value as string
             parsedOptions.coordinates = await this.evaluateLocationByName(
               value,
               options.key || this.globalOptions.key || ""
@@ -681,6 +682,7 @@ export class OpenWeatherAPI {
           }
 
           case "zipCode": {
+            parsedOptions.zipCode = value as string
             parsedOptions.coordinates = await this.evaluateLocationByZipCode(
               value,
               options.key || this.globalOptions.key || ""
@@ -695,7 +697,7 @@ export class OpenWeatherAPI {
       }
     }
 
-    return mergeObj({}, parsedOptions, this.globalOptions);
+    return mergeObj({}, this.globalOptions, parsedOptions);
   }
 }
 
