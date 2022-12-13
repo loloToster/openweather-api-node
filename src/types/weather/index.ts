@@ -87,3 +87,24 @@ export type Weather = WeatherBase &
   MinutelyWeather &
   HourlyWeather &
   DailyWeather;
+
+export interface Everything {
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezoneOffset: number;
+  current: CurrentWeather;
+  minutely: MinutelyWeather[];
+  hourly: HourlyWeather[];
+  daily: DailyWeather[];
+  alerts: Alert[];
+}
+
+export interface WeatherHistory {
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezoneOffset: number;
+  current: CurrentWeather;
+  hourly: HourlyWeather[];
+}

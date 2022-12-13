@@ -12,7 +12,7 @@ export interface Coordinates {
 export interface Options {
   key?: string;
   lang?: Language;
-  units?: string;
+  units?: Unit;
   coordinates?: Coordinates;
   locationName?: string;
   zipCode?: string;

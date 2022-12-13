@@ -17,7 +17,21 @@ import {
   SUP_UNITS,
 } from "./constants";
 
-import { Alert, Language, Location, Options, Unit, Coordinates } from "./types";
+import { 
+  Alert,
+  Language,
+  Location,
+  Options,
+  Unit, 
+  Coordinates, 
+  CurrentWeather, 
+  MinutelyWeather, 
+  HourlyWeather, 
+  DailyWeather, 
+  Everything, 
+  AirPollution, 
+  WeatherHistory 
+} from "./types";
 
 function isObject<T = Record<string, unknown>>(x: unknown): x is T {
   return Boolean(x) && typeof x === "object" && !Array.isArray(x);
@@ -98,6 +112,8 @@ export class OpenWeatherAPI {
 
   /**
    * Sets global API key
+   * 
+   * @param key - api key
    */
   setKey(key: string) {
     if (!key) throw new Error("Empty value cannot be a key: " + key);
@@ -127,7 +143,7 @@ export class OpenWeatherAPI {
    *
    * @return global language
    */
-  getLanguage() {
+  getLanguage(): Language | undefined {
     return this.globalOptions.lang;
   }
 
@@ -154,7 +170,7 @@ export class OpenWeatherAPI {
    *
    * @returns global units
    */
-  getUnits() {
+  getUnits(): Unit | undefined {
     return this.globalOptions.units;
   }
 
@@ -320,7 +336,7 @@ export class OpenWeatherAPI {
    * @param options - options used only for this call
    * @returns weather object of current weather
    */
-  async getCurrent(options: Options = {}) {
+  async getCurrent(options: Options = {}): Promise<CurrentWeather> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -344,7 +360,7 @@ export class OpenWeatherAPI {
   async getMinutelyForecast(
     limit: number = Number.POSITIVE_INFINITY,
     options: Options = {}
-  ) {
+  ): Promise<MinutelyWeather[]> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -368,7 +384,7 @@ export class OpenWeatherAPI {
   async getHourlyForecast(
     limit: number = Number.POSITIVE_INFINITY,
     options: Options = {}
-  ) {
+  ): Promise<HourlyWeather[]> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -393,7 +409,7 @@ export class OpenWeatherAPI {
     limit: number = Number.POSITIVE_INFINITY,
     includeToday: boolean = false,
     options: Options = {}
-  ) {
+  ): Promise<DailyWeather[]> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -414,7 +430,7 @@ export class OpenWeatherAPI {
    * @param options - options used only for this call
    * @returns weather object of today's weather **NOT the same as current!**
    */
-  async getToday(options: Options = {}) {
+  async getToday(options: Options = {}): Promise<DailyWeather> {
     return (await this.getDailyForecast(1, true, options))[0];
   }
 
@@ -445,7 +461,7 @@ export class OpenWeatherAPI {
    * @param options - options used only for this call
    * @returns object that contains everything
    */
-  async getEverything(options: Options = {}) {
+  async getEverything(options: Options = {}): Promise<Everything> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -473,7 +489,7 @@ export class OpenWeatherAPI {
    * @param dt - Date from the **previous five days** (Unix time, UTC time zone)
    * @param options - options used only for this call
    */
-  async getHistory(dt: Date | number | string, options: Options = {}) {
+  async getHistory(dt: Date | number | string, options: Options = {}): Promise<WeatherHistory> {
     if (dt === undefined) throw new Error("Provide time");
 
     await this.uncacheLocation();
@@ -506,7 +522,7 @@ export class OpenWeatherAPI {
    * @param options - options used only for this call
    * @returns Air Pollution Object with data about current pollution
    */
-  async getCurrentAirPollution(options: Options = {}) {
+  async getCurrentAirPollution(options: Options = {}): Promise<AirPollution> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -528,7 +544,7 @@ export class OpenWeatherAPI {
   async getForecastedAirPollution(
     limit = Number.POSITIVE_INFINITY,
     options: Options = {}
-  ) {
+  ): Promise<AirPollution[]> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
@@ -553,7 +569,7 @@ export class OpenWeatherAPI {
     from: Date | number | string,
     to: Date | number | string,
     options: Options = {}
-  ) {
+  ): Promise<AirPollution[]> {
     await this.uncacheLocation();
     const parsedOptions = await this.parseOptions(options);
 
