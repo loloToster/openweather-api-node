@@ -1,9 +1,10 @@
 {
- "include": ["./src"],
+ "include": ["./src/**/*"],
  "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020",
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "module": "CommonJS",
     "declaration": true,
     "strict": true,
     "baseUrl": "./src",
