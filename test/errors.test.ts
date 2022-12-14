@@ -4,13 +4,12 @@ import OpenWeatherAPI, { Language, Unit } from "../src";
 // ! Remeber to specify key in key.txt file
 const key = fs.readFileSync("./test/key.txt").toString().trim();
 
-const weather = new OpenWeatherAPI({
-  key: key,
-  locationName: "Hong Kong",
-});
-
-describe("Error tests:", function () {
+describe("Error tests:", () => {
   const emptyValues = ["", 0, null, undefined, false, NaN];
+
+  const weather = new OpenWeatherAPI({
+    key, locationName: "Hong Kong"
+  });
 
   it("handles invalid key", async () => {
     try {
@@ -21,112 +20,74 @@ describe("Error tests:", function () {
     }
   });
 
-  it("handles wrong coordinates", async () => {
-    try {
-      weather.setLocationByCoordinates("-200" as unknown as number, 78);
-    } catch (err: any) {
-      expect(
-        err.message.toLowerCase().includes("invalid coordinates")
-      ).toBeTruthy();
-    }
+  it("handles wrong coordinates", () => {
+    expect(
+      () => weather.setLocationByCoordinates("-200" as any, 78)
+    ).toThrow(/invalid coordinates/i);
   });
 
   it("handles wrong location name", async () => {
-    try {
-      await weather.getCurrent({ locationName: "ptero" });
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("ptero")).toBeTruthy();
-    }
+    await expect(
+      weather.getCurrent({ locationName: "ptero" })
+    ).rejects.toThrow(/ptero/i);
   });
 
-  it("handles wrong language", async () => {
-    try {
-      weather.setLanguage("ptero" as Language);
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("ptero")).toBeTruthy();
-    }
+  it("handles wrong language", () => {
+    expect(
+      () => weather.setLanguage("ptero" as Language)
+    ).toThrow(/ptero/i);
   });
 
-  it("handles wrong unit", async () => {
-    try {
-      weather.setUnits("ptero" as Unit);
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("ptero")).toBeTruthy();
-    }
+  it("handles wrong unit", () => {
+    expect(
+      () => weather.setUnits("ptero" as Unit)
+    ).toThrow(/ptero/i);
   });
 
   it("handles unknown parameter", async () => {
-    try {
-      await weather.getCurrent({ ptero: "" } as any);
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("ptero")).toBeTruthy();
-    }
+    await expect(
+      weather.getCurrent({ ptero: "" } as any)
+    ).rejects.toThrow(/ptero/i);
   });
 
   it("handles wrong type of option argument", async () => {
-    try {
-      await weather.getCurrent("ptero" as {});
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("provide {}")).toBeTruthy();
-    }
+    await expect(
+      weather.getCurrent("ptero" as {})
+    ).rejects.toThrow(/provide {}/i);
   });
 
-  it("handles empty location name", async () => {
+  it("handles empty location name", () => {
     emptyValues.forEach((element) => {
-      try {
-        weather.setLocationByName(element as string);
-        expect(false).toBe(true); // TODO: fail test
-      } catch (err: any) {
-        expect(err.message.toLowerCase().includes("empty")).toBeTruthy();
-      }
+      expect(
+        () => weather.setLocationByName(element as string)
+      ).toThrow(/empty/i);
     });
   });
 
-  it("handles empty key", async () => {
+  it("handles empty key", () => {
     emptyValues.forEach((element) => {
-      try {
-        weather.setKey(element as string);
-        expect(false).toBe(true); // TODO: fail test
-      } catch (err: any) {
-        expect(err.message.toLowerCase().includes("empty")).toBeTruthy();
-      }
+      expect(
+        () =>  weather.setKey(element as string)
+      ).toThrow(/empty/i);
     });
   });
 
   it("handles future in history", async () => {
-    try {
-      await weather.getHistory(new Date().getTime() + 900000);
-    } catch (err: any) {
-      expect(
-        err.message.toLowerCase().includes("requested time is in the future")
-      ).toBeTruthy();
-      return;
-    }
-    expect(false).toBe(true); // TODO: fail test
+    await expect(
+      weather.getHistory(new Date().getTime() + 900000)
+    ).rejects.toThrow(/requested time is in the future/i);
   });
 
   it("handles not within 5 days in history", async () => {
-    try {
-      await weather.getHistory(new Date().getTime() - 6 * 24 * 60 * 60 * 1000);
-    } catch (err: any) {
-      expect(
-        err.message
-          .toLowerCase()
-          .includes("requested time is out of allowed range of 5 days back")
-      ).toBeTruthy();
-      return;
-    }
-    expect(false).toBe(true); // TODO: fail test
+    await expect(
+      weather.getHistory(new Date().getTime() - 6 * 24 * 60 * 60 * 1000)
+    ).rejects.toThrow(/requested time is out of allowed range of 5 days back/i);
   });
 
   it("handles no time in history", async () => {
-    try {
+    await expect(
       // @ts-ignore
-      await weather.getHistory();
-    } catch (err: any) {
-      expect(err.message.toLowerCase().includes("provide time")).toBeTruthy();
-      return;
-    }
-    expect(false).toBe(true); // TODO: fail test
+      weather.getHistory()
+    ).rejects.toThrow(/provide time/i);
   });
 });
