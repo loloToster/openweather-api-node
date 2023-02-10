@@ -8,8 +8,8 @@ function currentParser(data: any): CurrentWeather {
     lon: data.lon,
     dt: new Date(data.current.dt * 1000),
     dtRaw: data.current.dt,
-    timezone: data.timezone,
-    timezoneOffset: data.timezone_offset,
+    timezone: undefined,
+    timezoneOffset: data.timezone,
     astronomical: {
       sunrise: new Date(data.current.sunrise * 1000),
       sunriseRaw: data.current.sunrise,

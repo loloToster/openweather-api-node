@@ -24,6 +24,21 @@ describe("Getting tests:", () => {
     expect(typeof current.weather.temp.cur).toBe("number");
   });
 
+  it("gets forecast", async () => {
+    let forecast = await weather.getForecast(20);
+
+    expect(forecast).toBeInstanceOf(Array);
+
+    if (!forecast.length) {
+      console.log("\t\x1b[31mEmpty forecast: ", forecast);
+    } else {
+      expect(forecast.length).toBe(20);
+      expect(typeof forecast[Math.floor(Math.random() * 17)].weather.rain).toBe(
+        "number"
+      );
+    }
+  });
+
   it("gets minutely", async () => {
     weather.setLocationByCoordinates(40.71, -74);
     let minutely = await weather.getMinutelyForecast(48);
@@ -34,9 +49,9 @@ describe("Getting tests:", () => {
       console.log("\t\x1b[31mEmpty minutely: ", minutely);
     } else {
       expect(minutely.length).toBe(48);
-      expect(
-        typeof minutely[Math.floor(Math.random() * 40)].weather.rain
-      ).toBe("number");
+      expect(typeof minutely[Math.floor(Math.random() * 40)].weather.rain).toBe(
+        "number"
+      );
     }
   });
 
@@ -50,9 +65,9 @@ describe("Getting tests:", () => {
       console.log("\t\x1b[31mEmpty hourly: ", hourly);
     } else {
       expect(hourly.length).toBe(10);
-      expect(
-        typeof hourly[Math.floor(Math.random() * 8)].weather.rain
-      ).toBe("number");
+      expect(typeof hourly[Math.floor(Math.random() * 8)].weather.rain).toBe(
+        "number"
+      );
     }
   });
 
@@ -66,9 +81,9 @@ describe("Getting tests:", () => {
       console.log("\t\x1b[31mEmpty daily: ", daily);
     } else {
       expect(daily.length).toBe(3);
-      expect(
-        typeof daily[Math.floor(Math.random() * 2)].weather.rain
-      ).toBe("number");
+      expect(typeof daily[Math.floor(Math.random() * 2)].weather.rain).toBe(
+        "number"
+      );
     }
   });
 
@@ -134,7 +149,7 @@ describe("Getting tests:", () => {
       currentDate,
       { coordinates: { lat: 10, lon: 10 } }
     );
-    
+
     expect(pollution.length).toBe(12);
     expect(
       Object.values(pollution[Math.floor(Math.random() * 10)].components).every(

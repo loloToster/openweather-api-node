@@ -1,9 +1,11 @@
 import { CurrentWeather } from "./current";
+import { ForecastWeather } from "./forecast";
 import { MinutelyWeather } from "./minutely";
 import { HourlyWeather } from "./hourly";
 import { DailyWeather } from "./daily";
 
 export * from "./current";
+export * from "./forecast";
 export * from "./minutely";
 export * from "./hourly";
 export * from "./daily";
@@ -75,15 +77,16 @@ export interface WeatherBase {
   /**
    * Date and time, Unix, UTC
    */
-  timezone: string;
+  timezone: string | undefined;
   /**
    * Date and time, Unix, UTC
    */
-  timezoneOffset: number | undefined;
+  timezoneOffset: number;
 }
 
 export type Weather = WeatherBase &
   CurrentWeather &
+  ForecastWeather &
   MinutelyWeather &
   HourlyWeather &
   DailyWeather;

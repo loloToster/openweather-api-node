@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 import currentParser from "./parsers/weather/current-parser";
+import forecastParser from "./parsers/weather/forecast-parser";
 
 import onecallCurrentParser from "./parsers/onecall/current-parser";
 import onecallMinutelyParser from "./parsers/onecall/minutely-parser";
@@ -13,6 +14,7 @@ import listAirPollutionParser from "./parsers/air-pollution/list-parser";
 import {
   AIR_POLLUTION_PATH,
   API_ENDPOINT,
+  FORECAST_PATH,
   GEO_PATH,
   ONECALL_PATH,
   SUP_LANGS,
@@ -20,20 +22,21 @@ import {
   WEATHER_PATH,
 } from "./constants";
 
-import { 
+import {
   Alert,
   Language,
   Location,
   Options,
-  Unit, 
-  Coordinates, 
-  CurrentWeather, 
-  MinutelyWeather, 
-  HourlyWeather, 
-  DailyWeather, 
-  Everything, 
-  AirPollution, 
-  WeatherHistory 
+  Unit,
+  Coordinates,
+  CurrentWeather,
+  MinutelyWeather,
+  HourlyWeather,
+  DailyWeather,
+  Everything,
+  AirPollution,
+  WeatherHistory,
+  ForecastWeather,
 } from "./types";
 
 function isObject<T = Record<string, unknown>>(x: unknown): x is T {
@@ -115,7 +118,7 @@ export class OpenWeatherAPI {
 
   /**
    * Sets global API key
-   * 
+   *
    * @param key - api key
    */
   setKey(key: string) {
@@ -352,6 +355,28 @@ export class OpenWeatherAPI {
   }
 
   /**
+   * Getter for forecasted weather
+   *
+   * @param limit - maximum length of returned array
+   * @param options - options used only for this call
+   * @returns array of Weather objects, one for every 3 hours, up to 5 days
+   */
+  async getForecast(
+    limit: number = Number.POSITIVE_INFINITY,
+    options: Options = {}
+  ): Promise<ForecastWeather[]> {
+    await this.uncacheLocation();
+    const parsedOptions = await this.parseOptions(options);
+
+    let response = await this.fetch(
+      this.createURL(parsedOptions, FORECAST_PATH)
+    );
+
+    let data = response.data;
+    return forecastParser(data, limit);
+  }
+
+  /**
    * Getter for minutely weather
    *
    * @param limit - maximum length of returned array
@@ -490,7 +515,10 @@ export class OpenWeatherAPI {
    * @param dt - Date from the **previous five days** (Unix time, UTC time zone)
    * @param options - options used only for this call
    */
-  async getHistory(dt: Date | number | string, options: Options = {}): Promise<WeatherHistory> {
+  async getHistory(
+    dt: Date | number | string,
+    options: Options = {}
+  ): Promise<WeatherHistory> {
     if (dt === undefined) throw new Error("Provide time");
 
     await this.uncacheLocation();
@@ -646,7 +674,7 @@ export class OpenWeatherAPI {
 
     const data = res.data;
 
-    if (data.cod && data.cod !== 200) {
+    if (data.cod && parseInt(data.cod) !== 200) {
       throw new Error(JSON.stringify(data));
     } else {
       return res;
@@ -683,7 +711,7 @@ export class OpenWeatherAPI {
           }
 
           case "locationName": {
-            parsedOptions.locationName = value as string
+            parsedOptions.locationName = value as string;
             parsedOptions.coordinates = await this.evaluateLocationByName(
               value,
               options.key || this.globalOptions.key || ""
@@ -699,7 +727,7 @@ export class OpenWeatherAPI {
           }
 
           case "zipCode": {
-            parsedOptions.zipCode = value as string
+            parsedOptions.zipCode = value as string;
             parsedOptions.coordinates = await this.evaluateLocationByZipCode(
               value,
               options.key || this.globalOptions.key || ""
