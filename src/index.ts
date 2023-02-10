@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 
 import currentParser from "./parsers/weather/current-parser";
-import minutelyParser from "./parsers/weather/minutely-parser";
-import hourlyParser from "./parsers/weather/hourly-parser";
-import dailyParser from "./parsers/weather/daily-parser";
+
+import onecallCurrentParser from "./parsers/onecall/current-parser";
+import onecallMinutelyParser from "./parsers/onecall/minutely-parser";
+import onecallHourlyParser from "./parsers/onecall/hourly-parser";
+import onecallDailyParser from "./parsers/onecall/daily-parser";
 
 import singleAirPollutionParser from "./parsers/air-pollution/single-parser";
 import listAirPollutionParser from "./parsers/air-pollution/list-parser";
@@ -15,6 +17,7 @@ import {
   ONECALL_PATH,
   SUP_LANGS,
   SUP_UNITS,
+  WEATHER_PATH,
 } from "./constants";
 
 import { 
@@ -341,9 +344,7 @@ export class OpenWeatherAPI {
     const parsedOptions = await this.parseOptions(options);
 
     let response = await this.fetch(
-      this.createURL(parsedOptions, ONECALL_PATH, {
-        exclude: "alerts,minutely,hourly,daily",
-      })
+      this.createURL(parsedOptions, WEATHER_PATH)
     );
 
     let data = response.data;
@@ -371,7 +372,7 @@ export class OpenWeatherAPI {
     );
 
     let data = response.data;
-    return minutelyParser(data, limit);
+    return onecallMinutelyParser(data, limit);
   }
 
   /**
@@ -395,7 +396,7 @@ export class OpenWeatherAPI {
     );
 
     let data = response.data;
-    return hourlyParser(data, limit);
+    return onecallHourlyParser(data, limit);
   }
 
   /**
@@ -421,7 +422,7 @@ export class OpenWeatherAPI {
 
     let data = response.data;
     if (!includeToday) data.daily.shift();
-    return dailyParser(data, limit);
+    return onecallDailyParser(data, limit);
   }
 
   /**
@@ -475,10 +476,10 @@ export class OpenWeatherAPI {
       lon: data.lon,
       timezone: data.timezone,
       timezoneOffset: data.timezone_offset,
-      current: currentParser(data),
-      minutely: minutelyParser(data, Number.POSITIVE_INFINITY),
-      hourly: hourlyParser(data, Number.POSITIVE_INFINITY),
-      daily: dailyParser(data, Number.POSITIVE_INFINITY),
+      current: onecallCurrentParser(data),
+      minutely: onecallMinutelyParser(data, Number.POSITIVE_INFINITY),
+      hourly: onecallHourlyParser(data, Number.POSITIVE_INFINITY),
+      daily: onecallDailyParser(data, Number.POSITIVE_INFINITY),
       alerts: data.alerts,
     };
   }
@@ -509,8 +510,8 @@ export class OpenWeatherAPI {
       lon: data.lon,
       timezone: data.timezone,
       timezoneOffset: data.timezone_offset,
-      current: currentParser(data),
-      hourly: hourlyParser(data, Number.POSITIVE_INFINITY),
+      current: onecallCurrentParser(data),
+      hourly: onecallHourlyParser(data, Number.POSITIVE_INFINITY),
     };
   }
 
@@ -645,7 +646,7 @@ export class OpenWeatherAPI {
 
     const data = res.data;
 
-    if (data.cod) {
+    if (data.cod && data.cod !== 200) {
       throw new Error(JSON.stringify(data));
     } else {
       return res;

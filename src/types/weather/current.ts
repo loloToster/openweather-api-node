@@ -27,7 +27,7 @@ export interface CurrentConditions {
   /**
    * Atmospheric temperature (varying according to pressure and humidity) below which water droplets begin to condense and dew can form. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
    */
-  dewPoint: number;
+  dewPoint: number | undefined;
   /**
    * Cloudiness, %
    */
@@ -35,7 +35,7 @@ export interface CurrentConditions {
   /**
    * The maximum value of UV index for the day
    */
-  uvi: number;
+  uvi: number | undefined;
   /**
    * Average visibility, metres
    */

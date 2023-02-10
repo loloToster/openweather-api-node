@@ -43,7 +43,7 @@ export interface WindData {
   /**
    * Wind gust
    */
-  gust: number;
+  gust: number | undefined;
   /**
    * Wind direction, degrees (meteorological)
    */
@@ -79,7 +79,7 @@ export interface WeatherBase {
   /**
    * Date and time, Unix, UTC
    */
-  timezoneOffset: number;
+  timezoneOffset: number | undefined;
 }
 
 export type Weather = WeatherBase &
