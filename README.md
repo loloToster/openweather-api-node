@@ -31,9 +31,11 @@ Simple package that makes it easy to work with OpenWeather API.
 This package is a wrapper for OpenWeather API. If you want to learn how to use this package check out examples in [*examples* directory](https://github.com/loloToster/openweather-api-node/tree/master/examples). The only thing that you need to get started is API key if you don't have one go to [OpenWeatherMap website](https://openweathermap.org/) and get it. For now this package supports only a part of the API but we are planning on adding more features like: triggers, maps and all the other stuff that is available for free in OpenWeatherMap API.
 
 Currently Supported APIs:
-  * Weather (from OneCall) - get **current weather** and weather **forecast for up to 7 days**
+  * Current Weather - get **current weather**
+  * Forecast - get weather **forecast for up to 5 days** with 3-hour step
+  * OneCall - get **current weather** and weather **forecast for up to 7 days**
   * Geocoding - get location **latitude and longitude from its name** and vice versa
-  * Historical (from OneCall) - get weather from **previous 5 days**
+  * Historical - get weather from **previous 5 days**
   * Air pollution - get **current, forecasted and historical data about air pollution**
 
 # Installation
