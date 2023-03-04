@@ -377,7 +377,8 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for minutely weather
+   * Getter for minutely weather\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param limit - maximum length of returned array
    * @param options - options used only for this call
@@ -401,7 +402,8 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for hourly weather
+   * Getter for hourly weather\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param limit - maximum length of returned array
    * @param options - options used only for this call
@@ -425,7 +427,9 @@ export class OpenWeatherAPI {
   }
 
   /**
-   *
+   * Getter for daily weather\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * 
    * @param limit - maximum length of returned array
    * @param includeToday - boolean indicating whether to include today's weather in returned array
    * @param options - options used only for this call
@@ -451,7 +455,8 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for today's weather
+   * Getter for today's weather\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param options - options used only for this call
    * @returns weather object of today's weather **NOT the same as current!**
@@ -462,7 +467,8 @@ export class OpenWeatherAPI {
 
   /**
    * Getter for alerts\
-   * **Note:** some agencies provide the alert’s description only in a local language.
+   * **Note:** some agencies provide the alert’s description only in a local language.\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param options - options used only for this call
    * @returns alerts
@@ -482,7 +488,8 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for every type of weather call and alerts
+   * Getter for every type of weather call and alerts\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param options - options used only for this call
    * @returns object that contains everything
@@ -510,7 +517,8 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for historical data about weather
+   * Getter for historical data about weather\
+   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
    *
    * @param dt - Date from the **previous five days** (Unix time, UTC time zone)
    * @param options - options used only for this call

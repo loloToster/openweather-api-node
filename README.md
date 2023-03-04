@@ -91,3 +91,9 @@ weather.getCurrent().then(data => {
 # [Documentation for v2](https://lolotoster.github.io/openweather-api-node/)
 
 [Documentation for older versions](https://github.com/loloToster/openweather-api-node/blob/829077b6653ffcde4736f3c7aec259e222c9d395/README.md)
+
+---
+
+#### Old OneCall api endpoint
+
+⚠️This package uses the OneCall v2 api endpoint and some of the methods like `getMinutelyForecast` or `getAlerts` will not work with API keys created after the introduction of OneCall v3 api. Support for version 3 is is planned to be a part of `openweather-api-node@3.0.0`
