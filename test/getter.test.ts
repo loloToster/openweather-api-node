@@ -114,7 +114,7 @@ describe("Getting tests:", () => {
     weather.setLocationByCoordinates(49.84, 24.03);
     let date = new Date().getTime() - 900000;
     let history = await weather.getHistory(date);
-    expect(Math.round(date / 1000)).toBe(history.current.dtRaw);
+    expect(Math.round(date / 1000)).toBe(history.dtRaw);
   });
 
   it("gets current air pollution", async () => {

@@ -35,7 +35,7 @@ Currently Supported APIs:
   * Forecast - get weather **forecast for up to 5 days** with 3-hour step
   * OneCall - get **current weather** and weather **forecast for up to 7 days**
   * Geocoding - get location **latitude and longitude from its name** and vice versa
-  * Historical - get weather from **previous 5 days**
+  * Historical - get weather data for **more that 40 years back**
   * Air pollution - get **current, forecasted and historical data about air pollution**
 
 # Installation
@@ -88,12 +88,16 @@ weather.getCurrent().then(data => {
 })
 ```
 
-# [Documentation for v2](https://lolotoster.github.io/openweather-api-node/)
+# [Documentation for v2 & v3](https://lolotoster.github.io/openweather-api-node/)
 
 [Documentation for older versions](https://github.com/loloToster/openweather-api-node/blob/829077b6653ffcde4736f3c7aec259e222c9d395/README.md)
 
 ---
 
-#### Old OneCall api endpoint
+#### Old OneCall API support
 
-⚠️This package uses the OneCall v2 api endpoint and some of the methods like `getMinutelyForecast` or `getAlerts` will not work with API keys created after the introduction of OneCall v3 api. Support for version 3 is is planned to be a part of `openweather-api-node@3.0.0`
+This package partially uses the OneCall 3.0 api endpoint. If you want to use older version of the OneCall api you can install the latest version of the package that supported it:
+
+```
+npm i openweather-api-node@2.1.2
+```

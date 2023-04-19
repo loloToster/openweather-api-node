@@ -3,12 +3,14 @@ import { ForecastWeather } from "./forecast";
 import { MinutelyWeather } from "./minutely";
 import { HourlyWeather } from "./hourly";
 import { DailyWeather } from "./daily";
+import { HistoricalWeather } from "./historical";
 
 export * from "./current";
 export * from "./forecast";
 export * from "./minutely";
 export * from "./hourly";
 export * from "./daily";
+export * from "./historical";
 
 export interface Alert {
   /**
@@ -75,7 +77,7 @@ export interface WeatherBase {
    */
   dtRaw: number;
   /**
-   * Date and time, Unix, UTC
+   * Timezone name for the requested location
    */
   timezone: string | undefined;
   /**
@@ -89,7 +91,8 @@ export type Weather = WeatherBase &
   ForecastWeather &
   MinutelyWeather &
   HourlyWeather &
-  DailyWeather;
+  DailyWeather &
+  HistoricalWeather;
 
 export interface Everything {
   lat: number;
@@ -101,13 +104,4 @@ export interface Everything {
   hourly: HourlyWeather[];
   daily: DailyWeather[];
   alerts: Alert[];
-}
-
-export interface WeatherHistory {
-  lat: number;
-  lon: number;
-  timezone: string;
-  timezoneOffset: number;
-  current: CurrentWeather;
-  hourly: HourlyWeather[];
 }

@@ -7,6 +7,7 @@ import onecallCurrentParser from "./parsers/onecall/current-parser";
 import onecallMinutelyParser from "./parsers/onecall/minutely-parser";
 import onecallHourlyParser from "./parsers/onecall/hourly-parser";
 import onecallDailyParser from "./parsers/onecall/daily-parser";
+import onecallHistoricalParser from "./parsers/onecall/history-parser";
 
 import singleAirPollutionParser from "./parsers/air-pollution/single-parser";
 import listAirPollutionParser from "./parsers/air-pollution/list-parser";
@@ -33,9 +34,9 @@ import {
   MinutelyWeather,
   HourlyWeather,
   DailyWeather,
+  HistoricalWeather,
   Everything,
   AirPollution,
-  WeatherHistory,
   ForecastWeather,
 } from "./types";
 
@@ -377,8 +378,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for minutely weather\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for minutely weather
    *
    * @param limit - maximum length of returned array
    * @param options - options used only for this call
@@ -402,8 +402,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for hourly weather\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for hourly weather
    *
    * @param limit - maximum length of returned array
    * @param options - options used only for this call
@@ -427,8 +426,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for daily weather\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for daily weather
    * 
    * @param limit - maximum length of returned array
    * @param includeToday - boolean indicating whether to include today's weather in returned array
@@ -455,8 +453,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for today's weather\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for today's weather
    *
    * @param options - options used only for this call
    * @returns weather object of today's weather **NOT the same as current!**
@@ -467,8 +464,7 @@ export class OpenWeatherAPI {
 
   /**
    * Getter for alerts\
-   * **Note:** some agencies provide the alert’s description only in a local language.\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * **Note:** some agencies provide the alert’s description only in a local language.
    *
    * @param options - options used only for this call
    * @returns alerts
@@ -488,8 +484,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for every type of weather call and alerts\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for every type of weather call and alerts
    *
    * @param options - options used only for this call
    * @returns object that contains everything
@@ -517,8 +512,7 @@ export class OpenWeatherAPI {
   }
 
   /**
-   * Getter for historical data about weather\
-   * ⚠️ This method uses the old OneCall api endpoint. See [this](https://lolotoster.github.io/openweather-api-node/#old-onecall-api-endpoint) for more information.
+   * Getter for historical data about weather
    *
    * @param dt - Date from the **previous five days** (Unix time, UTC time zone)
    * @param options - options used only for this call
@@ -526,7 +520,7 @@ export class OpenWeatherAPI {
   async getHistory(
     dt: Date | number | string,
     options: Options = {}
-  ): Promise<WeatherHistory> {
+  ): Promise<HistoricalWeather> {
     if (dt === undefined) throw new Error("Provide time");
 
     await this.uncacheLocation();
@@ -541,14 +535,7 @@ export class OpenWeatherAPI {
     );
 
     let data = response.data;
-    return {
-      lat: data.lat,
-      lon: data.lon,
-      timezone: data.timezone,
-      timezoneOffset: data.timezone_offset,
-      current: onecallCurrentParser(data),
-      hourly: onecallHourlyParser(data, Number.POSITIVE_INFINITY),
-    };
+    return onecallHistoricalParser(data);
   }
 
   // Uncategorized Methods

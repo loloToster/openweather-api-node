@@ -74,14 +74,8 @@ describe("Error tests:", () => {
 
   it("handles future in history", async () => {
     await expect(
-      weather.getHistory(new Date().getTime() + 900000)
+      weather.getHistory(new Date().getTime() + 365 * 24 * 60 * 60 * 1000)
     ).rejects.toThrow(/requested time is in the future/i);
-  });
-
-  it("handles not within 5 days in history", async () => {
-    await expect(
-      weather.getHistory(new Date().getTime() - 6 * 24 * 60 * 60 * 1000)
-    ).rejects.toThrow(/requested time is out of allowed range of 5 days back/i);
   });
 
   it("handles no time in history", async () => {
