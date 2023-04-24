@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import { get } from "./request";
 
 import currentParser from "./parsers/weather/current-parser";
 import forecastParser from "./parsers/weather/forecast-parser";
@@ -427,7 +427,7 @@ export class OpenWeatherAPI {
 
   /**
    * Getter for daily weather
-   * 
+   *
    * @param limit - maximum length of returned array
    * @param includeToday - boolean indicating whether to include today's weather in returned array
    * @param options - options used only for this call
@@ -659,14 +659,7 @@ export class OpenWeatherAPI {
   }
 
   private async fetch(url: string) {
-    let res: AxiosResponse;
-
-    try {
-      res = await axios.get(url);
-    } catch (err: any) {
-      res = err.response;
-    }
-
+    const res = await get(url);
     const data = res.data;
 
     if (data.cod && parseInt(data.cod) !== 200) {

@@ -28,9 +28,6 @@
   ],
   "author": "loloToster",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^0.21.4"
-  },
   "devDependencies": {
     "@types/jest": "^29.2.4",
     "gen-esm-wrapper": "^1.1.3",
