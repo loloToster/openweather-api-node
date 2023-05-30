@@ -103,6 +103,10 @@ export interface DailyConditions {
    * Description of the weather
    */
   description: string;
+  /**
+   * Human-readable text description of the daily forecast
+   */
+  summary: string;
   icon: Icon;
 }
 

@@ -58,6 +58,7 @@ function dailyParser(data: any, limit: number): DailyWeather[] {
         conditionId: w.id,
         main: w.main,
         description: w.description,
+        summary: element.summary,
         icon: {
           url: `http://openweathermap.org/img/wn/${w.icon}@2x.png`,
           raw: w.icon,
