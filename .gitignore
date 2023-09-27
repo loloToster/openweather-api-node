@@ -2,4 +2,4 @@ node_modules/
 docs/
 dist/
 temp.*
-key.txt
+key*.txt

@@ -4,5 +4,5 @@ media/
 docs/
 .github/
 temp.*
-key.txt
+key*.txt
 tsconfig.json
