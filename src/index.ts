@@ -85,11 +85,12 @@ export class OpenWeatherAPI {
       if (Object.hasOwnProperty.call(go, key)) {
         const value = go[key];
 
-        switch (key) {
+        switch (key as keyof Options) {
           case "key":
             this.setKey(value);
             break;
 
+          // @ts-ignore: Type '"language"' is not comparable to type 'keyof Options'.
           case "language":
           case "lang":
             this.setLanguage(value);
@@ -680,7 +681,7 @@ export class OpenWeatherAPI {
       if (Object.hasOwnProperty.call(options, key)) {
         const value = (options as Record<string, unknown>)[key];
 
-        switch (key) {
+        switch (key as keyof Options) {
           case "key": {
             if (typeof value !== "string")
               throw Error("key needs to be a string");
@@ -689,6 +690,7 @@ export class OpenWeatherAPI {
             break;
           }
 
+          // @ts-ignore: Type '"language"' is not comparable to type 'keyof Options'.
           case "language":
           case "lang": {
             parsedOptions.lang = this.evaluateLanguage(value);
