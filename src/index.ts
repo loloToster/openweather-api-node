@@ -91,6 +91,7 @@ export class OpenWeatherAPI {
             break;
 
           case "language":
+          case "lang":
             this.setLanguage(value);
             break;
 
@@ -688,7 +689,8 @@ export class OpenWeatherAPI {
             break;
           }
 
-          case "language": {
+          case "language":
+          case "lang": {
             parsedOptions.lang = this.evaluateLanguage(value);
             break;
           }
