@@ -17,6 +17,18 @@ export interface ForecastConditions {
    */
   feelsLike: ForecastTemperatures;
   /**
+   * Minimum temperature
+   * 
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  tempMin: number;
+  /**
+   * Maximum temperature
+   * 
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  tempMax: number;
+  /**
    * Atmospheric pressure on the sea level, hPa
    */
   pressure: number;

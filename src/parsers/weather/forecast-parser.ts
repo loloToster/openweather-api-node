@@ -25,6 +25,8 @@ function forecastParser(data: any, limit: number): ForecastWeather[] {
       weather: {
         temp: { cur: element.main.temp },
         feelsLike: { cur: element.main.feels_like },
+        tempMin: element.main.temp_min,
+        tempMax: element.main.temp_max,
         pressure: element.main.pressure,
         humidity: element.main.humidity,
         clouds: element.clouds.all,

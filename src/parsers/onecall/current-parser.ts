@@ -19,6 +19,8 @@ function currentParser(data: any): CurrentWeather {
     weather: {
       temp: { cur: data.current.temp },
       feelsLike: { cur: data.current.feels_like },
+      tempMin: NaN,
+      tempMax: NaN,
       pressure: data.current.pressure,
       humidity: data.current.humidity,
       dewPoint: data.current.dew_point,
