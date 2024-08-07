@@ -17,6 +17,18 @@ export interface CurrentConditions {
    */
   feelsLike: CurrentTemperatures;
   /**
+   * Current minimum temperature
+   * 
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  tempMin: number;
+  /**
+   * Current maximum temperature
+   * 
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  tempMax: number;
+  /**
    * Atmospheric pressure on the sea level, hPa
    */
   pressure: number;
