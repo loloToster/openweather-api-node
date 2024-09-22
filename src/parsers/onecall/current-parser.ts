@@ -1,6 +1,6 @@
-import { CurrentWeather } from "types/index";
+import { OnecallCurrentWeather } from "types/index";
 
-function currentParser(data: any): CurrentWeather {
+function currentParser(data: any): OnecallCurrentWeather {
   const w = data.current.weather[0];
 
   return {

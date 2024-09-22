@@ -7,11 +7,18 @@ export interface CurrentTemperatures {
   cur: number;
 }
 
-export interface CurrentConditions {
+export interface ExtendedCurrentTemperatures extends CurrentTemperatures {
   /**
-   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   * Minimum temperature at the moment. This is minimal currently observed temperature (within large megalopolises and urban areas).
    */
-  temp: CurrentTemperatures;
+  min: number;
+  /**
+   * Maximum temperature at the moment. This is maximal currently observed temperature (within large megalopolises and urban areas).
+   */
+  max: number;
+}
+
+export interface CurrentConditionsBase {
   /**
    * This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
    */
@@ -67,6 +74,20 @@ export interface CurrentConditions {
   icon: Icon;
 }
 
+export interface CurrentConditions extends CurrentConditionsBase {
+  /**
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  temp: ExtendedCurrentTemperatures;
+}
+
+export interface OnecallCurrentConditions extends CurrentConditionsBase {
+  /**
+   * Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
+   */
+  temp: CurrentTemperatures;
+}
+
 export interface CurrentAstronomical {
   /**
    * Sunrise time, Unix, UTC
@@ -83,4 +104,9 @@ export interface CurrentAstronomical {
 export interface CurrentWeather extends WeatherBase {
   astronomical: CurrentAstronomical;
   weather: CurrentConditions;
+}
+
+export interface OnecallCurrentWeather extends WeatherBase {
+  astronomical: CurrentAstronomical;
+  weather: OnecallCurrentConditions;
 }

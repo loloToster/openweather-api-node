@@ -1,10 +1,21 @@
 import { Icon, WeatherBase, WindData } from "./index";
 
-export interface ForecastTemperatures {
+export interface ForecastFeelsLike {
   /**
    * Estimated temperature
    */
   cur: number;
+}
+
+export interface ForecastTemperatures extends ForecastFeelsLike {
+  /**
+   * Minimum temperature at the moment of calculation. This is minimal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally.
+   */
+  min: number;
+  /**
+   * Maximum temperature at the moment of calculation. This is maximal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally.
+   */
+  max: number;
 }
 
 export interface ForecastConditions {
@@ -15,7 +26,7 @@ export interface ForecastConditions {
   /**
    * This accounts for the human perception of weather. Units – default: kelvin, metric: Celsius, imperial: Fahrenheit.
    */
-  feelsLike: ForecastTemperatures;
+  feelsLike: ForecastFeelsLike;
   /**
    * Atmospheric pressure on the sea level, hPa
    */

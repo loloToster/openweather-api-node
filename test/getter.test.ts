@@ -21,7 +21,10 @@ describe("Getting tests:", () => {
   it("gets current", async () => {
     weather.setLocationByName("warsaw");
     let current = await weather.getCurrent();
+    
     expect(typeof current.weather.temp.cur).toBe("number");
+    expect(current.weather.temp.min).toBeLessThanOrEqual(current.weather.temp.cur);
+    expect(current.weather.temp.max).toBeGreaterThanOrEqual(current.weather.temp.cur);
   });
 
   it("gets forecast", async () => {

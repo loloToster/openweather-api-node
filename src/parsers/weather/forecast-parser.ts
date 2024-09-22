@@ -23,7 +23,11 @@ function forecastParser(data: any, limit: number): ForecastWeather[] {
         sunsetRaw: data.city.sunset,
       },
       weather: {
-        temp: { cur: element.main.temp },
+        temp: { 
+          cur: element.main.temp,
+          min: element.main.temp_min,
+          max: element.main.temp_max
+        },
         feelsLike: { cur: element.main.feels_like },
         pressure: element.main.pressure,
         humidity: element.main.humidity,

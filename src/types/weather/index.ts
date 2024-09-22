@@ -1,4 +1,4 @@
-import { CurrentWeather } from "./current";
+import { CurrentWeather, OnecallCurrentWeather } from "./current";
 import { ForecastWeather } from "./forecast";
 import { MinutelyWeather } from "./minutely";
 import { HourlyWeather } from "./hourly";
@@ -99,7 +99,7 @@ export interface Everything {
   lon: number;
   timezone: string;
   timezoneOffset: number;
-  current: CurrentWeather;
+  current: OnecallCurrentWeather;
   minutely: MinutelyWeather[];
   hourly: HourlyWeather[];
   daily: DailyWeather[];

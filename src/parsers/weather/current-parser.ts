@@ -17,7 +17,11 @@ function currentParser(data: any): CurrentWeather {
       sunsetRaw: data.sys.sunset,
     },
     weather: {
-      temp: { cur: data.main.temp },
+      temp: { 
+        cur: data.main.temp,
+        min: data.main.temp_min,
+        max: data.main.temp_max
+      },
       feelsLike: { cur: data.main.feels_like },
       pressure: data.main.pressure,
       humidity: data.main.humidity,
