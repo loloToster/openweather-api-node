@@ -24,6 +24,11 @@ Simple package that makes it easy to work with OpenWeather API.
 <a href="https://github.com/loloToster/openweather-api-node/stargazers">
     <img src="https://img.shields.io/github/stars/loloToster/openweather-api-node?label=stars&logo=github&style=flat-square" alt="GitHub Stars">
 </a>
+<br>
+<br>
+<a href="https://buymeacoffee.com/lolotoster">
+    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy me a coffee">
+</a>
 </p>
 
 # About
